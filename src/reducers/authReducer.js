@@ -4,6 +4,7 @@ import _ from "lodash";
 const initialState = {
   isAuthorized: false,
   user: null,
+  loginError: null,
   error: null,
 };
 
@@ -39,6 +40,13 @@ const authReducer = (state = initialState, action) => {
       copiedState.isAuthorized = false;
       copiedState.user = null;
       copiedState.error = action.payload;
+      if (action.payload.errMessage) {
+        copiedState.loginError = action.payload.errMessage;
+      }
+      return copiedState;
+
+    case ACTION_TYPES.RESET_ERROR_MESSAGE:
+      copiedState.loginError = null;
       return copiedState;
 
     default:

@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -10,6 +10,7 @@ import useErrorMessage from "../../hooks/useErrorMessage";
 import actionCreator from "../../actions/actionCreator";
 import useInput from "../../hooks/useInput";
 import { useHistory } from "react-router-dom";
+import validateInput from "../../utils/validateInput";
 
 const LoginContainer = styled.section`
   width: 100vw;
@@ -28,13 +29,31 @@ const MainTitle = styled.div`
 `;
 
 const LoginPage = ({ authService }) => {
+  const { loginError } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const history = useHistory();
   const [error, showErrorMessage] = useErrorMessage("");
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
 
-  const handleLogin = useCallback(async () => {}, []);
+  const handleLogin = useCallback(
+    async (event) => {
+      event.preventDefault();
+      const inputData = {
+        email,
+        password,
+      };
+
+      const validationResult = validateInput(inputData);
+
+      if (validationResult) {
+        return showErrorMessage(validationResult);
+      }
+
+      dispatch(actionCreator.loginAction(inputData));
+    },
+    [dispatch, email, password, showErrorMessage]
+  );
 
   const handleSocialLogin = useCallback(
     async (event) => {
@@ -53,32 +72,40 @@ const LoginPage = ({ authService }) => {
     [authService, dispatch, showErrorMessage]
   );
 
+  useEffect(() => {
+    if (loginError) {
+      showErrorMessage(loginError);
+      dispatch(actionCreator.resetErrorMessage());
+    }
+  }, [dispatch, loginError, showErrorMessage]);
+
   return (
     <LoginContainer>
       {error.length > 0 && <ErrorMessage error={error} />}
       <MainTitle>CryptoFolio</MainTitle>
-      <div>
-        <label htmlFor="user-email">이메일</label>
-        <br />
-        <input
-          name="user-email"
-          value={email}
-          onChange={onChangeEmail}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="user-password">비밀번호</label>
-        <br />
-        <input
-          name="user-password"
-          value={password}
-          type="password"
-          onChange={onChangePassword}
-          required
-        />
-      </div>
-      <>
+      <form onSubmit={handleLogin}>
+        <div>
+          <label htmlFor="user-email">이메일</label>
+          <br />
+          <input
+            name="user-email"
+            value={email}
+            onChange={onChangeEmail}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="user-password">비밀번호</label>
+          <br />
+          <input
+            name="user-password"
+            value={password}
+            type="password"
+            onChange={onChangePassword}
+            required
+          />
+        </div>
+
         <Button
           name="Login"
           onClick={handleLogin}
@@ -100,7 +127,7 @@ const LoginPage = ({ authService }) => {
         >
           Google Login
         </Button>
-      </>
+      </form>
     </LoginContainer>
   );
 };

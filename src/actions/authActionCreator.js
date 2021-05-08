@@ -46,7 +46,7 @@ const loginAction = (data) => async (dispatch) => {
 
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_USER_SERVER_API}/sociallogin`,
+      `${process.env.REACT_APP_USER_SERVER_API}/auth/login`,
       {
         method: "POST",
         headers: {
@@ -57,6 +57,14 @@ const loginAction = (data) => async (dispatch) => {
     );
 
     const result = await response.json();
+
+    if (result.message === "fail") {
+      return dispatch({
+        type: getActionTypes().USER_LOGIN_FAIL,
+        payload: result.data,
+      });
+    }
+
     cookies.set("jwt", result.token);
 
     dispatch({
@@ -122,10 +130,14 @@ const signinAction = (data) => async (dispatch) => {
   }
 };
 
-const logoutAction = () => async (dispatch) => {
+const logoutAction = () => (dispatch) => {
   cookies.remove("jwt");
 
   return dispatch({ type: getActionTypes().USER_LOGOUT });
+};
+
+const resetErrorMessage = () => (dispatch) => {
+  return dispatch({ type: getActionTypes().RESET_ERROR_MESSAGE });
 };
 
 const authActionCreator = {
@@ -134,6 +146,7 @@ const authActionCreator = {
   socialLoginAction,
   signinAction,
   logoutAction,
+  resetErrorMessage,
 };
 
 export default authActionCreator;

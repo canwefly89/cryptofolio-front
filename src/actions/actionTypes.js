@@ -17,6 +17,7 @@ const getActionTypes = () => ({
   USER_SIGNIN_FAIL: "USER_SIGNIN_FAIL",
 
   USER_LOGOUT: "USER_LOGOUT",
+  RESET_ERROR_MESSAGE: "RESET_ERROR_MESSAGE",
 });
 
 export default getActionTypes;
