@@ -27,6 +27,7 @@ const authReducer = (state = initialState, action) => {
       return copiedState;
 
     case ACTION_TYPES.USER_LOGOUT:
+    case ACTION_TYPES.CHECK_AUTHORIZATION_UNAUTH:
       copiedState.isAuthorized = false;
       copiedState.user = null;
       return copiedState;
@@ -36,6 +37,7 @@ const authReducer = (state = initialState, action) => {
     case ACTION_TYPES.SOCIAL_LOGIN_FAIL:
     case ACTION_TYPES.USER_SIGNIN_FAIL:
       copiedState.isAuthorized = false;
+      copiedState.user = null;
       copiedState.error = action.payload;
       return copiedState;
 

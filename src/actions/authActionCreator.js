@@ -4,11 +4,14 @@ import getActionTypes from "./actionTypes.js";
 const cookies = new Cookies();
 
 const checkAuthAction = () => async (dispatch) => {
-  console.log("hi");
   dispatch({ type: getActionTypes().CHECK_AUTHORIZATION });
 
   try {
     const token = cookies.get("jwt");
+
+    if (!token || token === "undefined") {
+      return dispatch({ type: getActionTypes().CHECK_AUTHORIZATION_UNAUTH });
+    }
 
     const response = await fetch(
       `${process.env.REACT_APP_USER_SERVER_API}/auth/check_auth`,
@@ -23,13 +26,15 @@ const checkAuthAction = () => async (dispatch) => {
 
     const result = await response.json();
 
-    if (result.message === "Authorization Success") {
-      dispatch({
+    if (result.message === "success") {
+      return dispatch({
         type: getActionTypes().CHECK_AUTHORIZATION_SUCCESS,
-        payload: result.data,
+        payload: result.data.user,
       });
-    } else {
-      dispatch({ type: getActionTypes().CHECK_AUTHORIZATION_FAIL });
+    }
+
+    if (result.message === "Unauthorized") {
+      return dispatch({ type: getActionTypes().CHECK_AUTHORIZATION_UNAUTH });
     }
   } catch (err) {
     dispatch({ type: getActionTypes().CHECK_AUTHORIZATION_FAIL, payload: err });
