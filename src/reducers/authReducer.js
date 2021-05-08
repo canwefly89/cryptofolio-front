@@ -1,7 +1,11 @@
 import getActionTypes from "../actions/actionTypes";
 import _ from "lodash";
 
-const initialState = {};
+const initialState = {
+  isAuthorized: false,
+  user: null,
+  error: null,
+};
 
 const authReducer = (state = initialState, action) => {
   const ACTION_TYPES = getActionTypes();
@@ -15,7 +19,13 @@ const authReducer = (state = initialState, action) => {
 
     case ACTION_TYPES.CHECK_AUTHORIZATION_SUCCESS:
     case ACTION_TYPES.PLAYER_LOGIN_SUCCESS:
+      copiedState.isAuthorized = true;
+      copiedState.user = action.payload;
+      return copiedState;
+
     case ACTION_TYPES.PLAYER_LOGOUT_SUCCESS:
+      copiedState.isAuthorized = false;
+      copiedState.user = null;
       return copiedState;
 
     case ACTION_TYPES.CHECK_AUTHORIZATION_FAIL:
@@ -23,6 +33,7 @@ const authReducer = (state = initialState, action) => {
     case ACTION_TYPES.PATCH_RESULT_FAIL:
     case ACTION_TYPES.UNAUTH_MODE_FAIL:
       copiedState.isAuthorized = false;
+      copiedState.error = action.payload;
       return copiedState;
 
     default:

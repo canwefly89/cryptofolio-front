@@ -24,7 +24,7 @@ const LogoutMessage = styled.div`
   font-weight: 600;
 `;
 
-const Logout = ({ authService }) => {
+const LogoutPage = ({ authService }) => {
   const { isUnAuthMode } = useSelector((state) => state.authReducer);
   const [error, showErrorMessage] = useErrorMessage("");
   const dispatch = useDispatch();
@@ -55,8 +55,8 @@ const Logout = ({ authService }) => {
   );
 };
 
-Logout.propTypes = {
+LogoutPage.propTypes = {
   authService: PropTypes.object.isRequired,
 };
 
-export default Logout;
+export default LogoutPage;

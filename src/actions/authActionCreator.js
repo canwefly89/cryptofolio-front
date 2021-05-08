@@ -1,7 +1,7 @@
 import Cookies from "universal-cookie";
 import getActionTypes from "./actionTypes.js";
 
-export const checkAuthorization = () => async (dispatch) => {
+const checkAuthorization = () => async (dispatch) => {
   dispatch({ type: getActionTypes().CHECK_AUTHORIZATION });
 
   try {
@@ -34,8 +34,8 @@ export const checkAuthorization = () => async (dispatch) => {
   }
 };
 
-export const playerLogin = (data) => async (dispatch) => {
-  dispatch({ type: getActionTypes().PLAYER_LOGIN });
+const userLogin = (data) => async (dispatch) => {
+  dispatch({ type: getActionTypes().user_LOGIN });
 
   try {
     const response = await fetch(
@@ -55,20 +55,31 @@ export const playerLogin = (data) => async (dispatch) => {
     cookies.set("jwt", result.token);
 
     dispatch({
-      type: getActionTypes().PLAYER_LOGIN_SUCCESS,
+      type: getActionTypes().user_LOGIN_SUCCESS,
       payload: result.data,
     });
   } catch (err) {
-    dispatch({ type: getActionTypes().PLAYER_LOGIN_FAIL, payload: err });
+    dispatch({ type: getActionTypes().user_LOGIN_FAIL, payload: err });
   }
 };
 
-export const playerLogout = () => {
+const userSignin = () => {};
+
+const userLogout = () => {
   const cookies = new Cookies();
 
   cookies.remove("jwt");
 
   return {
-    type: getActionTypes().PLAYER_LOGOUT,
+    type: getActionTypes().user_LOGOUT,
   };
 };
+
+const authActionCreator = {
+  checkAuthorization,
+  userSignin,
+  userLogin,
+  userLogout,
+};
+
+export default authActionCreator;
