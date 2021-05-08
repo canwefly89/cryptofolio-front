@@ -1,20 +1,37 @@
-import React, { Suspense } from "react";
-import { Route, Switch } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { Suspense, useEffect } from "react";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 import LoginPage from "../LoginPage/LoginPage";
 import LogoutPage from "../LogoutPage/LogoutPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
-
 import LandingPage from "../LandingPage/LandingPage";
 import CryptofolioPage from "../CryptofolioPage/PortfolioPage";
 import CreateCryptoFolio from "../CreateCryptoFolio/CreateCryptoFolio";
 import CryptofolioDetail from "../CryptofolioDetail/CryptofolioDetail";
 import SigninPage from "../SigninPage/SigninPage";
 
+import actionCreator from "../../actions/actionCreator";
+
 const App = ({ authService }) => {
   const { isAuthorized } = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+
+  useEffect(() => {
+    dispatch(actionCreator.checkAuthAction());
+
+    const authPath = ["login", "signin", "logout"];
+    const isAuthPath = authPath.some((path) =>
+      location.pathname.includes(path)
+    );
+
+    if (isAuthorized && isAuthPath) {
+      history.push("/");
+    }
+  }, [dispatch, history, isAuthorized, location.pathname]);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -37,12 +54,12 @@ const App = ({ authService }) => {
             </Route>
           </>
         ) : (
-          <Route exact path="/login">
+          <Route path="/login">
             <LoginPage authService={authService} />
           </Route>
         )}
 
-        <Route exact path="/login">
+        <Route path="/login">
           <LoginPage authService={authService} />
         </Route>
 

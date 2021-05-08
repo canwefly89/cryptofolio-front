@@ -3,9 +3,9 @@ import coinActionCreator from "./coinActionCreator";
 import cryptofolioActionCreator from "./cryptofolioActionCreator";
 
 const actionCreator = {
-  authActionCreator,
-  coinActionCreator,
-  cryptofolioActionCreator,
+  ...authActionCreator,
+  ...coinActionCreator,
+  ...cryptofolioActionCreator,
 };
 
 export default actionCreator;

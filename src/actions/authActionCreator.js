@@ -1,15 +1,17 @@
 import Cookies from "universal-cookie";
 import getActionTypes from "./actionTypes.js";
 
-const checkAuthorization = () => async (dispatch) => {
+const cookies = new Cookies();
+
+const checkAuthAction = () => async (dispatch) => {
+  console.log("hi");
   dispatch({ type: getActionTypes().CHECK_AUTHORIZATION });
 
   try {
-    const cookies = new Cookies();
     const token = cookies.get("jwt");
 
     const response = await fetch(
-      `${process.env.REACT_APP_USER_SERVER_API}/check_auth`,
+      `${process.env.REACT_APP_USER_SERVER_API}/auth/check_auth`,
       {
         method: "POST",
         headers: {
@@ -34,12 +36,12 @@ const checkAuthorization = () => async (dispatch) => {
   }
 };
 
-const userLogin = (data) => async (dispatch) => {
-  dispatch({ type: getActionTypes().user_LOGIN });
+const loginAction = (data) => async (dispatch) => {
+  dispatch({ type: getActionTypes().USER_LOGIN });
 
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_USER_SERVER_API}/login`,
+      `${process.env.REACT_APP_USER_SERVER_API}/sociallogin`,
       {
         method: "POST",
         headers: {
@@ -50,36 +52,59 @@ const userLogin = (data) => async (dispatch) => {
     );
 
     const result = await response.json();
-    const cookies = new Cookies();
-
     cookies.set("jwt", result.token);
 
     dispatch({
-      type: getActionTypes().user_LOGIN_SUCCESS,
+      type: getActionTypes().USER_LOGIN_SUCCESS,
       payload: result.data,
     });
   } catch (err) {
-    dispatch({ type: getActionTypes().user_LOGIN_FAIL, payload: err });
+    dispatch({ type: getActionTypes().USER_LOGIN_FAIL, payload: err });
   }
 };
 
-const userSignin = () => {};
+const socialLoginAction = (data) => async (dispatch) => {
+  dispatch({ type: getActionTypes().SOCIAL_LOGIN });
 
-const userLogout = () => {
-  const cookies = new Cookies();
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_USER_SERVER_API}/auth/social_login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
+    const result = await response.json();
+    cookies.set("jwt", result.data.token);
+
+    dispatch({
+      type: getActionTypes().SOCIAL_LOGIN_SUCCESS,
+      payload: result.data.user,
+    });
+  } catch (err) {
+    dispatch({ type: getActionTypes().SOCIAL_LOGIN_FAIL, payload: err });
+  }
+};
+
+const signinAction = () => async (dispatch) => {};
+
+const logoutAction = () => async (dispatch) => {
   cookies.remove("jwt");
-
   return {
     type: getActionTypes().user_LOGOUT,
   };
 };
 
 const authActionCreator = {
-  checkAuthorization,
-  userSignin,
-  userLogin,
-  userLogout,
+  checkAuthAction,
+  loginAction,
+  socialLoginAction,
+  signinAction,
+  logoutAction,
 };
 
 export default authActionCreator;

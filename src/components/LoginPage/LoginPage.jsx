@@ -7,11 +7,8 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Button from "../shared/Button/Button";
 
 import useErrorMessage from "../../hooks/useErrorMessage";
-import {
-  authActionCreator,
-  coinActionCreator,
-  cryptofolioActionCreator,
-} from "../../actions/actionCreator";
+// import { loginAction, socialLoginAction } from "../../actions/actionCreator";
+import actionCreator from "../../actions/actionCreator";
 import useInput from "../../hooks/useInput";
 import { useHistory } from "react-router-dom";
 
@@ -38,18 +35,23 @@ const LoginPage = ({ authService }) => {
   const [id, onChangeId] = useInput("");
   const [password, onChangePassword] = useInput("");
 
-  const handleLogin = useCallback(() => {}, []);
+  const handleLogin = useCallback(async () => {}, []);
 
   const handleSocialLogin = useCallback(
     async (event) => {
       try {
         const loginData = await authService.login(event.target.name);
-        const { email, uid, displayName } = loginData.user;
+        const data = {
+          email: loginData.user.email,
+          name: loginData.user.displayName,
+        };
+
+        dispatch(actionCreator.socialLoginAction(data));
       } catch (err) {
         showErrorMessage("로그인에 실패하였습니다.");
       }
     },
-    [authService, showErrorMessage]
+    [authService, dispatch, showErrorMessage]
   );
 
   return (

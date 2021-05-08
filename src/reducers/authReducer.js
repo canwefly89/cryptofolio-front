@@ -13,25 +13,28 @@ const authReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case ACTION_TYPES.CHECK_AUTHORIZATION:
-    case ACTION_TYPES.PLAYER_LOGIN:
-    case ACTION_TYPES.PLAYER_LOGOUT:
+    case ACTION_TYPES.USER_LOGIN:
+    case ACTION_TYPES.SOCIAL_LOGIN:
+    case ACTION_TYPES.USER_SIGNIN:
       return copiedState;
 
     case ACTION_TYPES.CHECK_AUTHORIZATION_SUCCESS:
-    case ACTION_TYPES.PLAYER_LOGIN_SUCCESS:
+    case ACTION_TYPES.USER_LOGIN_SUCCESS:
+    case ACTION_TYPES.SOCIAL_LOGIN_SUCCESS:
+    case ACTION_TYPES.USER_SIGNIN_SUCCESS:
       copiedState.isAuthorized = true;
       copiedState.user = action.payload;
       return copiedState;
 
-    case ACTION_TYPES.PLAYER_LOGOUT_SUCCESS:
+    case ACTION_TYPES.USER_LOGOUT:
       copiedState.isAuthorized = false;
       copiedState.user = null;
       return copiedState;
 
     case ACTION_TYPES.CHECK_AUTHORIZATION_FAIL:
-    case ACTION_TYPES.PLAYER_LOGIN_FAIL:
-    case ACTION_TYPES.PATCH_RESULT_FAIL:
-    case ACTION_TYPES.UNAUTH_MODE_FAIL:
+    case ACTION_TYPES.USER_LOGIN_FAIL:
+    case ACTION_TYPES.SOCIAL_LOGIN_FAIL:
+    case ACTION_TYPES.USER_SIGNIN_FAIL:
       copiedState.isAuthorized = false;
       copiedState.error = action.payload;
       return copiedState;
