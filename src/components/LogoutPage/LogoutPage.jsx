@@ -1,13 +1,10 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import useErrorMessage from "../../hooks/useErrorMessage";
-
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
-
+import actionCreator from "../../actions/actionCreator";
 import Button from "../shared/Button/Button";
 
 const LogoutContainer = styled.div`
@@ -25,31 +22,32 @@ const LogoutMessage = styled.div`
 `;
 
 const LogoutPage = ({ authService }) => {
-  const { isUnAuthMode } = useSelector((state) => state.authReducer);
-  const [error, showErrorMessage] = useErrorMessage("");
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onLogout = async () => {};
+  const onLogout = useCallback(async () => {
+    dispatch(actionCreator.logoutAction());
+    await authService.logout();
+    history.push("/");
+  }, [authService, dispatch, history]);
 
   return (
     <LogoutContainer>
-      {error.length > 0 && <ErrorMessage error={error} />}
-      <LogoutMessage>Are You Leaving?</LogoutMessage>
+      <LogoutMessage>로그아웃 하시겠습니까?</LogoutMessage>
       <Button
         onClick={onLogout}
         margin={["5vh", "0", "0", "1vw"]}
         bgColor={"#eb4d4b"}
         fontWeight={"600"}
       >
-        Log Out
+        로그아웃
       </Button>
       <Button
-        onClick={() => history.push("/games")}
+        onClick={() => history.push("/")}
         margin={["1vh", "0", "0", "1vw"]}
         fontWeight={"600"}
       >
-        Back to game
+        돌아가기
       </Button>
     </LogoutContainer>
   );

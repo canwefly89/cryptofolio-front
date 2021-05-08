@@ -33,7 +33,7 @@ const checkAuthAction = () => async (dispatch) => {
       });
     }
 
-    if (result.message === "Unauthorized") {
+    if (result.message === "unauthorized") {
       return dispatch({ type: getActionTypes().CHECK_AUTHORIZATION_UNAUTH });
     }
   } catch (err) {
@@ -124,9 +124,8 @@ const signinAction = (data) => async (dispatch) => {
 
 const logoutAction = () => async (dispatch) => {
   cookies.remove("jwt");
-  return {
-    type: getActionTypes().user_LOGOUT,
-  };
+
+  return dispatch({ type: getActionTypes().USER_LOGOUT });
 };
 
 const authActionCreator = {

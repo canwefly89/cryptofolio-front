@@ -26,7 +26,7 @@ const App = ({ authService }) => {
   useEffect(() => {
     dispatch(actionCreator.checkAuthAction());
 
-    const authPath = ["login", "signin", "logout"];
+    const authPath = ["login", "signin"];
     const isAuthPath = authPath.some((path) =>
       location.pathname.includes(path)
     );
@@ -57,20 +57,15 @@ const App = ({ authService }) => {
               <Route path="/cryptofolio/:cryptofolioId">
                 <CryptofolioDetail />
               </Route>
+              <Route path="/logout">
+                <LogoutPage authService={authService} />
+              </Route>
             </>
           ) : (
             <Route path="/login">
               <LoginPage authService={authService} />
             </Route>
           )}
-
-          <Route path="/login">
-            <LoginPage authService={authService} />
-          </Route>
-
-          <Route path="/logout">
-            <LogoutPage authService={authService} />
-          </Route>
 
           <Route path="/signin">
             <SigninPage authService={authService} />
