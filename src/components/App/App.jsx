@@ -73,7 +73,7 @@ const App = ({ authService }) => {
           </Route>
 
           <Route path="/signin">
-            <SigninPage />
+            <SigninPage authService={authService} />
           </Route>
 
           <Route path="/error">

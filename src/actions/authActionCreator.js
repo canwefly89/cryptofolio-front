@@ -95,7 +95,32 @@ const socialLoginAction = (data) => async (dispatch) => {
   }
 };
 
-const signinAction = () => async (dispatch) => {};
+const signinAction = (data) => async (dispatch) => {
+  dispatch({ type: getActionTypes().USER_SIGNIN });
+
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_USER_SERVER_API}/auth/signin`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    const result = await response.json();
+    cookies.set("jwt", result.data.token);
+
+    dispatch({
+      type: getActionTypes().USER_SIGNIN_SUCCESS,
+      payload: result.data.user,
+    });
+  } catch (err) {
+    dispatch({ type: getActionTypes().USER_SIGNIN_FAIL, payload: err });
+  }
+};
 
 const logoutAction = () => async (dispatch) => {
   cookies.remove("jwt");

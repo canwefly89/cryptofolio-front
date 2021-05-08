@@ -7,7 +7,6 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Button from "../shared/Button/Button";
 
 import useErrorMessage from "../../hooks/useErrorMessage";
-// import { loginAction, socialLoginAction } from "../../actions/actionCreator";
 import actionCreator from "../../actions/actionCreator";
 import useInput from "../../hooks/useInput";
 import { useHistory } from "react-router-dom";
@@ -32,7 +31,7 @@ const LoginPage = ({ authService }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [error, showErrorMessage] = useErrorMessage("");
-  const [id, onChangeId] = useInput("");
+  const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
 
   const handleLogin = useCallback(async () => {}, []);
@@ -59,9 +58,14 @@ const LoginPage = ({ authService }) => {
       {error.length > 0 && <ErrorMessage error={error} />}
       <MainTitle>CryptoFolio</MainTitle>
       <div>
-        <label htmlFor="user-id">아이디</label>
+        <label htmlFor="user-email">이메일</label>
         <br />
-        <input name="user-id" value={id} onChange={onChangeId} required />
+        <input
+          name="user-email"
+          value={email}
+          onChange={onChangeEmail}
+          required
+        />
       </div>
       <div>
         <label htmlFor="user-password">비밀번호</label>
@@ -80,14 +84,14 @@ const LoginPage = ({ authService }) => {
           onClick={handleLogin}
           margin={["2vh", "0", "0", "0"]}
         >
-          Login
+          Log In
         </Button>
         <Button
           name="Google"
           onClick={() => history.push("/signin")}
           margin={["2vh", "0", "0", "0"]}
         >
-          SignIn
+          Sign In
         </Button>
         <Button
           name="Google"
