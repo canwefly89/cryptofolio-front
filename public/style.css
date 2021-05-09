@@ -2,23 +2,21 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* color: black; */
-  user-select: none;
-  text-align: center;
   line-height: 1em;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #222f3e;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* background-color: #222f3e; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-button:hover {
+/* button:hover {
   transform: scale(1.1, 1.1);
 }
 button:focus {
   outline: none;
-}
+} */

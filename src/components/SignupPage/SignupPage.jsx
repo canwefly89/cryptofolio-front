@@ -11,7 +11,7 @@ import useErrorMessage from "../../hooks/useErrorMessage";
 import useInput from "../../hooks/useInput";
 import validateInput from "../../utils/validateInput";
 
-const SigninPage = ({ authService }) => {
+const SignupPage = ({ authService }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -21,7 +21,7 @@ const SigninPage = ({ authService }) => {
   const [passwordConfirm, onChangePasswordConfirm] = useInput("");
   const [error, showErrorMessage] = useErrorMessage("");
 
-  const handleSignin = useCallback(
+  const handleSignup = useCallback(
     (event) => {
       event.preventDefault();
 
@@ -63,7 +63,7 @@ const SigninPage = ({ authService }) => {
   return (
     <>
       {error.length > 0 && <ErrorMessage error={error} />}
-      <form onSubmit={handleSignin}>
+      <form onSubmit={handleSignup}>
         <div>
           <label htmlFor="user-email">이메일</label>
           <br />
@@ -116,10 +116,10 @@ const SigninPage = ({ authService }) => {
           </Button>
           <Button
             name="Google"
-            onClick={handleSignin}
+            onClick={handleSignup}
             margin={["2vh", "0", "0", "0"]}
           >
-            Sign In
+            Sign Up
           </Button>
           <Button
             name="Google"
@@ -134,4 +134,4 @@ const SigninPage = ({ authService }) => {
   );
 };
 
-export default SigninPage;
+export default SignupPage;

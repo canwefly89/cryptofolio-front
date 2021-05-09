@@ -65,11 +65,11 @@ const loginAction = (data) => async (dispatch) => {
       });
     }
 
-    cookies.set("jwt", result.token);
+    cookies.set("jwt", result.data.token);
 
     dispatch({
       type: getActionTypes().USER_LOGIN_SUCCESS,
-      payload: result.data,
+      payload: result.data.user,
     });
   } catch (err) {
     dispatch({ type: getActionTypes().USER_LOGIN_FAIL, payload: err });
@@ -103,12 +103,12 @@ const socialLoginAction = (data) => async (dispatch) => {
   }
 };
 
-const signinAction = (data) => async (dispatch) => {
-  dispatch({ type: getActionTypes().USER_SIGNIN });
+const signupAction = (data) => async (dispatch) => {
+  dispatch({ type: getActionTypes().USER_SIGNUP });
 
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_USER_SERVER_API}/auth/signin`,
+      `${process.env.REACT_APP_USER_SERVER_API}/auth/signup`,
       {
         method: "POST",
         headers: {
@@ -122,11 +122,11 @@ const signinAction = (data) => async (dispatch) => {
     cookies.set("jwt", result.data.token);
 
     dispatch({
-      type: getActionTypes().USER_SIGNIN_SUCCESS,
+      type: getActionTypes().USER_SIGNUP_SUCCESS,
       payload: result.data.user,
     });
   } catch (err) {
-    dispatch({ type: getActionTypes().USER_SIGNIN_FAIL, payload: err });
+    dispatch({ type: getActionTypes().USER_SIGNUP_FAIL, payload: err });
   }
 };
 
@@ -144,7 +144,7 @@ const authActionCreator = {
   checkAuthAction,
   loginAction,
   socialLoginAction,
-  signinAction,
+  signupAction,
   logoutAction,
   resetErrorMessage,
 };
