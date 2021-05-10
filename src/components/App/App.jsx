@@ -8,7 +8,7 @@ import LoginPage from "../LoginPage/LoginPage";
 import LogoutPage from "../LogoutPage/LogoutPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import LandingPage from "../LandingPage/LandingPage";
-import CryptofolioPage from "../CryptofolioPage/PortfolioPage";
+import CryptofolioPage from "../CryptofolioPage/CryptofolioPage";
 import CreateCryptoFolio from "../CreateCryptoFolio/CreateCryptoFolio";
 import CryptofolioDetail from "../CryptofolioDetail/CryptofolioDetail";
 import SignupPage from "../SignupPage/SignupPage";
@@ -16,11 +16,7 @@ import Loading from "../Loading/Loading";
 import Footer from "../Footer/Footer";
 
 import actionCreator from "../../actions/actionCreator";
-import styled from "styled-components";
-
-const Main = styled.div`
-  flex: 1;
-`;
+import CoinPage from "../CoinPage/CoinPage";
 
 const App = ({ authService }) => {
   const { isAuthorized } = useSelector((state) => state.authReducer);
@@ -29,6 +25,7 @@ const App = ({ authService }) => {
   const history = useHistory();
 
   useEffect(() => {
+    dispatch(actionCreator.getHomeAction());
     dispatch(actionCreator.checkAuthAction());
 
     const authPath = ["login", "signup"];
@@ -44,45 +41,51 @@ const App = ({ authService }) => {
   return (
     <>
       <Header />
-      <Main>
-        <Suspense fallback={<Loading />}>
-          <Switch>
-            <Route exact path="/">
-              <LandingPage />
-            </Route>
 
-            <Route exact path="/cryptofolio">
-              <CryptofolioPage />
-            </Route>
+      <Suspense fallback={<Loading />}>
+        <Switch>
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
 
-            {isAuthorized ? (
-              <>
-                <Route exact path="/cryptofolio/new">
-                  <CreateCryptoFolio />
-                </Route>
-                <Route path="/cryptofolio/:cryptofolioId">
-                  <CryptofolioDetail />
-                </Route>
-                <Route path="/logout">
-                  <LogoutPage authService={authService} />
-                </Route>
-              </>
-            ) : (
-              <Route path="/login">
-                <LoginPage authService={authService} />
+          <Route exact path="/cryptofolio">
+            <CryptofolioPage />
+          </Route>
+
+          <Route exact path="/coin">
+            <CoinPage />
+          </Route>
+
+          {isAuthorized ? (
+            <Switch>
+              <Route exact path="/cryptofolio/new">
+                <CreateCryptoFolio />
               </Route>
-            )}
 
-            <Route path="/signup">
-              <SignupPage authService={authService} />
-            </Route>
+              <Route exact path="/cryptofolio/:cryptofolioId">
+                <CryptofolioDetail />
+              </Route>
 
-            <Route path="/error">
-              <ErrorPage />
+              <Route path="/logout">
+                <LogoutPage authService={authService} />
+              </Route>
+            </Switch>
+          ) : (
+            <Route path="/login">
+              <LoginPage authService={authService} />
             </Route>
-          </Switch>
-        </Suspense>
-      </Main>
+          )}
+
+          <Route path="/signup">
+            <SignupPage authService={authService} />
+          </Route>
+
+          <Route path="/error">
+            <ErrorPage />
+          </Route>
+        </Switch>
+      </Suspense>
+
       <Footer />
     </>
   );
