@@ -16,7 +16,6 @@ import Loading from "../Loading/Loading";
 import Footer from "../Footer/Footer";
 
 import actionCreator from "../../actions/actionCreator";
-import CoinPage from "../CoinPage/CoinPage";
 
 const App = ({ authService }) => {
   const { isAuthorized } = useSelector((state) => state.authReducer);
@@ -50,10 +49,6 @@ const App = ({ authService }) => {
 
           <Route exact path="/cryptofolio">
             <CryptofolioPage />
-          </Route>
-
-          <Route exact path="/coin">
-            <CoinPage />
           </Route>
 
           {isAuthorized ? (

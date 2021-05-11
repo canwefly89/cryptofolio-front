@@ -10,24 +10,24 @@ const CoinContainer = styled.div`
   cursor: pointer;
 `;
 
-const CoinItem = ({ coin, onClick, selected, handleValue }) => {
+const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
   const [error, showErrorMessage] = useErrorMessage("");
   const [value, setValue] = useState("");
 
   const handleClick = useCallback(() => {
-    if (selected.length > 9 && !selected) {
+    if (selectedList.length > 9 && !selectedList.includes(coin.ticker)) {
       showErrorMessage("10개 이하로 선택해주세요!");
     } else {
       onClick(coin.ticker);
     }
-  }, [coin.ticker, onClick, selected, showErrorMessage]);
+  }, [coin.ticker, onClick, selectedList, showErrorMessage]);
 
   const handleChangeValue = useCallback(
     (input) => {
       setValue(input);
-      handleValue(input, coin.ticker);
+      handleAmount(input, coin.ticker);
     },
-    [coin.ticker, handleValue]
+    [coin.ticker, handleAmount]
   );
 
   return (
@@ -35,7 +35,7 @@ const CoinItem = ({ coin, onClick, selected, handleValue }) => {
       {error.length > 0 && <ErrorMessage error={error} />}
       <CoinContainer
         onClick={handleClick}
-        bgColor={selected.includes(coin.ticker)}
+        bgColor={selectedList.includes(coin.ticker)}
       >
         <img src={coin.imagePath} width="20px" alt="" />
         <span>&nbsp;&nbsp;{coin.ticker}&nbsp;&nbsp;</span>
@@ -45,7 +45,7 @@ const CoinItem = ({ coin, onClick, selected, handleValue }) => {
           <span key={exchange}>{exchange}&nbsp;&nbsp;</span>
         ))}
       </CoinContainer>
-      {selected.includes(coin.ticker) && (
+      {selectedList.includes(coin.ticker) && (
         <input
           type="textarea"
           placeholder="value"

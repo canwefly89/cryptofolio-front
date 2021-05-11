@@ -59,7 +59,7 @@ const HeaderLogin = styled.div`
 `;
 
 const Header = () => {
-  const { isAuthorized } = useSelector((state) => state.authReducer);
+  const { isAuthorized, user } = useSelector((state) => state.authReducer);
   const history = useHistory();
 
   return (
@@ -72,7 +72,7 @@ const Header = () => {
           <div onClick={() => history.push("/coin")}>Coin</div>
         </HeaderItemContainer>
         <WelcomeMessage>
-          서성주님 환영합니다. 현재 크립토폴리오 최고 수익은
+          {user?.name}님 환영합니다. 현재 크립토폴리오 최고 수익은
           <span> 123,450원</span> 입니다.
         </WelcomeMessage>
 
