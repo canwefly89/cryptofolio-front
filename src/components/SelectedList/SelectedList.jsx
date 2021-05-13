@@ -1,37 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import setNumberFormat from "../../utils/setNumberFormat";
+import usePieChart from "../../hooks/usePieChart";
 
-const SelectedList = ({ selectedList, coinSet, totalValue }) => {
+const SelectedList = ({ selectedList, totalValue }) => {
   const { coinData } = useSelector((state) => state.coinReducer);
+  const svgRef = useRef();
+
+  usePieChart(svgRef, selectedList, coinData);
 
   return (
     <>
+      <svg ref={svgRef}></svg>
       {selectedList &&
-        selectedList.map((ticker) => {
+        selectedList.map((coin) => {
           return (
-            <div key={ticker}>
-              <img src={coinData[ticker].imagePath} width="20px" alt="ticker" />
-              <span>{ticker}&nbsp;&nbsp;</span>
-              {coinSet[ticker] && (
-                <>
-                  <span>
-                    $
-                    {setNumberFormat(
-                      coinSet[ticker] * coinData[ticker].price.price
-                    )}
-                  </span>
-                  <span>
-                    &nbsp;&nbsp;
-                    {(
-                      ((coinSet[ticker] * coinData[ticker].price.price) /
+            <div key={coin.name}>
+              <img
+                src={coinData[coin.name].imagePath}
+                width="20px"
+                alt="ticker"
+              />
+              <span>{coin.name}&nbsp;&nbsp;</span>
+
+              <span>
+                $
+                {setNumberFormat(coin.amount * coinData[coin.name].price.price)}
+              </span>
+              <span>
+                &nbsp;&nbsp;
+                {totalValue !== 0
+                  ? (
+                      ((coin.amount * coinData[coin.name].price.price) /
                         totalValue) *
                       100
-                    ).toFixed(2)}
-                    %
-                  </span>
-                </>
-              )}
+                    ).toFixed(2)
+                  : 0.0}
+                %
+              </span>
             </div>
           );
         })}

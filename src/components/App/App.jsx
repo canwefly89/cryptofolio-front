@@ -66,7 +66,14 @@ const App = ({ authService }) => {
               </Route>
             </Switch>
           ) : (
-            <Route path="/login">
+            <Route
+              path={[
+                "/cryptofolio/new",
+                "/cryptofolio/:cryptofolioId",
+                "/logout",
+                "/login",
+              ]}
+            >
               <LoginPage authService={authService} />
             </Route>
           )}

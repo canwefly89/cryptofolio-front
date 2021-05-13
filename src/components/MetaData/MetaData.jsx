@@ -21,7 +21,8 @@ const MetaDataItem = styled.div`
     display: block;
     margin-left: 6px;
   }
-  span:last-child {
+  span:last-child,
+  span:nth-child(2) {
     font-weight: 800;
   }
 `;
@@ -36,15 +37,15 @@ const MetaData = () => {
         <span>{metadata?.time}</span>
       </MetaDataItem>
       <MetaDataItem>
-        <span>시가총액(달러)</span>
+        <span>전체 시가총액</span>
         <span>
-          {metadata && setNumberFormat(metadata.marketCapDollar, "cut")}
+          {metadata && setNumberFormat(metadata.marketCapDollar, "cut")}달러
+        </span>
+        <span>
+          {metadata && setNumberFormat(metadata.marketCapWon, "cut")}원
         </span>
       </MetaDataItem>
-      <MetaDataItem>
-        <span>시가총액(원)</span>
-        <span>{metadata && setNumberFormat(metadata.marketCapWon, "cut")}</span>
-      </MetaDataItem>
+      <MetaDataItem></MetaDataItem>
       <MetaDataItem>
         <span>비트코인 도미넌스</span>
         <span>{metadata?.dominance}</span>

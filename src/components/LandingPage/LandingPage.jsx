@@ -1,39 +1,40 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, memo } from "react";
+import styled from "styled-components";
 
-import { useDispatch, useSelector } from "react-redux";
-import actionCreator from "../../actions/actionCreator";
-import CoinList from "../CreateCryptoFolio/CreateCryptoFolio";
+import ExchangeChart from "../ExchangeChart/ExchangeChart";
+import CategoryChart from "../CategoryChart/CategoryChart";
+import MyPortfolioChart from "../MyPortfolioChart/MyPortfolioChart";
+import CapitalPortfolioChart from "../CapitalPortfolioChart/CapitalPortfolioChart";
 
-const LandingPage = (props) => {
-  const dispatch = useDispatch();
-  const { coinData } = useSelector((state) => state.coinReducer);
-  const [marketCaps, setMarketCaps] = useState([]);
-  const svgRef = useRef();
-
-  useEffect(() => {
-    const filtered = [];
-    console.log(svgRef);
-
-    if (coinData) {
-      Object.values(coinData).forEach((coin) => {
-        filtered.push(coin.marketCap.marketCap / 10000000000);
-      });
-    }
-
-    setMarketCaps(filtered);
-    // console.log(filtered);
-  }, [coinData]);
+const LandingPage = memo((props) => {
+  const [type, setType] = useState("exchange");
 
   return (
     <div>
       <div>LandingPage</div>
-      <svg ref={svgRef}>
-        {marketCaps.map((v, i) => {
-          return <circle key={i} r={v}></circle>;
-        })}
-      </svg>
+      <button name={"exchange"} onClick={(e) => setType(e.target.name)}>
+        Exchange
+      </button>
+      <button name={"category"} onClick={(e) => setType(e.target.name)}>
+        Category
+      </button>
+      <button
+        name={"capital-portfolio"}
+        onClick={(e) => setType(e.target.name)}
+      >
+        Capital PortFolio
+      </button>
+      <button name={"my-portfolio"} onClick={(e) => setType(e.target.name)}>
+        My PortFolio
+      </button>
+      <div>
+        {type === "exchange" && <ExchangeChart />}
+        {type === "category" && <CategoryChart />}
+        {type === "capital-portfolio" && <CapitalPortfolioChart />}
+        {type === "my-portfolio" && <MyPortfolioChart />}
+      </div>
     </div>
   );
-};
+});
 
 export default LandingPage;

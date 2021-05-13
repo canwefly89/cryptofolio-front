@@ -9,6 +9,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  user-select: none;
   /* background-color: #222f3e; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

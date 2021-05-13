@@ -44,21 +44,20 @@ const CreateCryptoFolio = (props) => {
   const dispatch = useDispatch();
   const [name, onChangeName] = useInput("");
   const [coinList, setCoinList] = useState([]);
-  const [selectedList, setSelectedList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [coinSet, setCoinSet] = useState({});
+  const [selectedList, setSelectedList] = useState([]);
   const [error, showErrorMessage] = useErrorMessage("");
   const [totalValue, setTotalValue] = useState(0);
   const history = useHistory();
 
   const handleSearch = useCallback(
-    (value) => {
-      setSearchTerm(value);
+    (input) => {
+      setSearchTerm(input);
 
       const filtered = Object.values(coinData).filter(
-        (v) =>
-          v.name.toLowerCase().includes(value.toLowerCase()) ||
-          v.ticker.toLowerCase().includes(value.toLowerCase())
+        (coin) =>
+          coin.name.toLowerCase().includes(input.toLowerCase()) ||
+          coin.ticker.toLowerCase().includes(input.toLowerCase())
       );
 
       setCoinList(filtered);
@@ -92,13 +91,12 @@ const CreateCryptoFolio = (props) => {
 
   const handleSelect = useCallback(
     (ticker) => {
-      if (selectedList.includes(ticker)) {
-        const index = selectedList.indexOf(ticker);
-        selectedList.splice(index, 1);
+      const newSet = selectedList.filter((coin) => coin.name !== ticker);
 
-        setSelectedList([...selectedList]);
+      if (newSet.length === selectedList.length) {
+        setSelectedList([...newSet, { name: ticker, amount: 0 }]);
       } else {
-        setSelectedList([...selectedList, ticker]);
+        setSelectedList([...newSet]);
       }
     },
     [selectedList]
@@ -106,22 +104,28 @@ const CreateCryptoFolio = (props) => {
 
   const handleAmount = useCallback(
     (amount, ticker) => {
-      const newCoinSet = { ...coinSet, [ticker]: amount };
-      const newTotal = Object.entries(newCoinSet).reduce(
-        (a, [key, value]) =>
-          (a += parseFloat(value) * coinData[key].price.price),
+      const newSelectedList = selectedList.map((coin) => {
+        if (coin.name === ticker) {
+          return { ...coin, amount };
+        }
+        return coin;
+      });
+
+      const newTotal = newSelectedList.reduce(
+        (a, coin) =>
+          (a += parseFloat(coin.amount) * coinData[coin.name].price.price),
         0
       );
 
-      setCoinSet(newCoinSet);
+      setSelectedList(newSelectedList);
       setTotalValue(newTotal);
     },
-    [coinData, coinSet]
+    [coinData, selectedList]
   );
 
   const handleReset = useCallback(() => {
     setSelectedList([]);
-    setCoinSet({});
+    setSelectedList({});
   }, []);
 
   const handleRandom = useCallback((coinNumber, maxAsset) => {
@@ -134,9 +138,14 @@ const CreateCryptoFolio = (props) => {
     }
 
     dispatch(
-      actionCreator.createCryptofolioAction(name, coinSet, totalValue, history)
+      actionCreator.createCryptofolioAction(
+        name,
+        selectedList,
+        totalValue,
+        history
+      )
     );
-  }, [coinSet, dispatch, history, name, showErrorMessage, totalValue]);
+  }, [selectedList, dispatch, history, name, showErrorMessage, totalValue]);
 
   useEffect(() => {
     if (coinData) {
@@ -164,11 +173,7 @@ const CreateCryptoFolio = (props) => {
           />
         </SelectContainer>
         <ResultContainer>
-          <SelectedList
-            selectedList={selectedList}
-            coinSet={coinSet}
-            totalValue={totalValue}
-          />
+          <SelectedList selectedList={selectedList} totalValue={totalValue} />
           <CreateRandom handleRandom={handleRandom} />
           <Button onClick={handleCreate}>Create</Button>
           <Button onClick={handleReset}>Reset</Button>

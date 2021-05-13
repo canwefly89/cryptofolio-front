@@ -15,7 +15,10 @@ const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
   const [value, setValue] = useState("");
 
   const handleClick = useCallback(() => {
-    if (selectedList.length > 9 && !selectedList.includes(coin.ticker)) {
+    if (
+      selectedList.length > 9 &&
+      !selectedList.some((selected) => selected.name === coin.ticker)
+    ) {
       showErrorMessage("10개 이하로 선택해주세요!");
     } else {
       onClick(coin.ticker);
@@ -24,10 +27,18 @@ const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
 
   const handleChangeValue = useCallback(
     (input) => {
+      if (Number.isNaN(parseInt(input, 10)) && input.length > 0) {
+        return showErrorMessage("숫자만 입력할 수 있습니다.");
+      }
+
+      if (input.length === 0) {
+        input = 0;
+      }
+
       setValue(input);
       handleAmount(input, coin.ticker);
     },
-    [coin.ticker, handleAmount]
+    [coin.ticker, handleAmount, showErrorMessage]
   );
 
   return (
@@ -35,7 +46,7 @@ const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
       {error.length > 0 && <ErrorMessage error={error} />}
       <CoinContainer
         onClick={handleClick}
-        bgColor={selectedList.includes(coin.ticker)}
+        bgColor={selectedList.some((selected) => selected.name === coin.ticker)}
       >
         <img src={coin.imagePath} width="20px" alt="" />
         <span>&nbsp;&nbsp;{coin.ticker}&nbsp;&nbsp;</span>
@@ -45,7 +56,7 @@ const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
           <span key={exchange}>{exchange}&nbsp;&nbsp;</span>
         ))}
       </CoinContainer>
-      {selectedList.includes(coin.ticker) && (
+      {selectedList.some((selected) => selected.name === coin.ticker) && (
         <input
           type="textarea"
           placeholder="value"
