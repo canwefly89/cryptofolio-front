@@ -1,5 +1,5 @@
 import React from "react";
-import { CATEGORIES } from "../../constants/constants";
+import { CATEGORIES, PORTFOLIOS } from "../../constants/constants";
 
 const CoinFilter = ({ handleFilter }) => {
   return (
@@ -24,6 +24,16 @@ const CoinFilter = ({ handleFilter }) => {
         onChange={(e) => handleFilter(e.target.value, "category")}
       >
         {CATEGORIES.sort().map((v) => (
+          <option key={v} value={v}>
+            {v}
+          </option>
+        ))}
+      </select>
+      <select
+        name="portfolio"
+        onChange={(e) => handleFilter(e.target.value, "portfolio")}
+      >
+        {PORTFOLIOS.sort().map((v) => (
           <option key={v} value={v}>
             {v}
           </option>

@@ -15,8 +15,7 @@ const usePieChart = (svgRef, selectedList, coinData) => {
     const svg = d3
       .select(svgRef.current)
       .attr("width", dims.width + 10)
-      .attr("height", dims.height + 10)
-      .attr("style", "border: thin red solid");
+      .attr("height", dims.height + 10);
 
     svg.selectAll("g").remove();
 
@@ -34,7 +33,7 @@ const usePieChart = (svgRef, selectedList, coinData) => {
       .outerRadius(dims.radius)
       .innerRadius(dims.radius / 2);
 
-    const color = d3.scaleOrdinal(d3["schemeSet3"]);
+    const color = d3.scaleOrdinal(d3["schemeSet2"]);
 
     const arcTweenEnter = (d) => {
       const i = d3.interpolate(d.endAngle, d.startAngle);
@@ -57,8 +56,6 @@ const usePieChart = (svgRef, selectedList, coinData) => {
         .append("path")
         .attr("class", "arc")
         .attr("d", arcPath)
-        .attr("fill", "blue")
-        .attr("stroke", "#c8d6e5")
         .attr("fill", (d) => color(d.data.name))
         .transition()
         .duration(300)

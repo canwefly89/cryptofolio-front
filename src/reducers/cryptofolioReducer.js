@@ -14,13 +14,19 @@ const cryptofolioReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case ACTION_TYPES.CREATE_CRYPTOFOLIO:
+    case ACTION_TYPES.GET_CRYPTOFOLIOS:
       return copiedState;
 
     case ACTION_TYPES.CREATE_CRYPTOFOLIO_SUCCESS:
       copiedState.currentCryptoFolio = action.payload;
       return copiedState;
 
+    case ACTION_TYPES.GET_CRYPTOFOLIOS_SUCCESS:
+      copiedState.allCryptoFolios = action.payload;
+      return copiedState;
+
     case ACTION_TYPES.CREATE_CRYPTOFOLIO_FAIL:
+    case ACTION_TYPES.GET_CRYPTOFOLIOS_FAIL:
       copiedState.error = action.payload;
       return copiedState;
 

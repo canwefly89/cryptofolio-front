@@ -4,8 +4,6 @@ import { useParams } from "react-router-dom";
 const CryptofolioDetail = (props) => {
   const { cryptofolioId } = useParams();
 
-  console.log(cryptofolioId);
-
   return (
     <div>
       <div>CryptofolioDetail</div>

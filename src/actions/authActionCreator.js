@@ -131,7 +131,7 @@ const signupAction = (data) => async (dispatch) => {
 };
 
 const logoutAction = () => (dispatch) => {
-  cookies.remove("jwt");
+  cookies.remove("jwt", { path: "/" });
 
   return dispatch({ type: getActionTypes().USER_LOGOUT });
 };

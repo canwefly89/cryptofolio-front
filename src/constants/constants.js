@@ -1,3 +1,58 @@
+export const CHART_TYPE = {
+  EXCHANGE: "EXCHANGE",
+  CATEGORY: "CATEGORY",
+  PORTFOLIO: "PORTFOLIO",
+  MYPORTFOLIO: "MYPORTFOLIO",
+};
+
+export const VIEW_TYPE = {
+  BASIC: "BASIC",
+  SEPARATE: "SEPARATE",
+};
+
+export const CIRCLE_TYPE = {
+  PRICE: "PRICE",
+  MARKETCAP: "MARKETCAP",
+  CATEGORY: "CATEGORY",
+};
+
+export const CHART_SIZE = {
+  BUBBLE_WIDTH: 1200,
+  BUBBLE_HEIGHT: 1000,
+  PIE_WIDTH: 1200,
+  PIE_HEIGHT: 1000,
+};
+
+export const COLORS = {
+  MOUSEOVER_TARGET: "blue",
+  SEARCH_TARGET: "red",
+  UPBIT: "#0a3587",
+  BINANCE: "#f6cc28",
+  BOTH_EXCHANGE: "#ff6b6b",
+};
+
+export const PRICE_RANGE = {
+  MAX: 95000,
+  // MIN: 10000,
+  MIN: 7.489e-7,
+};
+
+export const MARKETCAP_RANGE = {
+  MIN: 10000000,
+  MAX: 1200000000000,
+  TEXT: 7500000000,
+};
+
+export const CATEGORY_RANGE = {
+  MIN: 1,
+  MAX: 10,
+};
+
+export const PORTFOLIO_RANGE = {
+  MIN: 1,
+  MAX: 5,
+};
+
 export const CATEGORIES = [
   "Tourism",
   "Retail",
@@ -8,24 +63,17 @@ export const CATEGORIES = [
   "Marketing",
   "Content Creation",
   "Energy",
-  "DragonFly Capital Portfolio",
   "binance smart chain",
   "Yield farming",
-  "Fenbushi Capital Portfolio",
-  "1Confirmation Portfolio",
   "Storage",
   "Analytics",
-  "Galaxy Digital Portfolio",
   "Video",
   "Logistics",
   "Fan token",
-  "Blockchain Capital Portfolio",
   "Filesharing",
   "Distributed Computing",
   "Winklevoss Capital",
   "Scaling",
-  "Fabric Ventures Portfolio",
-  "LedgerPrime Portfolio",
   "DAO",
   "Framework Ventures",
   "Smart Contracts",
@@ -33,38 +81,24 @@ export const CATEGORIES = [
   "Cosmos Ecosystem",
   "Kinetic Capital",
   "Huobi Capital",
-  "BoostVC Portfolio",
   "Masternodes",
-  "USV Portfolio",
   "IoT",
-  "DCG Portfolio",
-  "Polychain Capital Portfolio",
   "Decentralized exchange",
   "Cybersecurity",
   "Privacy",
   "Binance Launchpool",
   "Research",
   "ParaFi capital",
-  "Pantera Capital Portfolio",
   "lending-borowing",
-  "Alameda Research Portfolio",
   "Yield Aggregator",
-  "Binance Labs Portfolio",
   "Paradigm XZY Screener",
-  "Hashkey Capital Portfolio",
   "Health",
   "DeFi",
   "Memes",
   "collectibles-nfts",
-  "Multicoin Capital Portfolio",
-  "Placeholder Ventures Portfolio",
   "Centralized exchange",
-  "Three Arrows Capital Portfolio",
-  "CMS Holdings Portfolio",
   "Oracles",
-  "A16Z Portfolio",
   "Derivatives",
-  "electric-capital-portfolio",
   "Synthetics",
   "Gaming",
   "Polkadot Ecosystem",
@@ -73,13 +107,10 @@ export const CATEGORIES = [
   "ai-big-data",
   "Hospitality",
   "Identity",
-  "Exnetwork Capital Portfolio",
   "Insurance",
   "Interoperability",
-  "Coinbase Ventures Portfolio",
   "Music",
   "AMM",
-  "Coinfund Portfolio",
   "DeFiance Capital",
   "DAO Maker",
   "Avalanche Ecosystem",
@@ -94,5 +125,31 @@ export const CATEGORIES = [
   "mineable",
   "services",
   "payments",
-  "etc",
+];
+
+export const PORTFOLIOS = [
+  "DragonFly Capital Portfolio",
+  "Fenbushi Capital Portfolio",
+  "1Confirmation Portfolio",
+  "Galaxy Digital Portfolio",
+  "Blockchain Capital Portfolio",
+  "Fabric Ventures Portfolio",
+  "LedgerPrime Portfolio",
+  "BoostVC Portfolio",
+  "USV Portfolio",
+  "DCG Portfolio",
+  "Polychain Capital Portfolio",
+  "Pantera Capital Portfolio",
+  "Alameda Research Portfolio",
+  "Binance Labs Portfolio",
+  "Hashkey Capital Portfolio",
+  "Multicoin Capital Portfolio",
+  "Placeholder Ventures Portfolio",
+  "Three Arrows Capital Portfolio",
+  "CMS Holdings Portfolio",
+  "A16Z Portfolio",
+  "electric-capital-portfolio",
+  "Exnetwork Capital Portfolio",
+  "Coinbase Ventures Portfolio",
+  "Coinfund Portfolio",
 ];

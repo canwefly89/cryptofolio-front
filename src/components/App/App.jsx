@@ -24,9 +24,6 @@ const App = ({ authService }) => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(actionCreator.getHomeAction());
-    dispatch(actionCreator.checkAuthAction());
-
     const authPath = ["login", "signup"];
     const isAuthPath = authPath.some((path) =>
       location.pathname.includes(path)
@@ -36,6 +33,12 @@ const App = ({ authService }) => {
       history.push("/");
     }
   }, [dispatch, history, isAuthorized, location.pathname]);
+
+  useEffect(() => {
+    dispatch(actionCreator.getHomeAction());
+    dispatch(actionCreator.getCryptofoliosAction());
+    dispatch(actionCreator.checkAuthAction());
+  }, [dispatch]);
 
   return (
     <>

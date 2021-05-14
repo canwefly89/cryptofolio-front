@@ -4,12 +4,15 @@ const getHomeAction = () => async (dispatch) => {
   dispatch({ type: getActionTypes().GET_HOME });
 
   try {
-    const response = await fetch(`${process.env.REACT_APP_USER_SERVER_API}/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_USER_SERVER_API}/coin`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const result = await response.json();
 

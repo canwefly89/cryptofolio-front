@@ -1,5 +1,30 @@
 import getActionTypes from "./actionTypes.js";
 
+const getCryptofoliosAction = () => async (dispatch) => {
+  dispatch({ type: getActionTypes().GET_CRYPTOFOLIOS });
+
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_USER_SERVER_API}/cryptofolio`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const result = await response.json();
+
+    dispatch({
+      type: getActionTypes().GET_CRYPTOFOLIOS_SUCCESS,
+      payload: result.data,
+    });
+  } catch (err) {
+    dispatch({ type: getActionTypes().GET_CRYPTOFOLIOS_FAIL, payload: err });
+  }
+};
+
 const createCryptofolioAction = (name, coinSet, totalValue, history) => async (
   dispatch,
   getState
@@ -35,6 +60,7 @@ const createCryptofolioAction = (name, coinSet, totalValue, history) => async (
 };
 
 const cryptofolioActionCreator = {
+  getCryptofoliosAction,
   createCryptofolioAction,
 };
 

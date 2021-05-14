@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import setNumberFormat from "../../utils/setNumberFormat";
 import usePieChart from "../../hooks/usePieChart";
 
+import SVG from "../shared/SVG/SVG";
+
 const SelectedList = ({ selectedList, totalValue }) => {
   const { coinData } = useSelector((state) => state.coinReducer);
   const svgRef = useRef();
@@ -11,7 +13,7 @@ const SelectedList = ({ selectedList, totalValue }) => {
 
   return (
     <>
-      <svg ref={svgRef}></svg>
+      <SVG ref={svgRef}></SVG>
       {selectedList &&
         selectedList.map((coin) => {
           return (

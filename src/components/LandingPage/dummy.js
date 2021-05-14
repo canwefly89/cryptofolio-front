@@ -320,3 +320,27 @@ const LandingPage = memo((props) => {
 });
 
 export default LandingPage;
+
+/////
+
+const fixSvg = svg.append("g").attr("transform", "translate(0,0)");
+
+const circles = fixSvg
+  .selectAll("circle")
+  .data(coinList)
+  .enter()
+  .append("circle")
+  .attr("r", (d) => (d.marketCap ? radiusScale(d.marketCap?.marketCap) : 10))
+  .on("mouseover", handleMouseOver)
+  .on("mouseout", handleMouseOut)
+  .call(tip);
+
+circles
+  .filter((d) => d.marketCap?.marketCap > MARKETCAP_RANGE.TEXT)
+  .append("span")
+  .attr("text-anchor", "middle")
+  .attr("dy", "0.3em")
+  .attr("fill", "black")
+  .style("color", "black")
+  .style("font-size", (d) => (d.marketCap?.marketCap / MARKETCAP_RANGE) * 50)
+  .text((d) => d.ticker);
