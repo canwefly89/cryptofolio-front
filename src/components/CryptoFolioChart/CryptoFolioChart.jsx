@@ -7,7 +7,7 @@ import SVG from "../shared/SVG/SVG";
 
 const size = { height: 200, width: 200, radius: 100 };
 
-const CryptoFolioItem = ({ selectedList }) => {
+const CryptoFolioChart = ({ selectedList }) => {
   const { coinData } = useSelector((state) => state.coinReducer);
   const svgRef = useRef();
   const colorRef = useRef(
@@ -23,4 +23,4 @@ const CryptoFolioItem = ({ selectedList }) => {
   return <SVG ref={svgRef}></SVG>;
 };
 
-export default CryptoFolioItem;
+export default CryptoFolioChart;

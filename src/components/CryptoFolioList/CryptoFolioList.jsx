@@ -1,42 +1,64 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import CryptoFolioItem from "../CryptoFolioItem/CryptoFolioItem";
+import styled from "styled-components";
+import setNumberFormat from "../../utils/setNumberFormat";
+import CryptoFolioChart from "../CryptoFolioChart/CryptoFolioChart";
+
+const CryptoFolioItemContainer = styled.div`
+  display: flex;
+  background-color: black;
+  color: white;
+`;
+
+const CryptoFolioItem = styled.div`
+  margin-right: 40px;
+  cursor: pointer;
+`;
+
+const CryptoFolioInfo = styled.div`
+  margin-top: 5px;
+  margin-left: 35px;
+
+  span:first-child {
+    font-weight: 800;
+  }
+`;
 
 const CryptoFolioList = ({ cryptofolios }) => {
   const { user } = useSelector((state) => state.authReducer);
   const history = useHistory();
 
   return (
-    <div>
-      <div>CryptoFolioList</div>
+    <CryptoFolioItemContainer>
+      {!cryptofolios && <div>No Cryptofolios</div>}
       {cryptofolios &&
         cryptofolios.map((cryptofolio) => (
-          <div key={cryptofolio._id}>
+          <CryptoFolioItem key={cryptofolio._id}>
             <div
               onClick={() => history.push(`/cryptofolio/${cryptofolio._id}`)}
             >
-              <CryptoFolioItem selectedList={cryptofolio?.selectedList} />
+              <CryptoFolioChart selectedList={cryptofolio?.selectedList} />
             </div>
-            <div>
-              <span>작성자</span>
+            <CryptoFolioInfo style={{ marginTop: "15px" }}>
+              <span>작성자&nbsp;&nbsp;</span>
               <span>
                 {cryptofolio.createdBy.name
                   ? cryptofolio.createdBy.name
                   : user.name}
               </span>
-            </div>
-            <div>
-              <span>현재 수익금</span>
-              <span>${cryptofolio.profit}</span>
-            </div>
-            <div>
-              <span>현재 수익률</span>
-              <span>{cryptofolio.profitPercent}%</span>
-            </div>
-          </div>
+            </CryptoFolioInfo>
+            <CryptoFolioInfo>
+              <span>현재 수익&nbsp;&nbsp;</span>
+              <span>${setNumberFormat(cryptofolio.profit, "int")}</span>
+            </CryptoFolioInfo>
+            <CryptoFolioInfo>
+              <span>수익률&nbsp;&nbsp;</span>
+              <span>{setNumberFormat(cryptofolio.profitPercent)}%</span>
+            </CryptoFolioInfo>
+          </CryptoFolioItem>
         ))}
-    </div>
+    </CryptoFolioItemContainer>
   );
 };
 

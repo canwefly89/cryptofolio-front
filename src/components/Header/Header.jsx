@@ -1,13 +1,11 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import styled from "styled-components";
 import MetaData from "../MetaData/MetaData.jsx";
 import Button from "../shared/Button/Button";
-import actionCreator from "../../actions/actionCreator";
 
 import { useHistory } from "react-router-dom";
-import setNumberFormat from "../../utils/setNumberFormat";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -15,26 +13,31 @@ const HeaderContainer = styled.div`
   padding: 0 5vw;
   height: 80px;
   font-size: 1.1em;
+  background-color: #0d1315;
+`;
+
+const HeaderLogo = styled.div`
+  font-family: "Roboto", sans-serif;
+  font-size: 1.4em;
+  font-weight: 800;
+  color: white;
+  cursor: pointer;
 `;
 
 const WelcomeMessage = styled.div`
   font-size: 0.8em;
   margin-left: 30px;
+  color: white;
 
   span {
     font-weight: 800;
   }
 `;
 
-const HeaderLogo = styled.div`
-  font-size: 1.7em;
-  font-weight: 800;
-  cursor: pointer;
-`;
-
 const HeaderItemContainer = styled.div`
   display: flex;
   align-items: center;
+  color: white;
   font-size: 0.8em;
   font-weight: 800;
   margin-left: 40px;
@@ -49,6 +52,7 @@ const HeaderAuthContainer = styled.div`
   display: flex;
   align-items: center;
   margin-left: auto;
+  color: white;
   font-size: 0.8em;
   font-weight: 800;
 `;
@@ -68,13 +72,16 @@ const Header = () => {
       <HeaderContainer>
         <HeaderLogo onClick={() => history.push("/")}>CryptoFolio</HeaderLogo>
         <HeaderItemContainer>
-          <div onClick={() => history.push("/cryptofolio")}>CryptoFolio</div>
-          <div onClick={() => history.push("/coin")}>Coin</div>
+          <div onClick={() => history.push("/cryptofolio")}>Show List</div>
+          <div onClick={() => history.push("/cryptofolio/new")}>Creat New</div>
+          <div onClick={() => history.push("/coin")}>My Cryptofolio</div>
         </HeaderItemContainer>
-        <WelcomeMessage>
-          {user?.name}님 환영합니다. 현재 크립토폴리오 최고 수익은
-          <span> 123,450원</span> 입니다.
-        </WelcomeMessage>
+        {user && (
+          <WelcomeMessage>
+            {user?.name}님 환영합니다. 현재 크립토폴리오 최고 수익은
+            <span> 123,450원</span> 입니다.
+          </WelcomeMessage>
+        )}
 
         <HeaderAuthContainer>
           {isAuthorized ? (

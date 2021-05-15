@@ -1,39 +1,66 @@
 import React, { useState, memo } from "react";
 import styled from "styled-components";
 
-import ExchangeChart from "../ExchangeChart/ExchangeChart";
-import CategoryChart from "../CategoryChart/CategoryChart";
-import MyPortfolioChart from "../MyPortfolioChart/MyPortfolioChart";
-import CapitalPortfolioChart from "../CapitalPortfolioChart/CapitalPortfolioChart";
+import BubbleChart from "../BubbleChart/BubbleChart";
 
-const LandingPage = memo((props) => {
-  const [type, setType] = useState("exchange");
+import TypeButton from "../shared/TypeButton/TypeButton";
+import { CHART_TYPE } from "../../constants/constants";
+
+const LandingPageContainer = styled.div`
+  background-color: black;
+  padding-top: 30px;
+`;
+
+const BubbleButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 600px;
+  margin: 0 auto;
+`;
+
+const BubbleChartContainer = styled.div`
+  margin-top: 20px;
+`;
+
+const LandingPage = memo(() => {
+  const [type, setType] = useState(CHART_TYPE.EXCHANGE);
 
   return (
-    <div>
-      <div>LandingPage</div>
-      <button name={"exchange"} onClick={(e) => setType(e.target.name)}>
-        Exchange
-      </button>
-      <button name={"category"} onClick={(e) => setType(e.target.name)}>
-        Category
-      </button>
-      <button
-        name={"capital-portfolio"}
-        onClick={(e) => setType(e.target.name)}
-      >
-        Capital PortFolio
-      </button>
-      <button name={"my-portfolio"} onClick={(e) => setType(e.target.name)}>
-        My PortFolio
-      </button>
-      <div>
-        {type === "exchange" && <ExchangeChart />}
-        {type === "category" && <CategoryChart />}
-        {type === "capital-portfolio" && <CapitalPortfolioChart />}
-        {type === "my-portfolio" && <MyPortfolioChart />}
-      </div>
-    </div>
+    <LandingPageContainer>
+      <BubbleButtonContainer>
+        <TypeButton
+          name={CHART_TYPE.EXCHANGE}
+          onClick={(e) => setType(e.target.name)}
+          picked={type === CHART_TYPE.EXCHANGE}
+        >
+          Exchange
+        </TypeButton>
+        <TypeButton
+          name={CHART_TYPE.CATEGORY}
+          onClick={(e) => setType(e.target.name)}
+          picked={type === CHART_TYPE.CATEGORY}
+        >
+          Category
+        </TypeButton>
+        <TypeButton
+          name={"capital-portfolio"}
+          onClick={(e) => setType(e.target.name)}
+          picked={type === "capital-portfolio"}
+        >
+          Capital PortFolio
+        </TypeButton>
+        <TypeButton
+          name={"my-portfolio"}
+          onClick={(e) => setType(e.target.name)}
+          picked={type === "my-portfolio"}
+        >
+          My PortFolio
+        </TypeButton>
+      </BubbleButtonContainer>
+      <BubbleChartContainer>
+        <BubbleChart type={type || CHART_TYPE.EXCHANGE} />
+      </BubbleChartContainer>
+    </LandingPageContainer>
   );
 });
 

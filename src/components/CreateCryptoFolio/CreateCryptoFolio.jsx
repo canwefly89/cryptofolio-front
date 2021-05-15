@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import SelectedList from "../SelectedList/SelectedList";
@@ -14,23 +14,23 @@ import useCoinFilter from "../../hooks/useCoinFilter";
 import useCoinSelect from "../../hooks/useCoinSelect";
 import CoinFilter from "../CoinFilter/CoinFilter";
 import CreateRandom from "../CreateRandom/CreateRandom";
-// import actionCreator from "../../actions/actionCreator";
-// import { useHistory } from "react-router-dom";
 
 const CreateContainer = styled.div`
+  padding-top: 30px;
   display: flex;
+  background-color: black;
+  color: white;
+  min-height: 90vh;
 `;
 
 const FilterContainer = styled.div`
-  margin-left: auto;
-  margin-right: 40px;
-
-  input:focus {
-    color: #00b4cc;
-  }
-
-  button {
-  }
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  width: 100%;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: black;
 `;
 
 const SelectContainer = styled.div``;
@@ -39,6 +39,33 @@ const ResultContainer = styled.div`
   position: fixed;
   left: 60vw;
   flex: 0.5;
+  padding: 10px;
+  background-color: #dfe6e9;
+  color: black;
+  border-radius: 30px;
+`;
+
+const CryptoFolioTitle = styled.input`
+  display: block;
+  padding: 10px 20px;
+  margin: 0 auto;
+  width: 80%;
+  margin-top: 20px;
+  margin-bottom: -10px;
+  border-radius: 10px;
+  border: 0.5px solid gray;
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+const CreateButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+
+  button {
+    margin: 0 5px;
+  }
 `;
 
 const CreateCryptoFolio = () => {
@@ -46,8 +73,6 @@ const CreateCryptoFolio = () => {
   const [name, onChangeName] = useInput("");
   const [searchTerm, setSearchTerm] = useState("");
   const [error, showErrorMessage] = useErrorMessage("");
-  // const dispatch = useDispatch();
-  // const [selectedList, setSelectedList] = useState([]);
 
   const { coinList, handleSearch, handleFilter } = useCoinFilter(
     coinData,
@@ -66,15 +91,13 @@ const CreateCryptoFolio = () => {
 
   return (
     <>
-      <h1>CreateCryptoFolio</h1>
       {error.length > 0 && <ErrorMessage error={error} />}
-      <input type="text" value={name} onChange={onChangeName} required={true} />
+      <FilterContainer>
+        <CoinSearch searchTerm={searchTerm} onSearch={handleSearch} />
+        <CoinFilter handleFilter={handleFilter} />
+      </FilterContainer>
       <CreateContainer>
         <SelectContainer>
-          <FilterContainer>
-            <CoinSearch searchTerm={searchTerm} onSearch={handleSearch} />
-            <CoinFilter handleFilter={handleFilter} />
-          </FilterContainer>
           <CoinList
             coinList={coinList}
             handleSelect={handleSelect}
@@ -83,10 +106,21 @@ const CreateCryptoFolio = () => {
           />
         </SelectContainer>
         <ResultContainer>
+          <CryptoFolioTitle
+            type="text"
+            value={name}
+            onChange={onChangeName}
+            required={true}
+            placeholder="Enter Name"
+          />
           <SelectedList selectedList={selectedList} totalValue={totalValue} />
+          <CreateButtonContainer>
+            <Button onClick={handleCreate}>Create</Button>
+            <Button onClick={handleReset} bgColor={"#d63031"}>
+              Reset
+            </Button>
+          </CreateButtonContainer>
           <CreateRandom handleRandom={handleRandom} />
-          <Button onClick={handleCreate}>Create</Button>
-          <Button onClick={handleReset}>Reset</Button>
         </ResultContainer>
       </CreateContainer>
     </>
@@ -94,60 +128,3 @@ const CreateCryptoFolio = () => {
 };
 
 export default CreateCryptoFolio;
-
-// const handleSelect = useCallback(
-//   (ticker) => {
-//     const newSet = selectedList.filter((coin) => coin.name !== ticker);
-
-//     if (newSet.length === selectedList.length) {
-//       setSelectedList([...newSet, { name: ticker, amount: 0 }]);
-//     } else {
-//       setSelectedList([...newSet]);
-//     }
-//   },
-//   [selectedList]
-// );
-
-// const handleAmount = useCallback(
-//   (amount, ticker) => {
-//     const newSelectedList = selectedList.map((coin) => {
-//       if (coin.name === ticker) {
-//         return { ...coin, amount };
-//       }
-//       return coin;
-//     });
-
-//     const newTotal = newSelectedList.reduce(
-//       (a, coin) =>
-//         (a += parseFloat(coin.amount) * coinData[coin.name].price.price),
-//       0
-//     );
-
-//     setSelectedList(newSelectedList);
-//     setTotalValue(newTotal);
-//   },
-//   [coinData, selectedList]
-// );
-
-// const handleReset = useCallback(() => {
-//   setSelectedList([]);
-// }, []);
-
-// const handleRandom = useCallback((coinNumber, maxAsset) => {
-//   console.log(coinNumber, maxAsset);
-// }, []);
-
-// const handleCreate = useCallback(() => {
-//   if (name.length === 0) {
-//     return showErrorMessage("크립토폴리오 이름을 입력해주세요.");
-//   }
-
-//   dispatch(
-//     actionCreator.createCryptofolioAction(
-//       name,
-//       selectedList,
-//       totalValue,
-//       history
-//     )
-//   );
-// }, [selectedList, dispatch, history, name, showErrorMessage, totalValue]);

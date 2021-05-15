@@ -45,7 +45,9 @@ const useBubbleChart = (
   const drawGraph = useCallback(
     (svg) => {
       const coinList = Object.values(coinData);
-      if (!coinList || coinList.length === 0) return;
+      if (!coinList || coinList.length === 0) {
+        return;
+      }
 
       const ticked = () => {
         circles.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
@@ -54,6 +56,7 @@ const useBubbleChart = (
       const circles = createCircles(svg, coinList, circleType);
 
       circles
+        .attr("opacity", 0.85)
         .on("mouseover", handleMouseOver)
         .on("mouseout", handleMouseOut)
         .call(tip);

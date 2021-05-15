@@ -7,6 +7,57 @@ import { useParams } from "react-router-dom";
 import SVG from "../shared/SVG/SVG";
 import setNumberFormat from "../../utils/setNumberFormat";
 import calculateProfit from "../../utils/calculateProfit";
+import styled from "styled-components";
+
+const CryptoFolioContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 0;
+  background-color: black;
+  color: white;
+`;
+
+const CryptoFolioName = styled.h1`
+  font-size: 1.6rem;
+  font-weight: 800;
+`;
+
+const CryptoFolioInfoContainer = styled.div`
+  margin-top: 30px;
+  margin-bottom: 40px;
+  font-size: 1.2em;
+`;
+
+const CryptoFolioInfo = styled.div`
+  margin-bottom: 10px;
+
+  span:first-child {
+    font-weight: 800;
+  }
+`;
+
+const CrypoFolioCoins = styled.div`
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 30%;
+
+  span {
+    display: block;
+    width: 200px;
+    margin-left: 10px;
+  }
+`;
+
+const CoinTicker = styled.div`
+  width: 60px;
+`;
+
+const Section = styled.span`
+  font-weight: 800;
+`;
 
 const size = { height: 600, width: 600, radius: 300 };
 
@@ -40,26 +91,43 @@ const CryptofolioDetail = (props) => {
   );
 
   return (
-    <div>
-      <div>{currentFolio?.name}</div>
+    <CryptoFolioContainer>
+      <CryptoFolioName>{currentFolio?.name}</CryptoFolioName>
       <SVG ref={svgRef}></SVG>
-      <div>
-        <span>작성자</span> <span>{currentFolio.createdBy?.name}</span>
-      </div>
-      <div>
-        <span>현재 가치</span> <span>${currentFolio.currentValue}</span>
-      </div>
-      <div>
-        <span>수익금</span> <span>${currentFolio.profit}</span>
-      </div>
-      <div>
-        <span>수익률</span> <span>{currentFolio.profitPercent}%</span>
-      </div>
+      <CryptoFolioInfoContainer>
+        <CryptoFolioInfo>
+          <span>작성자</span>
+          &nbsp;&nbsp;
+          <span>{currentFolio.createdBy?.name}</span>
+        </CryptoFolioInfo>
+        <CryptoFolioInfo>
+          <span>현재 가치</span>
+          &nbsp;&nbsp;
+          <span>${setNumberFormat(currentFolio.currentValue)}</span>
+        </CryptoFolioInfo>
+        <CryptoFolioInfo>
+          <span>현재 수익</span>
+          &nbsp;&nbsp;
+          <span>${currentFolio.profit}</span>
+        </CryptoFolioInfo>
+        <CryptoFolioInfo>
+          <span>수익률</span>
+          &nbsp;&nbsp;
+          <span>{currentFolio.profitPercent}%</span>
+        </CryptoFolioInfo>
+      </CryptoFolioInfoContainer>
+      <CrypoFolioCoins>
+        <CoinTicker></CoinTicker>
+        <Section>코인명</Section>
+        <Section>현재 가격</Section>
+        <Section>코인 수</Section>
+        <Section>총 가치</Section>
+      </CrypoFolioCoins>
       {coinData &&
         currentFolio.selectedList?.map((coin) => {
           const currentCoin = coinData[coin.name];
           return (
-            <div key={coin.name}>
+            <CrypoFolioCoins key={coin.name}>
               <img src={currentCoin.imagePath} alt="ticker" />
               <span>{coin.name}</span>
               <span>${setNumberFormat(currentCoin.price?.price)}&nbsp;</span>
@@ -70,10 +138,10 @@ const CryptofolioDetail = (props) => {
                   currentCoin.price?.price * parseInt(coin.amount)
                 )}
               </span>
-            </div>
+            </CrypoFolioCoins>
           );
         })}
-    </div>
+    </CryptoFolioContainer>
   );
 };
 

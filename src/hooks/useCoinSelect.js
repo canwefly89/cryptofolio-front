@@ -53,6 +53,7 @@ const useCoinSelect = (coinData, name, showErrorMessage) => {
 
   const handleReset = useCallback(() => {
     setSelectedList([]);
+    setTotalValue(0);
   }, []);
 
   const handleRandom = useCallback((coinNumber, maxAsset) => {

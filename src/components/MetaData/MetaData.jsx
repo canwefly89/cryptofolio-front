@@ -9,7 +9,7 @@ const MetaDataContainer = styled.div`
   align-items: center;
   height: 40px;
   padding-left: 20px;
-  border-bottom: 0.8px solid lightgray;
+  border-bottom: 0.1px solid lightgray;
   font-size: 0.75rem;
 `;
 
@@ -20,6 +20,7 @@ const MetaDataItem = styled.div`
   span {
     display: block;
     margin-left: 6px;
+    font-family: "Noto Sans KR", sans-serif;
   }
   span:last-child,
   span:nth-child(2) {

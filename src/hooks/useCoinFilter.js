@@ -27,7 +27,7 @@ const useCoinFilter = (coinData, setSearchTerm) => {
     (value, type) => {
       let filtered = [];
 
-      switch (type) {
+      switch ((value, type)) {
         case "all":
           filtered = Object.values(coinData);
           break;

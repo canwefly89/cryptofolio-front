@@ -14,18 +14,22 @@ import validateInput from "../../utils/validateInput";
 
 const LoginContainer = styled.section`
   width: 100vw;
-  height: 100vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
+  background-color: black;
+  color: white;
 `;
 
 const MainTitle = styled.div`
-  width: 80%;
+  margin-top: 300px;
+  margin-bottom: 60px;
   text-align: center;
-  font-size: 4rem;
-  margin-top: 2vh;
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 3.7rem;
 `;
 
 const LoginPage = ({ authService }) => {
@@ -82,7 +86,7 @@ const LoginPage = ({ authService }) => {
   return (
     <LoginContainer>
       {error.length > 0 && <ErrorMessage error={error} />}
-      <MainTitle>CryptoFolio</MainTitle>
+      <MainTitle>Log In</MainTitle>
       <form onSubmit={handleLogin}>
         <div>
           <label htmlFor="user-email">이메일</label>

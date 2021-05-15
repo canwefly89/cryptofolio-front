@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -7,6 +8,23 @@ import CryptoFolioList from "../CryptoFolioList/CryptoFolioList";
 import calculateProfit from "../../utils/calculateProfit";
 import getMonthlySorted from "../../utils/getMonthlySorted";
 import getWeeklySorted from "../../utils/getWeeklySorted";
+
+const CryptoFolioContainer = styled.div`
+  padding: 40px;
+  background-color: black;
+  color: white;
+`;
+
+const ListContainer = styled.div`
+  margin-top: 20px;
+  margin-bottom: 60px;
+`;
+
+const ListTitle = styled.h1`
+  font-family: "Roboto", sans-serif;
+  font-size: 1.6em;
+  font-weight: 800;
+`;
 
 const CryptofolioPage = (props) => {
   const history = useHistory();
@@ -20,7 +38,9 @@ const CryptofolioPage = (props) => {
       return;
     }
 
-    const myCryptofolios = calculateProfit(user?.cryptofolios, coinData);
+    const myCryptofolios = calculateProfit(user?.cryptofolios, coinData).sort(
+      (a, b) => b.profitPercent - a.profitPercent
+    );
     const monthlyCryptofolios = getMonthlySorted(allCryptoFolios, coinData);
     const weeklyCryptofolios = getWeeklySorted(allCryptoFolios, coinData);
     const allTimeCryptofolios = calculateProfit(allCryptoFolios, coinData).sort(
@@ -38,30 +58,34 @@ const CryptofolioPage = (props) => {
   }, [allCryptoFolios, coinData, user?.cryptofolios]);
 
   return (
-    <div>
-      <div>CryptofolioPage</div>
+    <CryptoFolioContainer>
       {user && (
-        <div>
-          <h1>My Cryptofolios</h1>
-          <CryptoFolioList cryptofolios={cryptofolios.myCryptofolios} />
-        </div>
+        <>
+          <Button
+            onClick={() => history.push("/cryptofolio/new")}
+            bgColor={"#e84118"}
+          >
+            New Cryptofolio
+          </Button>
+          <ListContainer>
+            <ListTitle>My Cryptofolios</ListTitle>
+            <CryptoFolioList cryptofolios={cryptofolios.myCryptofolios} />
+          </ListContainer>
+        </>
       )}
-      <div>
-        <h1>Weekly Top Profit</h1>
+      <ListContainer>
+        <ListTitle>Weekly Top Profit</ListTitle>
         <CryptoFolioList cryptofolios={cryptofolios.weeklyCryptofolios} />
-      </div>
-      <div>
-        <h1>Monthly Top Profit</h1>
+      </ListContainer>
+      <ListContainer>
+        <ListTitle>Monthly Top Profit</ListTitle>
         <CryptoFolioList cryptofolios={cryptofolios.monthlyCryptofolios} />
-      </div>
-      <div>
-        <h1>All Time Top Profit</h1>
+      </ListContainer>
+      <ListContainer>
+        <ListTitle>All Time Top Profit</ListTitle>
         <CryptoFolioList cryptofolios={cryptofolios.allTimeCryptofolios} />
-      </div>
-      <Button onClick={() => history.push("/cryptofolio/new")}>
-        New Cryptofolio
-      </Button>
-    </div>
+      </ListContainer>
+    </CryptoFolioContainer>
   );
 };
 

@@ -16,14 +16,14 @@ const createRadiusScale = (circleType = CIRCLE_TYPE.MARKETCAP) => {
     return d3
       .scaleSqrt()
       .domain([MARKETCAP_RANGE.MIN, MARKETCAP_RANGE.MAX])
-      .range([10, 250]);
+      .range([8, 250]);
   }
 
   if (circleType === CIRCLE_TYPE.PRICE) {
     return d3
       .scaleSqrt()
       .domain([PRICE_RANGE.MIN, PRICE_RANGE.MAX])
-      .range([5, 320]);
+      .range([8, 250]);
   }
 };
 

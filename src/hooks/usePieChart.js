@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import * as d3 from "d3";
+import createToolTip from "../utils/createToolTip";
 
 /**
  *
  * @param {String, array, object}
  *
  */
+const tip = createToolTip();
 
 const usePieChart = (
   svgRef,
@@ -14,6 +16,24 @@ const usePieChart = (
   size,
   colorSet = "schemeSet2"
 ) => {
+  const handleMouseOver = useCallback((event, d) => {
+    console.log(d);
+    if (!coinData) {
+      return;
+    }
+    const newD = { ...coinData[d.data.name], ...d };
+    // tip.show(event, newD);
+  }, []);
+
+  const handleMouseOut = useCallback((event, d) => {
+    console.log(d);
+    if (!coinData) {
+      return;
+    }
+    const newD = { ...coinData[d.data.name], ...d };
+    // tip.hide(event, newD);
+  }, []);
+
   useEffect(() => {
     const cent = { x: size.width / 2 + 5, y: size.height / 2 + 5 };
 
@@ -31,11 +51,7 @@ const usePieChart = (
     const pie = d3
       .pie()
       .sort(null)
-      .value((d) => {
-        // console.log(d);
-        // console.log(coinData);
-        return d.amount * coinData[d.name].price.price;
-      });
+      .value((d) => d.amount * coinData[d.name].price.price);
 
     const arcPath = d3
       .arc()
@@ -69,6 +85,15 @@ const usePieChart = (
         .transition()
         .duration(300)
         .attrTween("d", arcTweenEnter);
+
+      const piece = svg
+        .selectAll("path")
+        .attr("opacity", 0.8)
+        .on("mouseover", handleMouseOver)
+        .on("mouseout", handleMouseOut);
+
+      console.log(piece);
+      // .call(tip);
     };
 
     if (selectedList && coinData) {
