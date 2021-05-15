@@ -25,14 +25,16 @@ const getCryptofoliosAction = () => async (dispatch) => {
   }
 };
 
-const createCryptofolioAction = (name, coinSet, totalValue, history) => async (
-  dispatch,
-  getState
-) => {
+const createCryptofolioAction = (
+  name,
+  selectedList,
+  totalValue,
+  history
+) => async (dispatch, getState) => {
   dispatch({ type: getActionTypes().CREATE_CRYPTOFOLIO });
 
   const createdBy = getState().authReducer.user._id;
-  const data = { name, coinSet, createdValue: totalValue, createdBy };
+  const data = { name, selectedList, createdValue: totalValue, createdBy };
 
   try {
     const response = await fetch(

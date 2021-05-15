@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import actionCreator from "../actions/actionCreator";
@@ -56,7 +56,7 @@ const useCoinSelect = (coinData, name, showErrorMessage) => {
   }, []);
 
   const handleRandom = useCallback((coinNumber, maxAsset) => {
-    console.log(coinNumber, maxAsset);
+    // console.log(coinNumber, maxAsset);
   }, []);
 
   const handleCreate = useCallback(() => {

@@ -1,15 +1,21 @@
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
+import { COLOR_SET } from "../../constants/constants";
 import setNumberFormat from "../../utils/setNumberFormat";
 import usePieChart from "../../hooks/usePieChart";
 
 import SVG from "../shared/SVG/SVG";
 
+const size = { height: 400, width: 400, radius: 200 };
+
 const SelectedList = ({ selectedList, totalValue }) => {
   const { coinData } = useSelector((state) => state.coinReducer);
   const svgRef = useRef();
+  const colorRef = useRef(
+    COLOR_SET[Math.floor(Math.random() * COLOR_SET.length)]
+  );
 
-  usePieChart(svgRef, selectedList, coinData);
+  usePieChart(svgRef, selectedList, coinData, size, colorRef.current);
 
   return (
     <>

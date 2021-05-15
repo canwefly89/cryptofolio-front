@@ -7,15 +7,20 @@ import * as d3 from "d3";
  *
  */
 
-const usePieChart = (svgRef, selectedList, coinData) => {
+const usePieChart = (
+  svgRef,
+  selectedList,
+  coinData,
+  size,
+  colorSet = "schemeSet2"
+) => {
   useEffect(() => {
-    const dims = { height: 400, width: 400, radius: 200 };
-    const cent = { x: dims.width / 2 + 5, y: dims.height / 2 + 5 };
+    const cent = { x: size.width / 2 + 5, y: size.height / 2 + 5 };
 
     const svg = d3
       .select(svgRef.current)
-      .attr("width", dims.width + 10)
-      .attr("height", dims.height + 10);
+      .attr("width", size.width + 10)
+      .attr("height", size.height + 10);
 
     svg.selectAll("g").remove();
 
@@ -26,14 +31,18 @@ const usePieChart = (svgRef, selectedList, coinData) => {
     const pie = d3
       .pie()
       .sort(null)
-      .value((d) => d.amount * coinData[d.name].price.price);
+      .value((d) => {
+        // console.log(d);
+        // console.log(coinData);
+        return d.amount * coinData[d.name].price.price;
+      });
 
     const arcPath = d3
       .arc()
-      .outerRadius(dims.radius)
-      .innerRadius(dims.radius / 2);
+      .outerRadius(size.radius)
+      .innerRadius(size.radius / 2);
 
-    const color = d3.scaleOrdinal(d3["schemeSet2"]);
+    const color = d3.scaleOrdinal(d3[colorSet]);
 
     const arcTweenEnter = (d) => {
       const i = d3.interpolate(d.endAngle, d.startAngle);
@@ -62,8 +71,18 @@ const usePieChart = (svgRef, selectedList, coinData) => {
         .attrTween("d", arcTweenEnter);
     };
 
-    update(selectedList);
-  }, [coinData, selectedList, svgRef]);
+    if (selectedList && coinData) {
+      update(selectedList);
+    }
+  }, [
+    coinData,
+    colorSet,
+    selectedList,
+    size.height,
+    size.radius,
+    size.width,
+    svgRef,
+  ]);
 };
 
 export default usePieChart;

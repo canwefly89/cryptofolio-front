@@ -53,6 +53,19 @@ export const PORTFOLIO_RANGE = {
   MAX: 5,
 };
 
+export const COLOR_SET = [
+  "schemeSet1",
+  "schemeSet2",
+  "schemeSet3",
+  "schemeCategory10",
+  "schemeAccent",
+  "schemeDark2",
+  "schemePastel1",
+  "schemePastel2",
+  "schemeTableau10",
+  "schemePaired",
+];
+
 export const CATEGORIES = [
   "Tourism",
   "Retail",
