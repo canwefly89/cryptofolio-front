@@ -26,10 +26,10 @@ const ListTitle = styled.h1`
   font-weight: 800;
 `;
 
-const CryptofolioPage = (props) => {
+const CryptoFolioPage = (props) => {
   const history = useHistory();
   const [cryptofolios, setCryptofolios] = useState({});
-  const { user } = useSelector((state) => state.authReducer);
+  const { isAuthorized, user } = useSelector((state) => state.authReducer);
   const { coinData } = useSelector((state) => state.coinReducer);
   const { allCryptoFolios } = useSelector((state) => state.cryptofolioReducer);
 
@@ -38,55 +38,58 @@ const CryptofolioPage = (props) => {
       return;
     }
 
-    const myCryptofolios = calculateProfit(user?.cryptofolios, coinData).sort(
+    const myCryptoFolios = calculateProfit(user?.cryptofolios, coinData).sort(
       (a, b) => b.profitPercent - a.profitPercent
     );
-    const monthlyCryptofolios = getMonthlySorted(allCryptoFolios, coinData);
-    const weeklyCryptofolios = getWeeklySorted(allCryptoFolios, coinData);
-    const allTimeCryptofolios = calculateProfit(allCryptoFolios, coinData).sort(
+    const monthlyCryptoFolios = getMonthlySorted(allCryptoFolios, coinData);
+    const weeklyCryptoFolios = getWeeklySorted(allCryptoFolios, coinData);
+    const allTimeCryptoFolios = calculateProfit(allCryptoFolios, coinData).sort(
       (a, b) => b.profitPercent - a.profitPercent
     );
 
-    const caculatedProfit = {
-      myCryptofolios,
-      monthlyCryptofolios,
-      weeklyCryptofolios,
-      allTimeCryptofolios,
+    const caculatedCryptoFolios = {
+      myCryptoFolios,
+      monthlyCryptoFolios,
+      weeklyCryptoFolios,
+      allTimeCryptoFolios,
     };
 
-    setCryptofolios(caculatedProfit);
+    setCryptofolios(caculatedCryptoFolios);
   }, [allCryptoFolios, coinData, user?.cryptofolios]);
 
   return (
     <CryptoFolioContainer>
-      {user && (
-        <>
-          <Button
-            onClick={() => history.push("/cryptofolio/new")}
-            bgColor={"#e84118"}
-          >
-            New Cryptofolio
-          </Button>
-          <ListContainer>
-            <ListTitle>My Cryptofolios</ListTitle>
-            <CryptoFolioList cryptofolios={cryptofolios.myCryptofolios} />
-          </ListContainer>
-        </>
+      {isAuthorized && (
+        <Button
+          onClick={() => history.push("/cryptofolio/new")}
+          bgColor={"#e84118"}
+        >
+          New Cryptofolio
+        </Button>
       )}
       <ListContainer>
         <ListTitle>Weekly Top Profit</ListTitle>
-        <CryptoFolioList cryptofolios={cryptofolios.weeklyCryptofolios} />
+        <CryptoFolioList
+          cryptofolios={cryptofolios.weeklyCryptoFolios}
+          onClick={() => history.push("/cryptofolio/all")}
+        />
       </ListContainer>
       <ListContainer>
         <ListTitle>Monthly Top Profit</ListTitle>
-        <CryptoFolioList cryptofolios={cryptofolios.monthlyCryptofolios} />
+        <CryptoFolioList
+          cryptofolios={cryptofolios.monthlyCryptoFolios}
+          onClick={() => history.push("/cryptofolio/all")}
+        />
       </ListContainer>
       <ListContainer>
         <ListTitle>All Time Top Profit</ListTitle>
-        <CryptoFolioList cryptofolios={cryptofolios.allTimeCryptofolios} />
+        <CryptoFolioList
+          cryptofolios={cryptofolios.allTimeCryptoFolios}
+          onClick={() => history.push("/cryptofolio/all")}
+        />
       </ListContainer>
     </CryptoFolioContainer>
   );
 };
 
-export default CryptofolioPage;
+export default CryptoFolioPage;

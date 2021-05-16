@@ -5,7 +5,10 @@ const Button = styled.button`
   margin-right: ${(props) => (props.margin && props.margin[1]) || "0"};
   margin-bottom: ${(props) => (props.margin && props.margin[2]) || "0"};
   margin-left: ${(props) => (props.margin && props.margin[3]) || "0"};
-  padding: 8px 16px;
+  padding-top: ${(props) => (props.padding && props.padding[0]) || "8px"};
+  padding-right: ${(props) => (props.padding && props.padding[1]) || "16px"};
+  padding-bottom: ${(props) => (props.padding && props.padding[2]) || "8px"};
+  padding-left: ${(props) => (props.padding && props.padding[3]) || "16px"};
   border: none;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;

@@ -2,7 +2,7 @@ import {
   CHART_TYPE,
   COLORS,
   CATEGORIES,
-  PORTFOLIOS,
+  TICKERS,
 } from "../constants/constants";
 import * as d3 from "d3";
 
@@ -11,7 +11,7 @@ import * as d3 from "d3";
  * @param {array} exchange Option for audioContext
  * @returns Created audioContext
  */
-const setCircleColor = (d, chartType) => {
+const getCircleColor = (d, chartType) => {
   if (chartType === CHART_TYPE.EXCHANGE) {
     if (d.exchanges.length === 2) {
       return COLORS.BOTH_EXCHANGE;
@@ -29,10 +29,31 @@ const setCircleColor = (d, chartType) => {
   }
 
   if (chartType === CHART_TYPE.PORTFOLIO) {
-    const color = d3.scaleOrdinal(d3["schemeSet3"]);
-    color.domain(PORTFOLIOS);
-    return d.portfolios.length > 0 ? color(d.portfolios[0]) : "gray";
+    const color = d3.scaleOrdinal([
+      "#cfe1f2",
+      "#b5d4e9",
+      "#93c3df",
+      "#6daed5",
+      "#4b97c9",
+      "#2f7ebc",
+      "#1864aa",
+    ]);
+    color.domain(TICKERS);
+    return color(d.name);
+  }
+
+  if (chartType === CHART_TYPE.MYPORTFOLIO) {
+    const color = d3.scaleOrdinal([
+      "#fdd8b3",
+      "#fdc28c",
+      "#fda762",
+      "#fb8d3d",
+      "#f2701d",
+      "#e25609",
+    ]);
+    color.domain(TICKERS);
+    return color(d.name);
   }
 };
 
-export default setCircleColor;
+export default getCircleColor;

@@ -8,14 +8,15 @@ import LoginPage from "../LoginPage/LoginPage";
 import LogoutPage from "../LogoutPage/LogoutPage";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import LandingPage from "../LandingPage/LandingPage";
-import CryptofolioPage from "../CryptofolioPage/CryptofolioPage";
+import CryptoFolioPage from "../CryptoFolioPage/CryptoFolioPage";
 import CreateCryptoFolio from "../CreateCryptoFolio/CreateCryptoFolio";
-import CryptofolioDetail from "../CryptofolioDetail/CryptofolioDetail";
+import CryptoFolioDetail from "../CryptoFolioDetail/CryptoFolioDetail";
 import SignupPage from "../SignupPage/SignupPage";
 import Loading from "../Loading/Loading";
 import Footer from "../Footer/Footer";
 
 import actionCreator from "../../actions/actionCreator";
+import AllCryptoFolio from "../AllCryptoFolio/AllCryptoFolio";
 
 const App = ({ authService }) => {
   const { isAuthorized } = useSelector((state) => state.authReducer);
@@ -51,7 +52,7 @@ const App = ({ authService }) => {
           </Route>
 
           <Route exact path="/cryptofolio">
-            <CryptofolioPage />
+            <CryptoFolioPage />
           </Route>
 
           {isAuthorized ? (
@@ -60,8 +61,12 @@ const App = ({ authService }) => {
                 <CreateCryptoFolio />
               </Route>
 
+              <Route exact path="/cryptofolio/all">
+                <AllCryptoFolio />
+              </Route>
+
               <Route exact path="/cryptofolio/:cryptofolioId">
-                <CryptofolioDetail />
+                <CryptoFolioDetail />
               </Route>
 
               <Route path="/logout">

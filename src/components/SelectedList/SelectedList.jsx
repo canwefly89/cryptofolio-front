@@ -11,13 +11,14 @@ const SelectedContainer = styled.div``;
 const SelectedCoin = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  width: 100%;
   margin: 10px 0;
-  margin-left: 50px;
 
   img {
     display: block;
     margin-right: 10px;
+    width: 25px;
   }
 
   span {
@@ -27,9 +28,13 @@ const SelectedCoin = styled.div`
 `;
 
 const TotalContainer = styled.div`
-  margin: 20px 0 30px 97px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 20px 0;
   font-weight: 800;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 `;
 
 const size = { height: 400, width: 400, radius: 180 };

@@ -97,10 +97,9 @@ const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
 
   const handleChangeValue = useCallback(
     (input) => {
-      if (
-        Number.isNaN(parseInt(input[input.length - 1], 10)) &&
-        input.length > 0
-      ) {
+      const NANRegex = /[^0-9.]/g;
+
+      if (NANRegex.test(input[input.length - 1]) && input.length > 0) {
         return showErrorMessage("숫자만 입력할 수 있습니다.");
       }
 

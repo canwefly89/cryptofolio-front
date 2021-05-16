@@ -11,13 +11,13 @@ import actionCreator from "../../actions/actionCreator";
 import useInput from "../../hooks/useInput";
 import { useHistory } from "react-router-dom";
 import validateInput from "../../utils/validateInput";
+import Input from "../shared/Input/Input";
 
 const LoginContainer = styled.section`
   width: 100vw;
   min-height: 90vh;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   background-color: black;
   color: white;
@@ -30,6 +30,25 @@ const MainTitle = styled.div`
   font-family: "Roboto", sans-serif;
   font-weight: 800;
   font-size: 3.7rem;
+`;
+
+const LoginForm = styled.form`
+  width: 300px;
+`;
+
+const LoginLabel = styled.label`
+  display: block;
+  margin-bottom: 5px;
+`;
+
+const LoginInputBox = styled.div`
+  margin-bottom: 20px;
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 const LoginPage = ({ authService }) => {
@@ -87,51 +106,59 @@ const LoginPage = ({ authService }) => {
     <LoginContainer>
       {error.length > 0 && <ErrorMessage error={error} />}
       <MainTitle>Log In</MainTitle>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="user-email">이메일</label>
-          <br />
-          <input
+      <LoginForm onSubmit={handleLogin}>
+        <LoginInputBox>
+          <LoginLabel htmlFor="user-email">이메일</LoginLabel>
+
+          <Input
             name="user-email"
             value={email}
             onChange={onChangeEmail}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="user-password">비밀번호</label>
-          <br />
-          <input
+        </LoginInputBox>
+        <LoginInputBox>
+          <LoginLabel htmlFor="user-password">비밀번호</LoginLabel>
+
+          <Input
             name="user-password"
             value={password}
             type="password"
             onChange={onChangePassword}
             required
           />
-        </div>
+        </LoginInputBox>
 
-        <Button
-          name="Login"
-          onClick={handleLogin}
-          margin={["2vh", "0", "0", "0"]}
-        >
-          Log In
-        </Button>
-        <Button
-          name="Google"
-          onClick={() => history.push("/signin")}
-          margin={["2vh", "0", "0", "0"]}
-        >
-          Sign In
-        </Button>
-        <Button
-          name="Google"
-          onClick={handleSocialLogin}
-          margin={["2vh", "0", "0", "0"]}
-        >
-          Google Login
-        </Button>
-      </form>
+        <ButtonContainer>
+          <Button
+            name="Login"
+            onClick={handleLogin}
+            margin={["0", "5px", "0", "5px"]}
+            bgColor={"#f1c40f"}
+            color={"black"}
+          >
+            Log In
+          </Button>
+        </ButtonContainer>
+        <ButtonContainer>
+          <Button
+            name="Signup"
+            onClick={() => history.push("/signup")}
+            margin={["10px", "5px", "0", "5px"]}
+          >
+            Sign Up
+          </Button>
+        </ButtonContainer>
+        <ButtonContainer>
+          <Button
+            name="Google"
+            onClick={handleSocialLogin}
+            margin={["10px", "5px", "0", "5px"]}
+          >
+            Google Login
+          </Button>
+        </ButtonContainer>
+      </LoginForm>
     </LoginContainer>
   );
 };

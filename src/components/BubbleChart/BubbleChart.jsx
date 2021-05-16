@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { useSelector } from "react-redux";
 import useBubbleChart from "../../hooks/useBubbleChart";
 import useInput from "../../hooks/useInput";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -26,14 +25,21 @@ const CircleTypeContainer = styled.div`
 `;
 
 const BubbleChart = ({ type }) => {
-  const { coinData } = useSelector((state) => state.coinReducer);
   const [searchTerm, onChangeSearchTerm] = useInput("");
   const [viewType, setViewType] = useState(VIEW_TYPE.BASIC);
   const [circleType, setCircleType] = useState(CIRCLE_TYPE.MARKETCAP);
   const svgRef = useRef();
 
-  useBubbleChart(svgRef, coinData, type, circleType, viewType);
+  useBubbleChart(svgRef, type, circleType, viewType);
   const handleSearch = useSearchBubbleChart(svgRef, searchTerm, type);
+
+  useEffect(() => {
+    if (type === CHART_TYPE.PORTFOLIO || type === CHART_TYPE.MYPORTFOLIO) {
+      setCircleType(CIRCLE_TYPE.AMOUNT);
+    } else {
+      setCircleType(CIRCLE_TYPE.MARKETCAP);
+    }
+  }, [type]);
 
   return (
     <>
@@ -61,7 +67,7 @@ const BubbleChart = ({ type }) => {
               bgColor="red"
               color="white"
             >
-              모아보기
+              Default
             </TypeButton>
             <TypeButton
               onClick={() => setViewType(VIEW_TYPE.SEPARATE)}
@@ -72,31 +78,60 @@ const BubbleChart = ({ type }) => {
               bgColor="red"
               color="white"
             >
-              거래소별
+              Exchange
             </TypeButton>
           </>
         )}
-        <TypeButton
-          onClick={() => setCircleType(CIRCLE_TYPE.MARKETCAP)}
-          picked={circleType === CIRCLE_TYPE.MARKETCAP}
-          padding={["6px", "12px", "6px", "12px"]}
-          margin={["0px", "0px", "0px", "10px"]}
-          fontSize="0.8rem"
-          bgColor="blue"
-          color="white"
-        >
-          시가총액별
-        </TypeButton>
-        <TypeButton
-          onClick={() => setCircleType(CIRCLE_TYPE.PRICE)}
-          picked={circleType === CIRCLE_TYPE.PRICE}
-          padding={["6px", "12px", "6px", "12px"]}
-          fontSize="0.8rem"
-          bgColor="blue"
-          color="white"
-        >
-          가격별
-        </TypeButton>
+        {(type === CHART_TYPE.EXCHANGE || type === CHART_TYPE.CATEGORY) && (
+          <>
+            <TypeButton
+              onClick={() => setCircleType(CIRCLE_TYPE.MARKETCAP)}
+              picked={circleType === CIRCLE_TYPE.MARKETCAP}
+              padding={["6px", "12px", "6px", "12px"]}
+              margin={["0px", "0px", "0px", "10px"]}
+              fontSize="0.8rem"
+              bgColor="blue"
+              color="white"
+            >
+              MarketCap
+            </TypeButton>
+            <TypeButton
+              onClick={() => setCircleType(CIRCLE_TYPE.PRICE)}
+              picked={circleType === CIRCLE_TYPE.PRICE}
+              padding={["6px", "12px", "6px", "12px"]}
+              fontSize="0.8rem"
+              bgColor="blue"
+              color="white"
+            >
+              Price
+            </TypeButton>
+          </>
+        )}
+        {(type === CHART_TYPE.PORTFOLIO || type === CHART_TYPE.MYPORTFOLIO) && (
+          <>
+            <TypeButton
+              onClick={() => setCircleType(CIRCLE_TYPE.AMOUNT)}
+              picked={circleType === CIRCLE_TYPE.AMOUNT}
+              padding={["6px", "12px", "6px", "12px"]}
+              margin={["0px", "0px", "0px", "10px"]}
+              fontSize="0.8rem"
+              bgColor="blue"
+              color="white"
+            >
+              Amount
+            </TypeButton>
+            <TypeButton
+              onClick={() => setCircleType(CIRCLE_TYPE.VALUE)}
+              picked={circleType === CIRCLE_TYPE.VALUE}
+              padding={["6px", "12px", "6px", "12px"]}
+              fontSize="0.8rem"
+              bgColor="blue"
+              color="white"
+            >
+              Value
+            </TypeButton>
+          </>
+        )}
       </CircleTypeContainer>
       <SVG ref={svgRef}></SVG>
     </>

@@ -9,16 +9,20 @@ import Button from "../shared/Button/Button";
 
 const LogoutContainer = styled.div`
   width: 100vw;
-  height: 80vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  background-color: black;
+  color: white;
 `;
 
 const LogoutMessage = styled.div`
-  font-size: 3rem;
-  font-weight: 600;
+  margin-top: 400px;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 3.7rem;
 `;
 
 const LogoutPage = ({ authService }) => {
@@ -26,28 +30,28 @@ const LogoutPage = ({ authService }) => {
   const history = useHistory();
 
   const onLogout = useCallback(async () => {
-    dispatch(actionCreator.logoutAction());
     await authService.logout();
+    dispatch(actionCreator.logoutAction());
     history.push("/");
   }, [authService, dispatch, history]);
 
   return (
     <LogoutContainer>
-      <LogoutMessage>로그아웃 하시겠습니까?</LogoutMessage>
+      <LogoutMessage>Log Out</LogoutMessage>
       <Button
         onClick={onLogout}
         margin={["5vh", "0", "0", "1vw"]}
         bgColor={"#eb4d4b"}
         fontWeight={"600"}
       >
-        로그아웃
+        Log Out
       </Button>
       <Button
         onClick={() => history.push("/")}
         margin={["1vh", "0", "0", "1vw"]}
         fontWeight={"600"}
       >
-        돌아가기
+        Go Back
       </Button>
     </LogoutContainer>
   );

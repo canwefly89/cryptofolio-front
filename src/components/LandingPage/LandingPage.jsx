@@ -5,6 +5,7 @@ import BubbleChart from "../BubbleChart/BubbleChart";
 
 import TypeButton from "../shared/TypeButton/TypeButton";
 import { CHART_TYPE } from "../../constants/constants";
+import { useSelector } from "react-redux";
 
 const LandingPageContainer = styled.div`
   background-color: black;
@@ -24,6 +25,7 @@ const BubbleChartContainer = styled.div`
 
 const LandingPage = memo(() => {
   const [type, setType] = useState(CHART_TYPE.EXCHANGE);
+  const { isAuthorized } = useSelector((state) => state.authReducer);
 
   return (
     <LandingPageContainer>
@@ -43,19 +45,21 @@ const LandingPage = memo(() => {
           Category
         </TypeButton>
         <TypeButton
-          name={"capital-portfolio"}
+          name={CHART_TYPE.PORTFOLIO}
           onClick={(e) => setType(e.target.name)}
-          picked={type === "capital-portfolio"}
+          picked={type === CHART_TYPE.PORTFOLIO}
         >
-          Capital PortFolio
+          PortFolio
         </TypeButton>
-        <TypeButton
-          name={"my-portfolio"}
-          onClick={(e) => setType(e.target.name)}
-          picked={type === "my-portfolio"}
-        >
-          My PortFolio
-        </TypeButton>
+        {isAuthorized && (
+          <TypeButton
+            name={CHART_TYPE.MYPORTFOLIO}
+            onClick={(e) => setType(e.target.name)}
+            picked={type === CHART_TYPE.MYPORTFOLIO}
+          >
+            My PortFolio
+          </TypeButton>
+        )}
       </BubbleButtonContainer>
       <BubbleChartContainer>
         <BubbleChart type={type || CHART_TYPE.EXCHANGE} />

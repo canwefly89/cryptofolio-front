@@ -2,7 +2,7 @@ import {
   CHART_TYPE,
   COLORS,
   CATEGORIES,
-  PORTFOLIOS,
+  TICKERS,
 } from "../constants/constants";
 import * as d3 from "d3";
 
@@ -31,11 +31,30 @@ const colorByChartType = (circles, chartType = CHART_TYPE.EXCHANGE) => {
   }
 
   if (chartType === CHART_TYPE.PORTFOLIO) {
-    const color = d3.scaleOrdinal(d3["schemeSet3"]);
-    color.domain(PORTFOLIOS);
-    circles.attr("fill", (d) =>
-      d.portfolios.length > 0 ? color(d.portfolios[0]) : "gray"
-    );
+    const color = d3.scaleOrdinal([
+      "#cfe1f2",
+      "#b5d4e9",
+      "#93c3df",
+      "#6daed5",
+      "#4b97c9",
+      "#2f7ebc",
+      "#1864aa",
+    ]);
+    color.domain(TICKERS);
+    circles.attr("fill", (d) => color(d.name));
+  }
+
+  if (chartType === CHART_TYPE.MYPORTFOLIO) {
+    const color = d3.scaleOrdinal([
+      "#fdd8b3",
+      "#fdc28c",
+      "#fda762",
+      "#fb8d3d",
+      "#f2701d",
+      "#e25609",
+    ]);
+    color.domain(TICKERS);
+    circles.attr("fill", (d) => color(d.name));
   }
 };
 

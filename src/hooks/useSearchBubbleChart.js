@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import { COLORS } from "../constants/constants";
-import setCircleColor from "../utils/setCircleColor";
+import getCircleColor from "../utils/getCircleColor";
 
 /**
  *
@@ -17,7 +17,7 @@ const useSearchBubbleChart = (svgRef, searchTerm, type) => {
       .filter(
         (d) =>
           d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          d.ticker.toLowerCase().includes(searchTerm.toLowerCase())
+          d.ticker?.toLowerCase().includes(searchTerm.toLowerCase())
       )
       .attr("fill", COLORS.SEARCH_TARGET);
 
@@ -25,7 +25,7 @@ const useSearchBubbleChart = (svgRef, searchTerm, type) => {
       .filter(
         (d) =>
           d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          d.ticker.toLowerCase().includes(searchTerm.toLowerCase())
+          d.ticker?.toLowerCase().includes(searchTerm.toLowerCase())
       )
       .attr("fill", COLORS.SEARCH_TARGET);
 
@@ -33,9 +33,9 @@ const useSearchBubbleChart = (svgRef, searchTerm, type) => {
       .filter(
         (d) =>
           !d.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-          !d.ticker.toLowerCase().includes(searchTerm.toLowerCase())
+          !d.ticker?.toLowerCase().includes(searchTerm.toLowerCase())
       )
-      .attr("fill", (d) => setCircleColor(d, type));
+      .attr("fill", (d) => getCircleColor(d, type));
   };
 
   return handleSearch;

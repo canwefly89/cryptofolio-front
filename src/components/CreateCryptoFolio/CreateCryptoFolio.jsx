@@ -37,6 +37,7 @@ const SelectContainer = styled.div``;
 
 const ResultContainer = styled.div`
   position: fixed;
+  bottom: 60px;
   left: 60vw;
   flex: 0.5;
   padding: 10px;

@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { COLOR_SET } from "../../constants/constants";
 import usePieChart from "../../hooks/usePieChart";
 
-import { useParams } from "react-router-dom";
+import { useLocation, useParams, useHistory } from "react-router-dom";
+import actionCreator from "../../actions/actionCreator";
 import SVG from "../shared/SVG/SVG";
+import Button from "../shared/Button/Button";
 import setNumberFormat from "../../utils/setNumberFormat";
 import calculateProfit from "../../utils/calculateProfit";
 import styled from "styled-components";
@@ -62,25 +64,43 @@ const Section = styled.span`
 const size = { height: 600, width: 600, radius: 300 };
 
 const CryptofolioDetail = (props) => {
+  const { user } = useSelector((state) => state.authReducer);
   const { coinData } = useSelector((state) => state.coinReducer);
   const { allCryptoFolios } = useSelector((state) => state.cryptofolioReducer);
   const svgRef = useRef();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const param = useParams();
   const [currentFolio, setCurrentFolio] = useState({});
   const colorRef = useRef(
     COLOR_SET[Math.floor(Math.random() * COLOR_SET.length)]
   );
+  const { state } = useLocation();
+
+  const handleDelete = () => {
+    dispatch(
+      actionCreator.deleteCryptofolioAction(
+        user?._id,
+        currentFolio?._id,
+        history
+      )
+    );
+  };
 
   useEffect(() => {
-    const thisFolio = allCryptoFolios.filter(
+    let thisFolio = allCryptoFolios.filter(
       (cryptofolio) => cryptofolio._id === param.cryptofolioId
     )[0];
+
+    if (!thisFolio && state) {
+      thisFolio = state;
+    }
 
     if (coinData) {
       const calculatedFolio = calculateProfit([thisFolio], coinData);
       setCurrentFolio(calculatedFolio[0]);
     }
-  }, [allCryptoFolios, coinData, param.cryptofolioId]);
+  }, [allCryptoFolios, coinData, param.cryptofolioId, state]);
 
   usePieChart(
     svgRef,
@@ -124,7 +144,7 @@ const CryptofolioDetail = (props) => {
         <Section>총 가치</Section>
       </CrypoFolioCoins>
       {coinData &&
-        currentFolio.selectedList?.map((coin) => {
+        currentFolio?.selectedList?.map((coin) => {
           const currentCoin = coinData[coin.name];
           return (
             <CrypoFolioCoins key={coin.name}>
@@ -141,6 +161,16 @@ const CryptofolioDetail = (props) => {
             </CrypoFolioCoins>
           );
         })}
+      {user?._id === currentFolio.createdBy?._id && (
+        <Button
+          onClick={handleDelete}
+          bgColor={"#f1c40f"}
+          color={"black"}
+          margin={["10px", 0, 0, 0]}
+        >
+          Delete
+        </Button>
+      )}
     </CryptoFolioContainer>
   );
 };

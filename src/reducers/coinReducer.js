@@ -4,7 +4,6 @@ import _ from "lodash";
 const initialState = {
   metadata: null,
   coinData: null,
-  cryptofolios: null,
   error: null,
 };
 
@@ -14,7 +13,6 @@ const coinReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case ACTION_TYPES.GET_HOME:
-    case ACTION_TYPES.GET_CRYPTOFOLIOS:
       return copiedState;
 
     case ACTION_TYPES.GET_HOME_SUCCESS:
@@ -22,12 +20,7 @@ const coinReducer = (state = initialState, action) => {
       copiedState.coinData = action.payload.coinData;
       return copiedState;
 
-    case ACTION_TYPES.GET_CRYPTOFOLIOS_SUCCESS:
-      copiedState.cryptofolios = action.payload;
-      return copiedState;
-
     case ACTION_TYPES.GET_HOME_FAIL:
-    case ACTION_TYPES.GET_CRYPTOFOLIOS_FAIL:
       copiedState.error = action.payload;
       return copiedState;
 

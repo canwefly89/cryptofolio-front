@@ -92,7 +92,7 @@ const usePieChart = (
         .on("mouseover", handleMouseOver)
         .on("mouseout", handleMouseOut);
 
-      console.log(piece);
+      // console.log(piece);
       // .call(tip);
     };
 

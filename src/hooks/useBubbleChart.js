@@ -1,8 +1,15 @@
 import { useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
 
 import * as d3 from "d3";
-import { COLORS, CHART_SIZE, VIEW_TYPE } from "../constants/constants";
-import setCircleColor from "../utils/setCircleColor";
+import {
+  COLORS,
+  CHART_SIZE,
+  VIEW_TYPE,
+  CHART_TYPE,
+  CIRCLE_TYPE,
+} from "../constants/constants";
+import getCircleColor from "../utils/getCircleColor";
 import colorByChartType from "../utils/colorByChartType";
 import createToolTip from "../utils/createToolTip";
 import createSimulation from "../utils/createSimulation";
@@ -16,44 +23,50 @@ import createCircles from "../utils/createCircles";
 const width = CHART_SIZE.BUBBLE_WIDTH;
 const height = CHART_SIZE.BUBBLE_HEIGHT;
 const t = d3.transition().duration(500);
-const tip = createToolTip();
 
 const useBubbleChart = (
   svgRef,
-  coinData,
   chartType,
   circleType,
   viewType = VIEW_TYPE.BASIC
 ) => {
-  const handleMouseOver = useCallback((event, d) => {
-    tip.show(event, d);
-    d3.select(event.currentTarget)
-      .transition(() => t)
-      .attr("fill", COLORS.MOUSEOVER_TARGET);
-  }, []);
+  const { coinData } = useSelector((state) => state.coinReducer);
+  const { allCryptoFolios } = useSelector((state) => state.cryptofolioReducer);
+  const { user } = useSelector((state) => state.authReducer);
+
+  const tip = createToolTip(chartType, coinData);
+
+  const handleMouseOver = useCallback(
+    (event, d) => {
+      tip.show(event, d);
+      d3.select(event.currentTarget)
+        .transition(() => t)
+        .attr("fill", COLORS.MOUSEOVER_TARGET);
+    },
+    [tip]
+  );
 
   const handleMouseOut = useCallback(
     (event, d) => {
       tip.hide(event, d);
       d3.select(event.currentTarget)
         .transition(() => t)
-        .attr("fill", (d) => setCircleColor(d, chartType));
+        .attr("fill", (d) => getCircleColor(d, chartType));
     },
-    [chartType]
+    [chartType, tip]
   );
 
   const drawGraph = useCallback(
-    (svg) => {
-      const coinList = Object.values(coinData);
+    (svg, coinList, chartType, circleType, viewType) => {
       if (!coinList || coinList.length === 0) {
         return;
       }
 
+      const circles = createCircles(svg, coinList, circleType);
+      const simulation = createSimulation(chartType, circleType, viewType);
       const ticked = () => {
         circles.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
       };
-      const simulation = createSimulation(chartType, circleType, viewType);
-      const circles = createCircles(svg, coinList, circleType);
 
       circles
         .attr("opacity", 0.85)
@@ -64,19 +77,87 @@ const useBubbleChart = (
       colorByChartType(circles, chartType);
       simulation.nodes(coinList).on("tick", ticked);
     },
-    [chartType, circleType, coinData, handleMouseOut, handleMouseOver, viewType]
+    [handleMouseOut, handleMouseOver, tip]
   );
 
   useEffect(() => {
+    let coinList = [];
+    let _circleType = circleType;
+
+    if (!coinData || allCryptoFolios.length === 0) {
+      return;
+    }
+
+    if (
+      chartType === CHART_TYPE.EXCHANGE ||
+      chartType === CHART_TYPE.CATEGORY
+    ) {
+      if (
+        _circleType !== CIRCLE_TYPE.MARKETCAP &&
+        _circleType !== CIRCLE_TYPE.PRICE
+      ) {
+        _circleType = CIRCLE_TYPE.MARKETCAP;
+      }
+
+      coinList = Object.values(coinData);
+    }
+
+    if (chartType === CHART_TYPE.PORTFOLIO) {
+      if (
+        _circleType !== CIRCLE_TYPE.AMOUNT &&
+        _circleType !== CIRCLE_TYPE.VALUE
+      ) {
+        _circleType = CIRCLE_TYPE.AMOUNT;
+      }
+      const coinInPortFolio = {};
+
+      allCryptoFolios.forEach((folio) => {
+        folio.selectedList.forEach((coin) => {
+          coinInPortFolio[coin.name]
+            ? (coinInPortFolio[coin.name] += parseInt(coin.amount, 10))
+            : (coinInPortFolio[coin.name] = parseInt(coin.amount, 10));
+        });
+      });
+
+      coinList = Object.entries(coinInPortFolio).map(([key, value]) => {
+        const price = coinData[key].price?.price;
+        return { name: key, amount: value, value: value * price };
+      });
+    }
+
+    if (chartType === CHART_TYPE.MYPORTFOLIO) {
+      if (
+        _circleType !== CIRCLE_TYPE.AMOUNT &&
+        _circleType !== CIRCLE_TYPE.VALUE
+      ) {
+        _circleType = CIRCLE_TYPE.AMOUNT;
+      }
+      const coinInPortFolio = {};
+
+      allCryptoFolios
+        .filter((folio) => folio.createdBy._id === user?._id)
+        .forEach((folio) => {
+          folio.selectedList.forEach((coin) => {
+            coinInPortFolio[coin.name]
+              ? (coinInPortFolio[coin.name] += parseInt(coin.amount, 10))
+              : (coinInPortFolio[coin.name] = parseInt(coin.amount, 10));
+          });
+        });
+
+      coinList = Object.entries(coinInPortFolio).map(([key, value]) => {
+        const price = coinData[key].price?.price;
+        return { name: key, amount: value, value: value * price };
+      });
+    }
+
     const svg = d3
       .select(svgRef.current)
       .attr("width", width)
       .attr("height", height);
 
-    if (coinData) {
-      drawGraph(svg);
-    }
-  }, [chartType, coinData, drawGraph, svgRef, viewType, circleType]);
+    drawGraph(svg, coinList, chartType, _circleType, viewType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chartType, viewType, circleType]);
 };
 
 export default useBubbleChart;

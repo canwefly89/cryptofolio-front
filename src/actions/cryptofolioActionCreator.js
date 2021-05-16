@@ -55,15 +55,61 @@ const createCryptofolioAction = (
       payload: result.data,
     });
 
-    history.push(`/cryptofolio/${result.data._id}`);
+    history.push({
+      pathname: `/cryptofolio/${result.data._id}`,
+      state: result.data,
+    });
   } catch (err) {
     dispatch({ type: getActionTypes().CREATE_CRYPTOFOLIO_FAIL, payload: err });
+  }
+};
+
+const deleteCryptofolioAction = (userId, cryptoFolioId, history) => async (
+  dispatch
+) => {
+  if (!userId || !cryptoFolioId) {
+    return;
+  }
+
+  dispatch({ type: getActionTypes().DELETE_CRYPTOFOLIO });
+
+  const data = { userId, cryptoFolioId };
+
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_USER_SERVER_API}/cryptofolio/delete`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (!response) {
+      return dispatch({
+        type: getActionTypes().DELETE_CRYPTOFOLIO_FAIL,
+      });
+    }
+
+    dispatch({
+      type: getActionTypes().DELETE_CRYPTOFOLIO_SUCCESS,
+      payload: cryptoFolioId,
+    });
+
+    history.push({
+      pathname: "/cryptofolio",
+    });
+  } catch (err) {
+    dispatch({ type: getActionTypes().DELETE_CRYPTOFOLIO_FAIL, payload: err });
   }
 };
 
 const cryptofolioActionCreator = {
   getCryptofoliosAction,
   createCryptofolioAction,
+  deleteCryptofolioAction,
 };
 
 export default cryptofolioActionCreator;

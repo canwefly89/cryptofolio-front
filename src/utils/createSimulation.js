@@ -28,17 +28,17 @@ const createSimulation = (
     if (viewType === VIEW_TYPE.SEPARATE) {
       forceX = d3
         .forceX((d) => {
-          if (d.exchanges?.length === 2) return width / 2 - 180;
-          if (d.exchanges?.includes("upbit")) return 130;
-          if (d.exchanges?.includes("binance")) return width - 280;
+          if (d.exchanges?.length === 2) return width / 2 - 200;
+          if (d.exchanges?.includes("upbit")) return width / 4 - 100;
+          if (d.exchanges?.includes("binance")) return (width / 4) * 3 - 200;
         })
         .strength(0.1);
 
       forceY = d3
         .forceY((d) => {
-          if (d.exchanges?.length === 2) return height / 2 - 50;
+          if (d.exchanges?.length === 2) return height / 2 - 100;
           if (d.exchanges?.includes("upbit")) return 200;
-          if (d.exchanges?.includes("binance")) return height - 300;
+          if (d.exchanges?.includes("binance")) return height - 400;
         })
         .strength(0.1);
     }
@@ -98,6 +98,36 @@ const createSimulation = (
         .force(
           "collide",
           d3.forceCollide((d) => radiusScale(d.price?.price) + 3)
+        );
+    }
+  }
+
+  if (
+    chartType === CHART_TYPE.PORTFOLIO ||
+    chartType === CHART_TYPE.MYPORTFOLIO
+  ) {
+    forceX = d3.forceX(0).strength(0.02);
+    forceY = d3.forceY(0).strength(0.02);
+
+    if (circleType === CIRCLE_TYPE.AMOUNT) {
+      return d3
+        .forceSimulation()
+        .force("x", forceX)
+        .force("y", forceY)
+        .force(
+          "collide",
+          d3.forceCollide((d) => radiusScale(d.amount) + 5)
+        );
+    }
+
+    if (circleType === CIRCLE_TYPE.VALUE) {
+      return d3
+        .forceSimulation()
+        .force("x", forceX)
+        .force("y", forceY)
+        .force(
+          "collide",
+          d3.forceCollide((d) => radiusScale(d.value) + 5)
         );
     }
   }

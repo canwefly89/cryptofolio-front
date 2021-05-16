@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import styled from "styled-components";
 
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Button from "../shared/Button/Button";
@@ -10,6 +11,45 @@ import actionCreator from "../../actions/actionCreator";
 import useErrorMessage from "../../hooks/useErrorMessage";
 import useInput from "../../hooks/useInput";
 import validateInput from "../../utils/validateInput";
+import Input from "../shared/Input/Input";
+
+const SignUpContainer = styled.section`
+  width: 100vw;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  color: white;
+`;
+
+const MainTitle = styled.div`
+  margin-top: 200px;
+  margin-bottom: 60px;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 3.7rem;
+`;
+
+const SignUpForm = styled.form`
+  width: 300px;
+`;
+
+const SignUpLabel = styled.label`
+  display: block;
+  margin-bottom: 5px;
+`;
+
+const SignUpInputBox = styled.div`
+  margin-bottom: 20px;
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
 
 const SignupPage = ({ authService }) => {
   const dispatch = useDispatch();
@@ -61,76 +101,85 @@ const SignupPage = ({ authService }) => {
   );
 
   return (
-    <>
+    <SignUpContainer>
       {error.length > 0 && <ErrorMessage error={error} />}
-      <form onSubmit={handleSignup}>
-        <div>
-          <label htmlFor="user-email">이메일</label>
-          <br />
-          <input
+      <MainTitle>Sign Up</MainTitle>
+      <SignUpForm onSubmit={handleSignup}>
+        <SignUpInputBox>
+          <SignUpLabel htmlFor="user-email">이메일</SignUpLabel>
+
+          <Input
             name="user-email"
             value={email}
             onChange={onChangeEmail}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="user-name">이름</label>
-          <br />
-          <input
+        </SignUpInputBox>
+        <SignUpInputBox>
+          <SignUpLabel htmlFor="user-name">이름</SignUpLabel>
+
+          <Input
             name="user-name"
             value={name}
             onChange={onChangeName}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="user-password">비밀번호</label>
-          <br />
-          <input
+        </SignUpInputBox>
+        <SignUpInputBox>
+          <SignUpLabel htmlFor="user-password">비밀번호</SignUpLabel>
+
+          <Input
             name="user-password"
             value={password}
             type="password"
             onChange={onChangePassword}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="user-passwordConfirm">비밀번호 확인</label>
-          <br />
-          <input
+        </SignUpInputBox>
+        <SignUpInputBox>
+          <SignUpLabel htmlFor="user-passwordConfirm">
+            비밀번호 확인
+          </SignUpLabel>
+
+          <Input
             name="user-passwordConfirm"
             value={passwordConfirm}
             type="password"
             onChange={onChangePasswordConfirm}
             required
           />
-        </div>
-        <>
+        </SignUpInputBox>
+        <ButtonContainer>
           <Button
-            name="Login"
-            onClick={() => history.push("/login")}
-            margin={["2vh", "0", "0", "0"]}
-          >
-            Log In
-          </Button>
-          <Button
-            name="Google"
+            name="SignUp"
             onClick={handleSignup}
-            margin={["2vh", "0", "0", "0"]}
+            margin={["10px", "0", "0", "0"]}
+            bgColor={"#f1c40f"}
+            color={"black"}
           >
             Sign Up
           </Button>
+        </ButtonContainer>
+        <ButtonContainer>
+          <Button
+            name="Login"
+            onClick={() => history.push("/login")}
+            margin={["10px", "0", "0", "0"]}
+          >
+            Log In
+          </Button>
+        </ButtonContainer>
+        <ButtonContainer>
           <Button
             name="Google"
             onClick={handleSocialLogin}
-            margin={["2vh", "0", "0", "0"]}
+            margin={["10px", "0", "0", "0"]}
           >
             Google Login
           </Button>
-        </>
-      </form>
-    </>
+        </ButtonContainer>
+      </SignUpForm>
+    </SignUpContainer>
   );
 };
 

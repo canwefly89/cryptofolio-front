@@ -55,7 +55,6 @@ const MetaData = () => {
         <span>김치 프리미엄</span>
         <span>{metadata?.premium}%</span>
       </MetaDataItem>
-      <button>업데이트</button>
     </MetaDataContainer>
   );
 };

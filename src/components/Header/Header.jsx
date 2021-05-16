@@ -64,6 +64,7 @@ const HeaderLogin = styled.div`
 
 const Header = () => {
   const { isAuthorized, user } = useSelector((state) => state.authReducer);
+
   const history = useHistory();
 
   return (
@@ -73,10 +74,16 @@ const Header = () => {
         <HeaderLogo onClick={() => history.push("/")}>CryptoFolio</HeaderLogo>
         <HeaderItemContainer>
           <div onClick={() => history.push("/cryptofolio")}>Show List</div>
-          <div onClick={() => history.push("/cryptofolio/new")}>Creat New</div>
-          <div onClick={() => history.push("/coin")}>My Cryptofolio</div>
+          {isAuthorized && (
+            <>
+              <div onClick={() => history.push("/cryptofolio/new")}>
+                Creat Cryptofolio
+              </div>
+              <div onClick={() => history.push("/coin")}>My Cryptofolio</div>
+            </>
+          )}
         </HeaderItemContainer>
-        {user && (
+        {isAuthorized && (
           <WelcomeMessage>
             {user?.name}님 환영합니다. 현재 크립토폴리오 최고 수익은
             <span> 123,450원</span> 입니다.
@@ -85,7 +92,13 @@ const Header = () => {
 
         <HeaderAuthContainer>
           {isAuthorized ? (
-            <Button onClick={() => history.push("/logout")}>Log out</Button>
+            <Button
+              onClick={() => history.push("/logout")}
+              bgColor={"#eb4d4b"}
+              fontWeight={"600"}
+            >
+              Log out
+            </Button>
           ) : (
             <>
               <HeaderLogin onClick={() => history.push("/login")}>
