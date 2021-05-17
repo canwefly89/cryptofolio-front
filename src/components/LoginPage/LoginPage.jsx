@@ -1,17 +1,19 @@
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Button from "../shared/Button/Button";
+import Input from "../shared/Input/Input";
 
 import useErrorMessage from "../../hooks/useErrorMessage";
-import actionCreator from "../../actions/actionCreator";
 import useInput from "../../hooks/useInput";
-import { useHistory } from "react-router-dom";
-import validateInput from "../../utils/validateInput";
-import Input from "../shared/Input/Input";
+import useLocalLogin from "../../hooks/useLocalLogin";
+import useSocialLogin from "../../hooks/useSocialLogin";
+
+import actionCreator from "../../actions/actionCreator";
 
 const LoginContainer = styled.section`
   width: 100vw;
@@ -52,55 +54,23 @@ const ButtonContainer = styled.div`
 `;
 
 const LoginPage = ({ authService }) => {
-  const { loginError } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
+  const { authError } = useSelector((state) => state.authReducer);
   const history = useHistory();
+
   const [error, showErrorMessage] = useErrorMessage("");
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
 
-  const handleLogin = useCallback(
-    async (event) => {
-      event.preventDefault();
-      const inputData = {
-        email,
-        password,
-      };
-
-      const validationResult = validateInput(inputData);
-
-      if (validationResult) {
-        return showErrorMessage(validationResult);
-      }
-
-      dispatch(actionCreator.loginAction(inputData));
-    },
-    [dispatch, email, password, showErrorMessage]
-  );
-
-  const handleSocialLogin = useCallback(
-    async (event) => {
-      try {
-        const loginData = await authService.login(event.target.name);
-        const data = {
-          email: loginData.user.email,
-          name: loginData.user.displayName,
-        };
-
-        dispatch(actionCreator.socialLoginAction(data));
-      } catch (err) {
-        showErrorMessage("로그인에 실패하였습니다.");
-      }
-    },
-    [authService, dispatch, showErrorMessage]
-  );
+  const handleLogin = useLocalLogin(email, password, showErrorMessage);
+  const handleSocialLogin = useSocialLogin(authService, showErrorMessage);
 
   useEffect(() => {
-    if (loginError) {
-      showErrorMessage(loginError);
+    if (authError) {
+      showErrorMessage(authError);
       dispatch(actionCreator.resetErrorMessage());
     }
-  }, [dispatch, loginError, showErrorMessage]);
+  }, [dispatch, authError, showErrorMessage]);
 
   return (
     <LoginContainer>

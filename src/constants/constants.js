@@ -14,7 +14,6 @@ export const VIEW_TYPE = {
 export const CIRCLE_TYPE = {
   PRICE: "PRICE",
   MARKETCAP: "MARKETCAP",
-  CATEGORY: "CATEGORY",
   AMOUNT: "AMOUNT",
   VALUE: "VALUE",
 };
@@ -43,26 +42,6 @@ export const MARKETCAP_RANGE = {
   MIN: 10000000,
   MAX: 1200000000000,
   TEXT: 7500000000,
-};
-
-export const CATEGORY_RANGE = {
-  MIN: 1,
-  MAX: 10,
-};
-
-export const PORTFOLIO_RANGE = {
-  MIN: 1,
-  MAX: 5,
-};
-
-export const AMOUNT_RANGE = {
-  MAX: 500000,
-  MIN: 0.001,
-};
-
-export const VALUE_RANGE = {
-  MAX: 100000,
-  MIN: 0.001,
 };
 
 export const EXCHANGE_MARK = {

@@ -6,8 +6,10 @@ import actionCreator from "../actions/actionCreator";
 
 /**
  *
- * @param {String} message
- * @returns error message & show message func
+ * @param {object} coinData
+ * @param {string} name
+ * @param {func} showErrorMessage
+ * @returns {array, number, func} selected List, total value of cryptofolio, handler funcs
  */
 const useCoinSelect = (coinData, name, showErrorMessage) => {
   const dispatch = useDispatch();

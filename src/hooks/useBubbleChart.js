@@ -1,7 +1,13 @@
 import { useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
-
 import * as d3 from "d3";
+
+import getCircleColor from "../utils/getCircleColor";
+import colorByChartType from "../utils/colorByChartType";
+import createToolTip from "../utils/createToolTip";
+import createSimulation from "../utils/createSimulation";
+import createCircles from "../utils/createCircles";
+
 import {
   COLORS,
   CHART_SIZE,
@@ -9,15 +15,13 @@ import {
   CHART_TYPE,
   CIRCLE_TYPE,
 } from "../constants/constants";
-import getCircleColor from "../utils/getCircleColor";
-import colorByChartType from "../utils/colorByChartType";
-import createToolTip from "../utils/createToolTip";
-import createSimulation from "../utils/createSimulation";
-import createCircles from "../utils/createCircles";
 
 /**
  *
- * @param {String, array, object}
+ * @param {Object} svgRef
+ * @param {String} chartType
+ * @param {String} circleType
+ * @param {String} viewType
  *
  */
 const width = CHART_SIZE.BUBBLE_WIDTH;

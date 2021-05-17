@@ -1,9 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+import SearchBox from "../shared/SearchBox/SearchBox";
+import styled from "styled-components";
 
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SearchBox from "../shared/SearchBox/SearchBox";
-import styled from "styled-components";
 
 const CoinSearchContainer = styled.div`
   width: 300px;
@@ -27,6 +29,11 @@ const CoinSearch = ({ searchTerm, onSearch }) => {
       </SearchBox>
     </CoinSearchContainer>
   );
+};
+
+CoinSearch.propTypes = {
+  searchTerm: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default CoinSearch;

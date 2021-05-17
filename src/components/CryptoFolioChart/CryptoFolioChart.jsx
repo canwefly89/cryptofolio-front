@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import { COLOR_SET } from "../../constants/constants";
-import usePieChart from "../../hooks/usePieChart";
+import PropTypes from "prop-types";
 
 import SVG from "../shared/SVG/SVG";
+
+import usePieChart from "../../hooks/usePieChart";
+import { useSelector } from "react-redux";
+
+import { COLOR_SET } from "../../constants/constants";
 
 const size = { height: 200, width: 200, radius: 100 };
 
@@ -21,6 +24,10 @@ const CryptoFolioChart = ({ selectedList }) => {
   }, []);
 
   return <SVG ref={svgRef}></SVG>;
+};
+
+CryptoFolioChart.propTypes = {
+  selectedList: PropTypes.array.isRequired,
 };
 
 export default CryptoFolioChart;

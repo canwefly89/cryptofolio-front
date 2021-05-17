@@ -4,8 +4,9 @@ import { tip as d3tip } from "d3-v6-tip";
 import changeNumberFormat from "./changeNumberFormat";
 /**
  *
- * @param {array} exchange Option for audioContext
- * @returns Created audioContext
+ * @param {string} chartType Type of Current Chart
+ * @param {object} coinData Coin Data Set
+ * @returns Tooltip d3 object
  */
 const createToolTip = (chartType, coinData) => {
   if (

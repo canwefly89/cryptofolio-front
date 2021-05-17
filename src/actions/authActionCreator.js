@@ -119,6 +119,14 @@ const signupAction = (data) => async (dispatch) => {
     );
 
     const result = await response.json();
+
+    if (result.message === "fail") {
+      return dispatch({
+        type: getActionTypes().USER_SIGNUP_FAIL,
+        payload: result.data,
+      });
+    }
+
     cookies.set("jwt", result.data.token);
 
     dispatch({
@@ -130,7 +138,7 @@ const signupAction = (data) => async (dispatch) => {
   }
 };
 
-const logoutAction = () => (dispatch) => {
+const logoutAction = (history) => (dispatch) => {
   cookies.remove("jwt", { path: "/" });
 
   return dispatch({ type: getActionTypes().USER_LOGOUT });

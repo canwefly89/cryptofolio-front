@@ -14,7 +14,7 @@ const FooterContainer = styled.div`
   }
 `;
 
-const Footer = (props) => {
+const Footer = () => {
   return (
     <FooterContainer>
       <span> &copy; 2021 CryptoFolio. All rights reserved </span>

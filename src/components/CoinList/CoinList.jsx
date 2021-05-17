@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import CoinItem from "../CoinItem/CoinItem";
 
@@ -21,4 +22,12 @@ const CoinList = ({ coinList, handleSelect, selectedList, handleAmount }) => {
     </>
   );
 };
+
+CoinList.propTypes = {
+  coinList: PropTypes.array.isRequired,
+  handleSelect: PropTypes.func.isRequired,
+  selectedList: PropTypes.array.isRequired,
+  handleAmount: PropTypes.func.isRequired,
+};
+
 export default CoinList;

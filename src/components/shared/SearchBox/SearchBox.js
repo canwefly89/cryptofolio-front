@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 const SearchBox = styled.form`
+  font-weight: ${(props) => props.fontWeight || "600"};
+  font-size: ${(props) => props.fontSize || "0.7rem"};
+  color: ${(props) => (props.picked ? "white" : "black")};
+
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -10,9 +14,6 @@ const SearchBox = styled.form`
   padding: 0 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   background-color: "white";
-  font-weight: ${(props) => props.fontWeight || "600"};
-  font-size: ${(props) => props.fontSize || "0.7rem"};
-  color: ${(props) => (props.picked ? "white" : "black")};
 
   input {
     width: 100%;

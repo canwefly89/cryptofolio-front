@@ -1,9 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import changeNumberFormat from "../../utils/changeNumberFormat";
+
 import CryptoFolioChart from "../CryptoFolioChart/CryptoFolioChart";
+
+import changeNumberFormat from "../../utils/changeNumberFormat";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -73,6 +76,11 @@ const CryptoFolioList = ({ cryptofolios, onClick }) => {
       </ShowMoreButton>
     </CryptoFolioItemContainer>
   );
+};
+
+CryptoFolioList.propTypes = {
+  cryptofolios: PropTypes.array,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default CryptoFolioList;

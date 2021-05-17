@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import SelectedList from "../SelectedList/SelectedList";
-import CoinSearch from "../CoinSearch/CoinSearch";
 import CoinList from "../CoinList/CoinList";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import Button from "../shared/Button/Button";
-
-import useErrorMessage from "../../hooks/useErrorMessage";
-import useInput from "../../hooks/useInput";
-import useCoinFilter from "../../hooks/useCoinFilter";
-import useCoinSelect from "../../hooks/useCoinSelect";
+import CoinSearch from "../CoinSearch/CoinSearch";
 import CoinFilter from "../CoinFilter/CoinFilter";
 import CreateRandom from "../CreateRandom/CreateRandom";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import SelectedList from "../SelectedList/SelectedList";
+import Button from "../shared/Button/Button";
+
+import useCoinFilter from "../../hooks/useCoinFilter";
+import useCoinSelect from "../../hooks/useCoinSelect";
+import useErrorMessage from "../../hooks/useErrorMessage";
+import useInput from "../../hooks/useInput";
 
 const CreateContainer = styled.div`
   padding-top: 30px;
@@ -70,9 +70,9 @@ const CreateButtonContainer = styled.div`
 `;
 
 const CreateCryptoFolio = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const { coinData } = useSelector((state) => state.coinReducer);
   const [name, onChangeName] = useInput("");
-  const [searchTerm, setSearchTerm] = useState("");
   const [error, showErrorMessage] = useErrorMessage("");
 
   const { coinList, handleSearch, handleFilter } = useCoinFilter(

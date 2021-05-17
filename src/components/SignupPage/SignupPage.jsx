@@ -1,17 +1,19 @@
-import React, { useCallback } from "react";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Button from "../shared/Button/Button";
+import Input from "../shared/Input/Input";
 
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-
-import actionCreator from "../../actions/actionCreator";
 import useErrorMessage from "../../hooks/useErrorMessage";
 import useInput from "../../hooks/useInput";
-import validateInput from "../../utils/validateInput";
-import Input from "../shared/Input/Input";
+import useSignUp from "../../hooks/useSignup";
+import useSocialLogin from "../../hooks/useSocialLogin";
+
+import actionCreator from "../../actions/actionCreator";
 
 const SignUpContainer = styled.section`
   width: 100vw;
@@ -53,6 +55,7 @@ const ButtonContainer = styled.div`
 
 const SignupPage = ({ authService }) => {
   const dispatch = useDispatch();
+  const { authError } = useSelector((state) => state.authReducer);
   const history = useHistory();
 
   const [email, onChangeEmail] = useInput("");
@@ -61,44 +64,18 @@ const SignupPage = ({ authService }) => {
   const [passwordConfirm, onChangePasswordConfirm] = useInput("");
   const [error, showErrorMessage] = useErrorMessage("");
 
-  const handleSignup = useCallback(
-    (event) => {
-      event.preventDefault();
-
-      const inputData = {
-        email,
-        name,
-        password,
-        passwordConfirm,
-      };
-
-      const validationResult = validateInput(inputData);
-
-      if (validationResult) {
-        return showErrorMessage(validationResult);
-      }
-
-      dispatch(actionCreator.signinAction(inputData));
-    },
-    [dispatch, email, name, password, passwordConfirm, showErrorMessage]
+  const handleSignup = useSignUp(
+    { email, name, password, passwordConfirm },
+    showErrorMessage
   );
+  const handleSocialLogin = useSocialLogin(authService, showErrorMessage);
 
-  const handleSocialLogin = useCallback(
-    async (event) => {
-      try {
-        const loginData = await authService.login(event.target.name);
-        const data = {
-          email: loginData.user.email,
-          name: loginData.user.displayName,
-        };
-
-        dispatch(actionCreator.socialLoginAction(data));
-      } catch (err) {
-        showErrorMessage("로그인에 실패하였습니다.");
-      }
-    },
-    [authService, dispatch, showErrorMessage]
-  );
+  useEffect(() => {
+    if (authError) {
+      showErrorMessage(authError);
+      dispatch(actionCreator.resetErrorMessage());
+    }
+  }, [dispatch, authError, showErrorMessage]);
 
   return (
     <SignUpContainer>
@@ -181,6 +158,10 @@ const SignupPage = ({ authService }) => {
       </SignUpForm>
     </SignUpContainer>
   );
+};
+
+SignupPage.propTypes = {
+  authService: PropTypes.object.isRequired,
 };
 
 export default SignupPage;

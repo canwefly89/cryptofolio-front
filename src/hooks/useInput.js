@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 
 /**
  *
- * @param {String} initialValue
+ * @param {string} initialValue
  * @returns input value and input handler
  */
 const useInput = (initialValue) => {

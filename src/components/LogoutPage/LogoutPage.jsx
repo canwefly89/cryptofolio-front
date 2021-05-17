@@ -1,11 +1,11 @@
-import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
-import actionCreator from "../../actions/actionCreator";
 import Button from "../shared/Button/Button";
+
+import useLogout from "../../hooks/useLogout";
 
 const LogoutContainer = styled.div`
   width: 100vw;
@@ -26,20 +26,14 @@ const LogoutMessage = styled.div`
 `;
 
 const LogoutPage = ({ authService }) => {
-  const dispatch = useDispatch();
+  const handleLogout = useLogout(authService);
   const history = useHistory();
-
-  const onLogout = useCallback(async () => {
-    await authService.logout();
-    dispatch(actionCreator.logoutAction());
-    history.push("/");
-  }, [authService, dispatch, history]);
 
   return (
     <LogoutContainer>
       <LogoutMessage>Log Out</LogoutMessage>
       <Button
-        onClick={onLogout}
+        onClick={handleLogout}
         margin={["5vh", "0", "0", "1vw"]}
         bgColor={"#eb4d4b"}
         fontWeight={"600"}

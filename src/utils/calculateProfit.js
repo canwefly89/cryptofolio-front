@@ -1,12 +1,13 @@
 /**
  *
- * @param {number} number target Number
- * @param {type} string format type
- * @returns Created audioContext
+ * @param {array} cryptofolioList
+ * @param {object} coinData
+ * @returns {array} calculatedList
  */
-const calculateProfit = (array = [], coinData = {}) => {
-  const caculated = array.map((cryptofolio) => {
+const calculateProfit = (cryptofolioList = [], coinData = {}) => {
+  const caculatedList = cryptofolioList.map((cryptofolio) => {
     if (!cryptofolio) {
+      // eslint-disable-next-line array-callback-return
       return;
     }
 
@@ -27,7 +28,7 @@ const calculateProfit = (array = [], coinData = {}) => {
     return cryptofolio;
   });
 
-  return caculated;
+  return caculatedList;
 };
 
 export default calculateProfit;

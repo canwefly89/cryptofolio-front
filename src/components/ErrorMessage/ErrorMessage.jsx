@@ -1,11 +1,11 @@
 import React from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const ErrorMessageContainer = styled.div`
   position: absolute;
   padding: 20px 30px;
-  top: 5px;
+  top: 300px;
   left: 50vw;
   background-color: #ffebee;
   text-align: center;

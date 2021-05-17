@@ -2,15 +2,15 @@ import dayjs from "dayjs";
 import calculateProfit from "./calculateProfit";
 /**
  *
- * @param {number} number target Number
- * @param {type} string format type
- * @returns Created audioContext
+ * @param {array} cryptofolioList
+ * @param {object} coinData
+ * @return {array} sorted List
  */
-const getMonthlySorted = (array = [], coinData = {}) => {
-  return calculateProfit(array, coinData)
+const getMonthlySorted = (cryptofolioList = [], coinData = {}) => {
+  return calculateProfit(cryptofolioList, coinData)
     .filter(
-      (portfolio) =>
-        new Date(dayjs(portfolio.createdAt)) -
+      (cryptofolio) =>
+        new Date(dayjs(cryptofolio.createdAt)) -
           new Date(dayjs(Date.now()).add(-1, "month")) >
         0
     )

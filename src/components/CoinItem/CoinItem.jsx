@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { useCallback } from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
-import changeNumberFormat from "../../utils/changeNumberFormat";
+
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+
 import useErrorMessage from "../../hooks/useErrorMessage";
+import { useCallback } from "react";
+
+import changeNumberFormat from "../../utils/changeNumberFormat";
 import { EXCHANGE_MARK } from "../../constants/constants";
 
 const CoinInfoContainer = styled.div`
@@ -76,8 +80,8 @@ const InputAmount = styled.input`
 `;
 
 const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
-  const [error, showErrorMessage] = useErrorMessage("");
   const [value, setValue] = useState("");
+  const [error, showErrorMessage] = useErrorMessage("");
 
   const handleClick = useCallback(() => {
     if (
@@ -155,6 +159,13 @@ const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
       </AmountContainer>
     </>
   );
+};
+
+CoinItem.propTypes = {
+  coin: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+  selectedList: PropTypes.array.isRequired,
+  handleAmount: PropTypes.func.isRequired,
 };
 
 export default CoinItem;

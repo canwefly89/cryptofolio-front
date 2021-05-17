@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
 import styled from "styled-components";
-import MetaData from "../MetaData/MetaData.jsx";
+
+import MetaData from "../MetaData/MetaData";
 import Button from "../shared/Button/Button";
 
 import { useHistory } from "react-router-dom";
@@ -64,7 +64,6 @@ const HeaderLogin = styled.div`
 
 const Header = () => {
   const { isAuthorized, user } = useSelector((state) => state.authReducer);
-
   const history = useHistory();
 
   return (

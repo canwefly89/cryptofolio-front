@@ -2,8 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 
 /**
  *
- * @param {String} message
- * @returns error message & show message func
+ * @param {object} coinData
+ * @param {func} setSearchTerm
+ * @returns {arrary, func} filtered List, search/filter function
  */
 const useCoinFilter = (coinData, setSearchTerm) => {
   const [coinList, setCoinList] = useState([]);
@@ -20,7 +21,7 @@ const useCoinFilter = (coinData, setSearchTerm) => {
 
       setCoinList(filtered);
     },
-    [coinData]
+    [coinData, setSearchTerm]
   );
 
   const handleFilter = useCallback(

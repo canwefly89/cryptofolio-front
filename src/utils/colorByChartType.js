@@ -8,8 +8,9 @@ import * as d3 from "d3";
 
 /**
  *
- * @param {array} exchange Option for audioContext
- * @returns Created audioContext
+ * @param {object} circles
+ * @param {string} chartType
+ *
  */
 const colorByChartType = (circles, chartType = CHART_TYPE.EXCHANGE) => {
   if (chartType === CHART_TYPE.EXCHANGE) {

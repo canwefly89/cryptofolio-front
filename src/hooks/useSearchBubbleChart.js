@@ -4,8 +4,10 @@ import getCircleColor from "../utils/getCircleColor";
 
 /**
  *
- * @param {String} message
- * @returns error message & show message func
+ * @param {object} svgRef
+ * @param {string} searchTerm
+ * @param {string} type
+ * @returns search handler
  */
 const useSearchBubbleChart = (svgRef, searchTerm, type) => {
   const handleSearch = (event) => {

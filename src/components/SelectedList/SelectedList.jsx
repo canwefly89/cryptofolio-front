@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { COLOR_SET } from "../../constants/constants";

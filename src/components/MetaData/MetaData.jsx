@@ -1,7 +1,7 @@
 import React from "react";
+import styled from "styled-components";
 import { useSelector } from "react-redux";
 
-import styled from "styled-components";
 import changeNumberFormat from "../../utils/changeNumberFormat";
 
 const MetaDataContainer = styled.div`

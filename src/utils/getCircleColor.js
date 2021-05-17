@@ -8,8 +8,9 @@ import * as d3 from "d3";
 
 /**
  *
- * @param {array} exchange Option for audioContext
- * @returns Created audioContext
+ * @param {object} d
+ * @param {string} chartType
+ * @returns Color Code
  */
 const getCircleColor = (d, chartType) => {
   if (chartType === CHART_TYPE.EXCHANGE) {

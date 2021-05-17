@@ -1,19 +1,14 @@
 /**
  *
- * @param {object} inputData Option for audioContext
+ * @param {object} signupData Option for audioContext
  * @returns Created audioContext
  */
-const validateInput = (inputData) => {
-  const { email, name, password, passwordConfirm } = inputData;
+const validateInput = (signupData) => {
+  const { email, password, passwordConfirm } = signupData;
   const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  const NAME_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]*$/;
 
   if (!EMAIL_REGEX.test(email)) {
     return "잘못된 이메일 형식입니다.";
-  }
-
-  if (!NAME_REGEX.test(name)) {
-    return "잘못된 이름 형식입니다.";
   }
 
   if (password.length < 8) {

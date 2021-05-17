@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import Button from "../shared/Button/Button";
 import CryptoFolioList from "../CryptoFolioList/CryptoFolioList";
+import Button from "../shared/Button/Button";
+
 import calculateProfit from "../../utils/calculateProfit";
 import getMonthlySorted from "../../utils/getMonthlySorted";
 import getWeeklySorted from "../../utils/getWeeklySorted";
@@ -26,12 +27,12 @@ const ListTitle = styled.h1`
   font-weight: 800;
 `;
 
-const CryptoFolioPage = (props) => {
-  const history = useHistory();
+const CryptoFolioPage = () => {
   const [cryptofolios, setCryptofolios] = useState({});
   const { isAuthorized, user } = useSelector((state) => state.authReducer);
   const { coinData } = useSelector((state) => state.coinReducer);
   const { allCryptoFolios } = useSelector((state) => state.cryptofolioReducer);
+  const history = useHistory();
 
   useEffect(() => {
     if (!coinData) {

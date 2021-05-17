@@ -5,14 +5,16 @@ const Input = styled.input`
   margin-right: ${(props) => (props.margin && props.margin[1]) || "0"};
   margin-bottom: ${(props) => (props.margin && props.margin[2]) || "0"};
   margin-left: ${(props) => (props.margin && props.margin[3]) || "0"};
+
   width: 100%;
   padding: 10px;
-  outline: none;
   border: 0.5px solid gray;
   border-radius: 2px;
+  outline: none;
   color: white;
   font-weight: 800;
   background-color: inherit;
+
   :focus {
     outline: none;
   }

@@ -3,20 +3,20 @@ import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-import Header from "../Header/Header";
-import LoginPage from "../LoginPage/LoginPage";
-import LogoutPage from "../LogoutPage/LogoutPage";
-import ErrorPage from "../ErrorPage/ErrorPage";
-import LandingPage from "../LandingPage/LandingPage";
-import CryptoFolioPage from "../CryptoFolioPage/CryptoFolioPage";
+import AllCryptoFolio from "../AllCryptoFolio/AllCryptoFolio";
 import CreateCryptoFolio from "../CreateCryptoFolio/CreateCryptoFolio";
 import CryptoFolioDetail from "../CryptoFolioDetail/CryptoFolioDetail";
-import SignupPage from "../SignupPage/SignupPage";
-import Loading from "../Loading/Loading";
+import CryptoFolioPage from "../CryptoFolioPage/CryptoFolioPage";
+import ErrorPage from "../ErrorPage/ErrorPage";
 import Footer from "../Footer/Footer";
+import Header from "../Header/Header";
+import LandingPage from "../LandingPage/LandingPage";
+import Loading from "../Loading/Loading";
+import LoginPage from "../LoginPage/LoginPage";
+import LogoutPage from "../LogoutPage/LogoutPage";
+import SignupPage from "../SignupPage/SignupPage";
 
 import actionCreator from "../../actions/actionCreator";
-import AllCryptoFolio from "../AllCryptoFolio/AllCryptoFolio";
 
 const App = ({ authService }) => {
   const { isAuthorized } = useSelector((state) => state.authReducer);

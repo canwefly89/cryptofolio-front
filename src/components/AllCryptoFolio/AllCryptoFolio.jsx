@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+
+import Button from "../shared/Button/Button";
+import CryptoFolioChart from "../CryptoFolioChart/CryptoFolioChart";
+
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import Button from "../shared/Button/Button";
-import changeNumberFormat from "../../utils/changeNumberFormat";
-import CryptoFolioChart from "../CryptoFolioChart/CryptoFolioChart";
 import calculateProfit from "../../utils/calculateProfit";
+import changeNumberFormat from "../../utils/changeNumberFormat";
 
 const CryptoFolioContainer = styled.div`
   padding: 40px;
@@ -45,12 +47,12 @@ const CryptoFolioInfo = styled.div`
   }
 `;
 
-const AllCryptoFolio = (props) => {
-  const history = useHistory();
+const AllCryptoFolio = () => {
   const [cryptofolios, setCryptofolios] = useState([]);
   const { isAuthorized, user } = useSelector((state) => state.authReducer);
   const { coinData } = useSelector((state) => state.coinReducer);
   const { allCryptoFolios } = useSelector((state) => state.cryptofolioReducer);
+  const history = useHistory();
 
   useEffect(() => {
     if (!coinData) {

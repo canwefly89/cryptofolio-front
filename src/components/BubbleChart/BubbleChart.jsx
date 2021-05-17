@@ -1,16 +1,18 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+
+import TypeButton from "../shared/TypeButton/TypeButton";
+import SearchBox from "../shared/SearchBox/SearchBox";
+import SVG from "../shared/SVG/SVG";
 
 import useBubbleChart from "../../hooks/useBubbleChart";
 import useInput from "../../hooks/useInput";
+
+import useSearchBubbleChart from "../../hooks/useSearchBubbleChart";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { CHART_TYPE, CIRCLE_TYPE, VIEW_TYPE } from "../../constants/constants";
-import useSearchBubbleChart from "../../hooks/useSearchBubbleChart";
-import SVG from "../shared/SVG/SVG";
-import TypeButton from "../shared/TypeButton/TypeButton";
-import SearchBox from "../shared/SearchBox/SearchBox";
 import "../../styles/tooltip.css";
 
 const SearchContainer = styled.div`
@@ -25,9 +27,9 @@ const CircleTypeContainer = styled.div`
 `;
 
 const BubbleChart = ({ type }) => {
-  const [searchTerm, onChangeSearchTerm] = useInput("");
   const [viewType, setViewType] = useState(VIEW_TYPE.BASIC);
   const [circleType, setCircleType] = useState(CIRCLE_TYPE.MARKETCAP);
+  const [searchTerm, onChangeSearchTerm] = useInput("");
   const svgRef = useRef();
 
   useBubbleChart(svgRef, type, circleType, viewType);
@@ -136,6 +138,10 @@ const BubbleChart = ({ type }) => {
       <SVG ref={svgRef}></SVG>
     </>
   );
+};
+
+BubbleChart.propTypes = {
+  type: PropTypes.string.isRequired,
 };
 
 export default BubbleChart;

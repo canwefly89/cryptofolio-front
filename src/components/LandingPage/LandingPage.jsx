@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import BubbleChart from "../BubbleChart/BubbleChart";
@@ -23,7 +23,7 @@ const BubbleChartContainer = styled.div`
   margin-top: 20px;
 `;
 
-const LandingPage = memo(() => {
+const LandingPage = () => {
   const [type, setType] = useState(CHART_TYPE.EXCHANGE);
   const { isAuthorized } = useSelector((state) => state.authReducer);
 
@@ -66,6 +66,6 @@ const LandingPage = memo(() => {
       </BubbleChartContainer>
     </LandingPageContainer>
   );
-});
+};
 
 export default LandingPage;

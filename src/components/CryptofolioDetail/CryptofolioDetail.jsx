@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { COLOR_SET } from "../../constants/constants";
-import usePieChart from "../../hooks/usePieChart";
-
 import { useLocation, useParams, useHistory } from "react-router-dom";
-import actionCreator from "../../actions/actionCreator";
+
 import SVG from "../shared/SVG/SVG";
 import Button from "../shared/Button/Button";
+
+import usePieChart from "../../hooks/usePieChart";
+
+import actionCreator from "../../actions/actionCreator";
 import changeNumberFormat from "../../utils/changeNumberFormat";
 import calculateProfit from "../../utils/calculateProfit";
-import styled from "styled-components";
+import { COLOR_SET } from "../../constants/constants";
 
 const CryptoFolioContainer = styled.div`
   display: flex;
@@ -63,18 +65,20 @@ const Section = styled.span`
 
 const size = { height: 600, width: 600, radius: 300 };
 
-const CryptofolioDetail = (props) => {
-  const { user } = useSelector((state) => state.authReducer);
-  const { coinData } = useSelector((state) => state.coinReducer);
-  const { allCryptoFolios } = useSelector((state) => state.cryptofolioReducer);
-  const svgRef = useRef();
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const param = useParams();
+const CryptofolioDetail = () => {
   const [currentFolio, setCurrentFolio] = useState({});
+  const svgRef = useRef();
   const colorRef = useRef(
     COLOR_SET[Math.floor(Math.random() * COLOR_SET.length)]
   );
+
+  const { user } = useSelector((state) => state.authReducer);
+  const { coinData } = useSelector((state) => state.coinReducer);
+  const { allCryptoFolios } = useSelector((state) => state.cryptofolioReducer);
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+  const param = useParams();
   const { state } = useLocation();
 
   const handleDelete = () => {

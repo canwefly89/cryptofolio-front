@@ -1,6 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
+
+import { useState } from "react";
 import { CATEGORIES, PORTFOLIOS } from "../../constants/constants";
 
 import TypeButton from "../shared/TypeButton/TypeButton";
@@ -89,6 +91,10 @@ const CoinFilter = ({ handleFilter }) => {
       </FilterSelectContainer>
     </>
   );
+};
+
+CoinFilter.propTypes = {
+  handleFilter: PropTypes.func.isRequired,
 };
 
 export default CoinFilter;

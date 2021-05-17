@@ -2,7 +2,7 @@
  *
  * @param {number} number target Number
  * @param {type} string format type
- * @returns Created audioContext
+ * @returns {string} formatted number
  */
 const changeNumberFormat = (number, type) => {
   const COMMA_REGEX = /\B(?=(\d{3})+(?!\d))/g;

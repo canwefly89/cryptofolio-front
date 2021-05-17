@@ -5,7 +5,11 @@ import { CHART_TYPE } from "../constants/constants";
 
 /**
  *
- * @param {String, array, object}
+ * @param {object} svgRef
+ * @param {array} selectedList
+ * @param {object} coinData
+ * @param {object} size
+ * @param {colorSet} string
  *
  */
 
