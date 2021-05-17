@@ -1,13 +1,13 @@
 import { useEffect, useCallback } from "react";
 import * as d3 from "d3";
 import createToolTip from "../utils/createToolTip";
+import { CHART_TYPE } from "../constants/constants";
 
 /**
  *
  * @param {String, array, object}
  *
  */
-const tip = createToolTip();
 
 const usePieChart = (
   svgRef,
@@ -16,23 +16,20 @@ const usePieChart = (
   size,
   colorSet = "schemeSet2"
 ) => {
-  const handleMouseOver = useCallback((event, d) => {
-    console.log(d);
-    if (!coinData) {
-      return;
-    }
-    const newD = { ...coinData[d.data.name], ...d };
-    // tip.show(event, newD);
-  }, []);
+  const tip = createToolTip(CHART_TYPE.PIE, coinData);
+  const handleMouseOver = useCallback(
+    (event, d) => {
+      tip.show(event, d);
+    },
+    [tip]
+  );
 
-  const handleMouseOut = useCallback((event, d) => {
-    console.log(d);
-    if (!coinData) {
-      return;
-    }
-    const newD = { ...coinData[d.data.name], ...d };
-    // tip.hide(event, newD);
-  }, []);
+  const handleMouseOut = useCallback(
+    (event, d) => {
+      tip.hide(event, d);
+    },
+    [tip]
+  );
 
   useEffect(() => {
     const cent = { x: size.width / 2 + 5, y: size.height / 2 + 5 };
@@ -86,14 +83,12 @@ const usePieChart = (
         .duration(300)
         .attrTween("d", arcTweenEnter);
 
-      const piece = svg
+      svg
         .selectAll("path")
         .attr("opacity", 0.8)
         .on("mouseover", handleMouseOver)
-        .on("mouseout", handleMouseOut);
-
-      // console.log(piece);
-      // .call(tip);
+        .on("mouseout", handleMouseOut)
+        .call(tip);
     };
 
     if (selectedList && coinData) {
@@ -102,11 +97,14 @@ const usePieChart = (
   }, [
     coinData,
     colorSet,
+    handleMouseOut,
+    handleMouseOver,
     selectedList,
     size.height,
     size.radius,
     size.width,
     svgRef,
+    tip,
   ]);
 };
 

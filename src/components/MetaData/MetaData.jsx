@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import styled from "styled-components";
-import setNumberFormat from "../../utils/setNumberFormat";
+import changeNumberFormat from "../../utils/changeNumberFormat";
 
 const MetaDataContainer = styled.div`
   display: flex;
@@ -40,10 +40,10 @@ const MetaData = () => {
       <MetaDataItem>
         <span>전체 시가총액</span>
         <span>
-          {metadata && setNumberFormat(metadata.marketCapDollar, "cut")}달러
+          {metadata && changeNumberFormat(metadata.marketCapDollar, "cut")}달러
         </span>
         <span>
-          {metadata && setNumberFormat(metadata.marketCapWon, "cut")}원
+          {metadata && changeNumberFormat(metadata.marketCapWon, "cut")}원
         </span>
       </MetaDataItem>
       <MetaDataItem></MetaDataItem>

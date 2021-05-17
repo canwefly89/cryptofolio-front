@@ -3,8 +3,6 @@ import {
   MARKETCAP_RANGE,
   CIRCLE_TYPE,
   PRICE_RANGE,
-  AMOUNT_RANGE,
-  VALUE_RANGE,
 } from "../constants/constants";
 
 /**
@@ -13,7 +11,7 @@ import {
  * @returns Created audioContext
  */
 
-const createRadiusScale = (circleType = CIRCLE_TYPE.MARKETCAP) => {
+const createRadiusScale = (circleType = CIRCLE_TYPE.MARKETCAP, data) => {
   if (circleType === CIRCLE_TYPE.MARKETCAP) {
     return d3
       .scaleSqrt()
@@ -29,17 +27,17 @@ const createRadiusScale = (circleType = CIRCLE_TYPE.MARKETCAP) => {
   }
 
   if (circleType === CIRCLE_TYPE.AMOUNT) {
-    return d3
-      .scaleSqrt()
-      .domain([AMOUNT_RANGE.MIN, AMOUNT_RANGE.MAX])
-      .range([30, 300]);
+    const max = Math.max(...data.map((item) => item.amount));
+    const min = Math.min(...data.map((item) => item.amount));
+
+    return d3.scaleSqrt().domain([min, max]).range([10, 120]);
   }
 
   if (circleType === CIRCLE_TYPE.VALUE) {
-    return d3
-      .scaleSqrt()
-      .domain([VALUE_RANGE.MIN, VALUE_RANGE.MAX])
-      .range([10, 150]);
+    const max = Math.max(...data.map((item) => item.value));
+    const min = Math.min(...data.map((item) => item.value));
+
+    return d3.scaleSqrt().domain([min, max]).range([10, 120]);
   }
 };
 

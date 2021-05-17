@@ -10,7 +10,7 @@
             <>
               <span>
                 $
-                {setNumberFormat(
+                {changeNumberFormat(
                   coinSet[ticker].amount * coinData[ticker].price.price
                 )}
               </span>
@@ -32,6 +32,6 @@
     })}
   <div>
     <span>Total</span>
-    <span>${setNumberFormat(totalValue)}</span>
+    <span>${changeNumberFormat(totalValue)}</span>
   </div>
 </>;

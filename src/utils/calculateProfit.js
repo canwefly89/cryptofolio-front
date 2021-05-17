@@ -9,6 +9,7 @@ const calculateProfit = (array = [], coinData = {}) => {
     if (!cryptofolio) {
       return;
     }
+
     let currentValue = 0;
 
     cryptofolio.selectedList.forEach((coin) => {

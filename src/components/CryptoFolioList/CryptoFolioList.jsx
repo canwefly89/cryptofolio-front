@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import setNumberFormat from "../../utils/setNumberFormat";
+import changeNumberFormat from "../../utils/changeNumberFormat";
 import CryptoFolioChart from "../CryptoFolioChart/CryptoFolioChart";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -60,11 +60,11 @@ const CryptoFolioList = ({ cryptofolios, onClick }) => {
             </CryptoFolioInfo>
             <CryptoFolioInfo>
               <span>현재 수익&nbsp;&nbsp;</span>
-              <span>${setNumberFormat(cryptofolio.profit, "int")}</span>
+              <span>${changeNumberFormat(cryptofolio.profit, "int")}</span>
             </CryptoFolioInfo>
             <CryptoFolioInfo>
               <span>수익률&nbsp;&nbsp;</span>
-              <span>{setNumberFormat(cryptofolio.profitPercent)}%</span>
+              <span>{changeNumberFormat(cryptofolio.profitPercent)}%</span>
             </CryptoFolioInfo>
           </CryptoFolioItem>
         ))}

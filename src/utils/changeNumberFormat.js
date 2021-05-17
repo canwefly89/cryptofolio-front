@@ -4,7 +4,7 @@
  * @param {type} string format type
  * @returns Created audioContext
  */
-const setNumberFormat = (number, type) => {
+const changeNumberFormat = (number, type) => {
   const COMMA_REGEX = /\B(?=(\d{3})+(?!\d))/g;
 
   if (typeof number !== "number") {
@@ -24,4 +24,4 @@ const setNumberFormat = (number, type) => {
   return number.toFixed(2).toString().replace(COMMA_REGEX, ",");
 };
 
-export default setNumberFormat;
+export default changeNumberFormat;

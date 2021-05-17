@@ -7,7 +7,7 @@ import { useLocation, useParams, useHistory } from "react-router-dom";
 import actionCreator from "../../actions/actionCreator";
 import SVG from "../shared/SVG/SVG";
 import Button from "../shared/Button/Button";
-import setNumberFormat from "../../utils/setNumberFormat";
+import changeNumberFormat from "../../utils/changeNumberFormat";
 import calculateProfit from "../../utils/calculateProfit";
 import styled from "styled-components";
 
@@ -123,7 +123,7 @@ const CryptofolioDetail = (props) => {
         <CryptoFolioInfo>
           <span>현재 가치</span>
           &nbsp;&nbsp;
-          <span>${setNumberFormat(currentFolio.currentValue)}</span>
+          <span>${changeNumberFormat(currentFolio.currentValue)}</span>
         </CryptoFolioInfo>
         <CryptoFolioInfo>
           <span>현재 수익</span>
@@ -150,11 +150,11 @@ const CryptofolioDetail = (props) => {
             <CrypoFolioCoins key={coin.name}>
               <img src={currentCoin.imagePath} alt="ticker" />
               <span>{coin.name}</span>
-              <span>${setNumberFormat(currentCoin.price?.price)}&nbsp;</span>
-              <span>{setNumberFormat(coin.amount, "int")}</span>
+              <span>${changeNumberFormat(currentCoin.price?.price)}&nbsp;</span>
+              <span>{changeNumberFormat(coin.amount, "int")}</span>
               <span>
                 $
-                {setNumberFormat(
+                {changeNumberFormat(
                   currentCoin.price?.price * parseInt(coin.amount)
                 )}
               </span>

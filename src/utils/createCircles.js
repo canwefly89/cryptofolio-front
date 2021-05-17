@@ -10,11 +10,11 @@ import createRadiusScale from "./createRadiusScale";
 const width = CHART_SIZE.BUBBLE_WIDTH;
 const height = CHART_SIZE.BUBBLE_HEIGHT;
 
-const createCircles = (svg, array, circleType = CIRCLE_TYPE.MARKETCAP) => {
-  let radiusScale = createRadiusScale(circleType);
+const createCircles = (svg, coinList, circleType = CIRCLE_TYPE.MARKETCAP) => {
+  let radiusScale = createRadiusScale(circleType, coinList);
   svg.selectAll("g").remove();
 
-  const baseGroup = svg.selectAll("g").data(array);
+  const baseGroup = svg.selectAll("g").data(coinList);
   const circleGroup = baseGroup.enter().append("g");
 
   if (circleType === CIRCLE_TYPE.MARKETCAP) {

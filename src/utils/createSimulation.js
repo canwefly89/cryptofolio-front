@@ -18,9 +18,11 @@ const height = CHART_SIZE.BUBBLE_HEIGHT;
 const createSimulation = (
   chartType = CHART_TYPE.EXCHANGE,
   circleType = CIRCLE_TYPE.MARKETCAP,
-  viewType = VIEW_TYPE.BASIC
+  viewType = VIEW_TYPE.BASIC,
+  coinList
 ) => {
-  const radiusScale = createRadiusScale(circleType);
+  console.log(coinList);
+  const radiusScale = createRadiusScale(circleType, coinList);
   let forceX;
   let forceY;
 
@@ -29,8 +31,8 @@ const createSimulation = (
       forceX = d3
         .forceX((d) => {
           if (d.exchanges?.length === 2) return width / 2 - 200;
-          if (d.exchanges?.includes("upbit")) return width / 4 - 100;
-          if (d.exchanges?.includes("binance")) return (width / 4) * 3 - 200;
+          if (d.exchanges?.includes("upbit")) return width / 4 - 200;
+          if (d.exchanges?.includes("binance")) return (width / 4) * 3 - 80;
         })
         .strength(0.1);
 

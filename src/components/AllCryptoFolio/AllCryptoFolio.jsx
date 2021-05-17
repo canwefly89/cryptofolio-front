@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import Button from "../shared/Button/Button";
-import setNumberFormat from "../../utils/setNumberFormat";
+import changeNumberFormat from "../../utils/changeNumberFormat";
 import CryptoFolioChart from "../CryptoFolioChart/CryptoFolioChart";
 import calculateProfit from "../../utils/calculateProfit";
 
@@ -94,11 +94,11 @@ const AllCryptoFolio = (props) => {
               </CryptoFolioInfo>
               <CryptoFolioInfo>
                 <span>현재 수익&nbsp;&nbsp;</span>
-                <span>${setNumberFormat(cryptofolio.profit, "int")}</span>
+                <span>${changeNumberFormat(cryptofolio.profit, "int")}</span>
               </CryptoFolioInfo>
               <CryptoFolioInfo>
                 <span>수익률&nbsp;&nbsp;</span>
-                <span>{setNumberFormat(cryptofolio.profitPercent)}%</span>
+                <span>{changeNumberFormat(cryptofolio.profitPercent)}%</span>
               </CryptoFolioInfo>
             </CryptoFolioItem>
           ))}

@@ -63,7 +63,12 @@ const useBubbleChart = (
       }
 
       const circles = createCircles(svg, coinList, circleType);
-      const simulation = createSimulation(chartType, circleType, viewType);
+      const simulation = createSimulation(
+        chartType,
+        circleType,
+        viewType,
+        coinList
+      );
       const ticked = () => {
         circles.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
       };
@@ -157,7 +162,7 @@ const useBubbleChart = (
 
     drawGraph(svg, coinList, chartType, _circleType, viewType);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartType, viewType, circleType]);
+  }, [chartType, viewType, coinData, circleType]);
 };
 
 export default useBubbleChart;

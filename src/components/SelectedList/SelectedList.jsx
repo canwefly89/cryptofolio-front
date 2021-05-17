@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { COLOR_SET } from "../../constants/constants";
-import setNumberFormat from "../../utils/setNumberFormat";
+import changeNumberFormat from "../../utils/changeNumberFormat";
 import usePieChart from "../../hooks/usePieChart";
 
 import SVG from "../shared/SVG/SVG";
@@ -63,7 +63,9 @@ const SelectedList = ({ selectedList, totalValue }) => {
               <span>{coin.name}&nbsp;&nbsp;</span>
               <span>
                 $
-                {setNumberFormat(coin.amount * coinData[coin.name].price.price)}
+                {changeNumberFormat(
+                  coin.amount * coinData[coin.name].price.price
+                )}
               </span>
               <span>
                 &nbsp;&nbsp;
@@ -82,7 +84,7 @@ const SelectedList = ({ selectedList, totalValue }) => {
       <TotalContainer>
         <span>합계</span>
         &nbsp;&nbsp;
-        <span>${setNumberFormat(totalValue)}</span>
+        <span>${changeNumberFormat(totalValue)}</span>
       </TotalContainer>
     </SelectedContainer>
   );

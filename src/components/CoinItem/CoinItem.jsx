@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useCallback } from "react";
 import styled from "styled-components";
-import setNumberFormat from "../../utils/setNumberFormat";
+import changeNumberFormat from "../../utils/changeNumberFormat";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import useErrorMessage from "../../hooks/useErrorMessage";
 import { EXCHANGE_MARK } from "../../constants/constants";
@@ -126,12 +126,12 @@ const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
           <div>
             <span>현재 가격</span>
             &nbsp;&nbsp;
-            <span>${setNumberFormat(coin.price?.price)}</span>
+            <span>${changeNumberFormat(coin.price?.price)}</span>
           </div>
           <div>
             <span>시가 총액</span>
             &nbsp;&nbsp;
-            <span>${setNumberFormat(coin.marketCap?.marketCap)}</span>
+            <span>${changeNumberFormat(coin.marketCap?.marketCap)}</span>
           </div>
         </CoinPriceContainer>
         <ExchangeContainer>
