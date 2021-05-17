@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
+import useUpdateMetaData from "../../hooks/useUpdateMetaData";
 import changeNumberFormat from "../../utils/changeNumberFormat";
 
 const MetaDataContainer = styled.div`
@@ -28,8 +29,15 @@ const MetaDataItem = styled.div`
   }
 `;
 
+const UpdateMetaData = styled.button`
+  margin-left: 20px;
+  margin-top: 2px;
+`;
+
 const MetaData = () => {
   const { metadata } = useSelector((state) => state.coinReducer);
+
+  const handleUpdateMetaData = useUpdateMetaData();
 
   return (
     <MetaDataContainer>
@@ -55,6 +63,7 @@ const MetaData = () => {
         <span>김치 프리미엄</span>
         <span>{metadata?.premium}%</span>
       </MetaDataItem>
+      <UpdateMetaData onClick={handleUpdateMetaData}>업데이트</UpdateMetaData>
     </MetaDataContainer>
   );
 };

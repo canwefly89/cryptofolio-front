@@ -7,8 +7,6 @@ import { useHistory } from "react-router-dom";
 import CryptoFolioChart from "../CryptoFolioChart/CryptoFolioChart";
 
 import changeNumberFormat from "../../utils/changeNumberFormat";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CryptoFolioItemContainer = styled.div`
   display: grid;
@@ -33,12 +31,7 @@ const CryptoFolioInfo = styled.div`
   }
 `;
 
-const ShowMoreButton = styled.div`
-  font-size: 3em;
-  cursor: pointer;
-`;
-
-const CryptoFolioList = ({ cryptofolios, onClick }) => {
+const CryptoFolioList = ({ cryptofolios }) => {
   const { user } = useSelector((state) => state.authReducer);
   const history = useHistory();
 
@@ -71,16 +64,12 @@ const CryptoFolioList = ({ cryptofolios, onClick }) => {
             </CryptoFolioInfo>
           </CryptoFolioItem>
         ))}
-      <ShowMoreButton onClick={onClick}>
-        <FontAwesomeIcon icon={faPlusCircle} style={{ color: "#f5f6fa" }} />
-      </ShowMoreButton>
     </CryptoFolioItemContainer>
   );
 };
 
 CryptoFolioList.propTypes = {
   cryptofolios: PropTypes.array,
-  onClick: PropTypes.func.isRequired,
 };
 
 export default CryptoFolioList;

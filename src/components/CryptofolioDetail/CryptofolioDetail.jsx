@@ -168,8 +168,7 @@ const CryptofolioDetail = () => {
       {user?._id === currentFolio.createdBy?._id && (
         <Button
           onClick={handleDelete}
-          bgColor={"#f1c40f"}
-          color={"black"}
+          bgColor={"#e84118"}
           margin={["10px", 0, 0, 0]}
         >
           Delete

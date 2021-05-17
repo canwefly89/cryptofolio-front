@@ -98,6 +98,8 @@ const usePieChart = (
     if (selectedList && coinData) {
       update(selectedList);
     }
+
+    return () => tip.hide();
   }, [
     coinData,
     colorSet,
