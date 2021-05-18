@@ -65,7 +65,7 @@ const Section = styled.span`
 
 const size = { height: 600, width: 600, radius: 300 };
 
-const CryptofolioDetail = () => {
+const CryptoFolioDetail = () => {
   const [currentFolio, setCurrentFolio] = useState({});
   const svgRef = useRef();
   const colorRef = useRef(
@@ -178,4 +178,4 @@ const CryptofolioDetail = () => {
   );
 };
 
-export default CryptofolioDetail;
+export default CryptoFolioDetail;
