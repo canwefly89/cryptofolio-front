@@ -26,7 +26,7 @@ const App = ({ authService }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  usePusher();
+  // usePusher();
 
   useEffect(() => {
     const authPath = ["login", "signup"];

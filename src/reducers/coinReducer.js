@@ -4,7 +4,8 @@ import _ from "lodash";
 const initialState = {
   metadata: null,
   coinData: null,
-  isLoading: false,
+  isMetadataLoading: false,
+  isPriceLoading: false,
   error: null,
 };
 
@@ -14,31 +15,40 @@ const coinReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case ACTION_TYPES.GET_DATA:
-    case ACTION_TYPES.UPDATE_METADATA:
+      // copiedState.isMetadataLoading = true;
+      // copiedState.isPriceLoading = true;
+      return copiedState;
+
     case ACTION_TYPES.UPDATE_PRICE:
-      copiedState.isLoading = true;
+      // copiedState.isPriceLoading = true;
+      return copiedState;
+
+    case ACTION_TYPES.UPDATE_METADATA:
+      // copiedState.isMetadataLoading = true;
       return copiedState;
 
     case ACTION_TYPES.GET_DATA_SUCCESS:
-      copiedState.isLoading = false;
+      // copiedState.isMetadataLoading = false;
+      // copiedState.isPriceLoading = false;
       copiedState.metadata = action.payload.metadata;
       copiedState.coinData = action.payload.coinData;
       return copiedState;
 
     case ACTION_TYPES.UPDATE_PRICE_SUCCESS:
-      copiedState.isLoading = false;
+      // copiedState.isPriceLoading = false;
       copiedState.coinData = action.payload;
       return copiedState;
 
     case ACTION_TYPES.UPDATE_METADATA_SUCCESS:
-      copiedState.isLoading = false;
+      // copiedState.isMetadataLoading = false;
       copiedState.metadata = action.payload;
       return copiedState;
 
     case ACTION_TYPES.GET_DATA_FAIL:
     case ACTION_TYPES.UPDATE_METADATA_FAIL:
     case ACTION_TYPES.UPDATE_PRICE_FAIL:
-      copiedState.isLoading = false;
+      // copiedState.isMetadataLoading = false;
+      // copiedState.isPriceLoading = false;
       copiedState.error = action.payload;
       return copiedState;
 

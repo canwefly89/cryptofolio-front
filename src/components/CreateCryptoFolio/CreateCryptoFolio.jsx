@@ -37,7 +37,7 @@ const SelectContainer = styled.div``;
 
 const ResultContainer = styled.div`
   position: fixed;
-  bottom: 60px;
+  bottom: 100px;
   left: 60vw;
   flex: 0.5;
   padding: 10px;
@@ -115,7 +115,13 @@ const CreateCryptoFolio = () => {
           />
           <SelectedList selectedList={selectedList} totalValue={totalValue} />
           <CreateButtonContainer>
-            <Button onClick={createHandler.handleCreate}>Create</Button>
+            <Button
+              onClick={createHandler.handleCreate}
+              padding={["10px", "20px", "10px", "20px"]}
+              fontSize={"1.2rem"}
+            >
+              Create
+            </Button>
             <Button onClick={createHandler.handleReset} bgColor={"#d63031"}>
               Reset
             </Button>

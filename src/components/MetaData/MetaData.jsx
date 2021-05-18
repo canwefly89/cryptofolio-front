@@ -35,7 +35,9 @@ const UpdateMetaData = styled.button`
 `;
 
 const MetaData = () => {
-  const { metadata } = useSelector((state) => state.coinReducer);
+  const { metadata, isMetadataLoading } = useSelector(
+    (state) => state.coinReducer
+  );
 
   const handleUpdateMetaData = useUpdateMetaData();
 
@@ -63,7 +65,11 @@ const MetaData = () => {
         <span>김치 프리미엄</span>
         <span>{metadata?.premium}%</span>
       </MetaDataItem>
-      <UpdateMetaData onClick={handleUpdateMetaData}>업데이트</UpdateMetaData>
+      {isMetadataLoading ? (
+        <span>로딩중</span>
+      ) : (
+        <UpdateMetaData onClick={handleUpdateMetaData}>업데이트</UpdateMetaData>
+      )}
     </MetaDataContainer>
   );
 };

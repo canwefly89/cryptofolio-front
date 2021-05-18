@@ -56,8 +56,7 @@ const CreateRandom = ({ handleRandom }) => {
       </RandomSettingContainer>
       <Button
         onClick={() => handleRandom(randomNumber, maxAsset)}
-        bgColor={"#f1c40f"}
-        color={"black"}
+        bgColor={"#636e72"}
       >
         Set Random
       </Button>
