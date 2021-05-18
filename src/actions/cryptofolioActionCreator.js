@@ -1,6 +1,6 @@
 import getActionTypes from "./actionTypes.js";
 
-const getCryptofoliosAction = () => async (dispatch) => {
+const getCryptofoliosAction = () => async (dispatch, getState) => {
   dispatch({ type: getActionTypes().GET_CRYPTOFOLIOS });
 
   try {
@@ -50,12 +50,12 @@ const createCryptofolioAction = (
 
     const result = await response.json();
 
-    dispatch({
+    await dispatch({
       type: getActionTypes().CREATE_CRYPTOFOLIO_SUCCESS,
       payload: result.data,
     });
 
-    history.push({
+    await history.push({
       pathname: `/cryptofolio/${result.data._id}`,
       state: result.data,
     });

@@ -122,7 +122,7 @@ const CryptofolioDetail = () => {
         <CryptoFolioInfo>
           <span>작성자</span>
           &nbsp;&nbsp;
-          <span>{currentFolio.createdBy?.name}</span>
+          <span>{currentFolio.createdBy?.name || user.name}</span>
         </CryptoFolioInfo>
         <CryptoFolioInfo>
           <span>현재 가치</span>

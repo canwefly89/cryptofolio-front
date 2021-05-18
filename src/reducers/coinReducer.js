@@ -13,13 +13,13 @@ const coinReducer = (state = initialState, action) => {
   const copiedState = _.cloneDeep(state);
 
   switch (action.type) {
-    case ACTION_TYPES.GET_HOME:
+    case ACTION_TYPES.GET_DATA:
     case ACTION_TYPES.UPDATE_METADATA:
     case ACTION_TYPES.UPDATE_PRICE:
       copiedState.isLoading = true;
       return copiedState;
 
-    case ACTION_TYPES.GET_HOME_SUCCESS:
+    case ACTION_TYPES.GET_DATA_SUCCESS:
       copiedState.isLoading = false;
       copiedState.metadata = action.payload.metadata;
       copiedState.coinData = action.payload.coinData;
@@ -35,7 +35,7 @@ const coinReducer = (state = initialState, action) => {
       copiedState.metadata = action.payload;
       return copiedState;
 
-    case ACTION_TYPES.GET_HOME_FAIL:
+    case ACTION_TYPES.GET_DATA_FAIL:
     case ACTION_TYPES.UPDATE_METADATA_FAIL:
     case ACTION_TYPES.UPDATE_PRICE_FAIL:
       copiedState.isLoading = false;

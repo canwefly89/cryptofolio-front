@@ -93,7 +93,7 @@ const useBubbleChart = (
     let coinList = [];
     let _circleType = circleType;
 
-    if (!coinData || allCryptoFolios.length === 0) {
+    if (!coinData) {
       return;
     }
 

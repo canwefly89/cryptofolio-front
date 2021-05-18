@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 
 /**
  *
@@ -6,9 +6,7 @@ import { useState, useEffect, useCallback } from "react";
  * @param {func} setSearchTerm
  * @returns {arrary, func} filtered List, search/filter function
  */
-const useCoinFilter = (coinData, setSearchTerm) => {
-  const [coinList, setCoinList] = useState([]);
-
+const useCoinFilter = (coinData, setSearchTerm, setCoinList) => {
   const handleSearch = useCallback(
     (input) => {
       setSearchTerm(input);
@@ -21,7 +19,7 @@ const useCoinFilter = (coinData, setSearchTerm) => {
 
       setCoinList(filtered);
     },
-    [coinData, setSearchTerm]
+    [coinData, setCoinList, setSearchTerm]
   );
 
   const handleFilter = useCallback(
@@ -58,7 +56,7 @@ const useCoinFilter = (coinData, setSearchTerm) => {
 
       setCoinList(filtered);
     },
-    [coinData]
+    [coinData, setCoinList]
   );
 
   useEffect(() => {
@@ -66,10 +64,9 @@ const useCoinFilter = (coinData, setSearchTerm) => {
       const coins = Object.values(coinData);
       setCoinList(coins);
     }
-  }, [coinData]);
+  }, [coinData, setCoinList]);
 
   return {
-    coinList,
     handleSearch,
     handleFilter,
   };

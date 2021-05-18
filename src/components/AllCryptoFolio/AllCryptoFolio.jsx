@@ -17,16 +17,6 @@ const CryptoFolioContainer = styled.div`
   color: white;
 `;
 
-const CryptoFolioItemContainer = styled.div`
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(7, 1fr);
-  row-gap: 20px;
-  align-items: center;
-  background-color: black;
-  color: white;
-`;
-
 const ListTitle = styled.h1`
   margin-top: 30px;
   font-family: "Roboto", sans-serif;
@@ -36,6 +26,16 @@ const ListTitle = styled.h1`
 
 const CryptoFolioItem = styled.div`
   cursor: pointer;
+`;
+
+const CryptoFolioItemContainer = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 20px;
+  align-items: center;
+  background-color: black;
+  color: white;
 `;
 
 const CryptoFolioInfo = styled.div`
@@ -79,7 +79,7 @@ const AllCryptoFolio = () => {
       <ListTitle>All CryptoFolios</ListTitle>
       <CryptoFolioItemContainer>
         {cryptofolios.length > 0 &&
-          cryptofolios.slice(0, 10).map((cryptofolio) => (
+          cryptofolios.map((cryptofolio) => (
             <CryptoFolioItem key={cryptofolio._id}>
               <div
                 onClick={() => history.push(`/cryptofolio/${cryptofolio._id}`)}

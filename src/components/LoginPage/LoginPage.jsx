@@ -110,25 +110,25 @@ const LoginPage = ({ authService }) => {
             Log In
           </Button>
         </ButtonContainer>
-        <ButtonContainer>
-          <Button
-            name="Signup"
-            onClick={() => history.push("/signup")}
-            margin={["10px", "5px", "0", "5px"]}
-          >
-            Sign Up
-          </Button>
-        </ButtonContainer>
-        <ButtonContainer>
-          <Button
-            name="Google"
-            onClick={handleSocialLogin}
-            margin={["10px", "5px", "0", "5px"]}
-          >
-            Google Login
-          </Button>
-        </ButtonContainer>
       </LoginForm>
+      <ButtonContainer>
+        <Button
+          name="Signup"
+          onClick={() => history.push("/signup")}
+          margin={["10px", "5px", "0", "5px"]}
+        >
+          Sign Up
+        </Button>
+      </ButtonContainer>
+      <ButtonContainer>
+        <Button
+          name="Google"
+          onClick={handleSocialLogin}
+          margin={["10px", "5px", "0", "5px"]}
+        >
+          Google Login
+        </Button>
+      </ButtonContainer>
     </LoginContainer>
   );
 };

@@ -31,6 +31,10 @@ const authReducer = (state = initialState, action) => {
       copiedState.user = action.payload;
       return copiedState;
 
+    case ACTION_TYPES.CREATE_CRYPTOFOLIO_SUCCESS:
+      copiedState.user?.cryptofolios.push(action.payload);
+      return copiedState;
+
     case ACTION_TYPES.USER_LOGOUT:
     case ACTION_TYPES.CHECK_AUTHORIZATION_UNAUTH:
       copiedState.isAuthorized = false;

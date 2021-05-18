@@ -15,11 +15,12 @@ import getWeeklySorted from "../../utils/getWeeklySorted";
 const CryptoFolioContainer = styled.div`
   padding: 40px;
   background-color: black;
+  min-height: 87vh;
   color: white;
 `;
 
 const ListContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: 60px;
 `;
 
@@ -30,7 +31,7 @@ const ListTitle = styled.h1`
 `;
 
 const CryptoFolioPage = () => {
-  const [cryptofolios, setCryptofolios] = useState({});
+  const [cryptoFolios, setCryptoFolios] = useState({});
   const { isAuthorized, user } = useSelector((state) => state.authReducer);
   const { coinData } = useSelector((state) => state.coinReducer);
   const { allCryptoFolios } = useSelector((state) => state.cryptofolioReducer);
@@ -43,9 +44,6 @@ const CryptoFolioPage = () => {
       return;
     }
 
-    const myCryptoFolios = calculateProfit(user?.cryptofolios, coinData).sort(
-      (a, b) => b.profitPercent - a.profitPercent
-    );
     const monthlyCryptoFolios = getMonthlySorted(allCryptoFolios, coinData);
     const weeklyCryptoFolios = getWeeklySorted(allCryptoFolios, coinData);
     const allTimeCryptoFolios = calculateProfit(allCryptoFolios, coinData).sort(
@@ -53,14 +51,13 @@ const CryptoFolioPage = () => {
     );
 
     const caculatedCryptoFolios = {
-      myCryptoFolios,
       monthlyCryptoFolios,
       weeklyCryptoFolios,
       allTimeCryptoFolios,
     };
 
-    setCryptofolios(caculatedCryptoFolios);
-  }, [allCryptoFolios, coinData, user?.cryptofolios]);
+    setCryptoFolios(caculatedCryptoFolios);
+  }, [allCryptoFolios, coinData, user?.cryptoFolios]);
 
   return (
     <CryptoFolioContainer>
@@ -87,15 +84,15 @@ const CryptoFolioPage = () => {
       </span>
       <ListContainer>
         <ListTitle>Weekly Top Profit</ListTitle>
-        <CryptoFolioList cryptofolios={cryptofolios.weeklyCryptoFolios} />
+        <CryptoFolioList cryptoFolios={cryptoFolios.weeklyCryptoFolios} />
       </ListContainer>
       <ListContainer>
         <ListTitle>Monthly Top Profit</ListTitle>
-        <CryptoFolioList cryptofolios={cryptofolios.monthlyCryptoFolios} />
+        <CryptoFolioList cryptoFolios={cryptoFolios.monthlyCryptoFolios} />
       </ListContainer>
       <ListContainer>
         <ListTitle>All Time Top Profit</ListTitle>
-        <CryptoFolioList cryptofolios={cryptofolios.allTimeCryptoFolios} />
+        <CryptoFolioList cryptoFolios={cryptoFolios.allTimeCryptoFolios} />
       </ListContainer>
     </CryptoFolioContainer>
   );

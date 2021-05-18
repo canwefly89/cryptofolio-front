@@ -14,7 +14,10 @@ import LandingPage from "../LandingPage/LandingPage";
 import Loading from "../Loading/Loading";
 import LoginPage from "../LoginPage/LoginPage";
 import LogoutPage from "../LogoutPage/LogoutPage";
+import MyCryptoFolioPage from "../MyCryptoFolioPage/MyCryproFolioPage";
 import SignupPage from "../SignupPage/SignupPage";
+
+import usePusher from "../../hooks/usePusher";
 
 import actionCreator from "../../actions/actionCreator";
 
@@ -23,6 +26,7 @@ const App = ({ authService }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
+  usePusher();
 
   useEffect(() => {
     const authPath = ["login", "signup"];
@@ -36,9 +40,9 @@ const App = ({ authService }) => {
   }, [dispatch, history, isAuthorized, location.pathname]);
 
   useEffect(() => {
-    dispatch(actionCreator.getHomeAction());
-    dispatch(actionCreator.getCryptofoliosAction());
+    dispatch(actionCreator.getDataAction());
     dispatch(actionCreator.checkAuthAction());
+    dispatch(actionCreator.getCryptofoliosAction());
   }, [dispatch]);
 
   return (
@@ -63,6 +67,10 @@ const App = ({ authService }) => {
 
               <Route exact path="/cryptofolio/all">
                 <AllCryptoFolio />
+              </Route>
+
+              <Route exact path="/my-cryptofolio">
+                <MyCryptoFolioPage />
               </Route>
 
               <Route exact path="/cryptofolio/:cryptofolioId">

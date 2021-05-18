@@ -23,7 +23,7 @@ const cryptofolioReducer = (state = initialState, action) => {
       return copiedState;
 
     case ACTION_TYPES.CREATE_CRYPTOFOLIO_SUCCESS:
-      copiedState.currentCryptoFolio = action.payload;
+      copiedState.allCryptoFolios.push(action.payload);
       return copiedState;
 
     case ACTION_TYPES.GET_CRYPTOFOLIOS_SUCCESS:

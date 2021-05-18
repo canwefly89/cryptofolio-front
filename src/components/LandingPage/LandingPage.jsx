@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 
 const LandingPageContainer = styled.div`
   background-color: black;
+  min-height: 87vh;
   padding-top: 30px;
 `;
 

@@ -13,14 +13,16 @@ const calculateProfit = (cryptofolioList = [], coinData = {}) => {
 
     let currentValue = 0;
 
-    cryptofolio.selectedList.forEach((coin) => {
+    cryptofolio.selectedList?.forEach((coin) => {
       if (coin.amount.length > 0) {
         currentValue +=
-          coinData[coin.name]?.price.price * parseInt(coin.amount, 10);
+          coinData[coin.name]?.price.price * parseFloat(coin.amount, 10);
       }
     });
     cryptofolio.currentValue = currentValue;
-    cryptofolio.profit = currentValue - cryptofolio.createdValue;
+    cryptofolio.profit = parseFloat(
+      (currentValue - cryptofolio.createdValue).toFixed(2)
+    );
     cryptofolio.profitPercent = parseFloat(
       (currentValue / cryptofolio.createdValue - 1).toFixed(2)
     );

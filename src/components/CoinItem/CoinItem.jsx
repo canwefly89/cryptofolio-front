@@ -153,7 +153,12 @@ const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
             type="textarea"
             placeholder="Enter Amount"
             onChange={(e) => handleChangeValue(e.target.value)}
-            value={value}
+            value={
+              value ||
+              selectedList.filter(
+                (selected) => selected.name === coin.ticker
+              )[0].amount
+            }
           />
         )}
       </AmountContainer>

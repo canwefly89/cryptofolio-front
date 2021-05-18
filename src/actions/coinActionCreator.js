@@ -1,7 +1,7 @@
 import getActionTypes from "./actionTypes.js";
 
-const getHomeAction = () => async (dispatch) => {
-  dispatch({ type: getActionTypes().GET_HOME });
+const getDataAction = () => async (dispatch) => {
+  dispatch({ type: getActionTypes().GET_DATA });
 
   try {
     const response = await fetch(
@@ -16,18 +16,9 @@ const getHomeAction = () => async (dispatch) => {
 
     const result = await response.json();
 
-    dispatch({ type: getActionTypes().GET_HOME_SUCCESS, payload: result.data });
+    dispatch({ type: getActionTypes().GET_DATA_SUCCESS, payload: result.data });
   } catch (err) {
-    dispatch({ type: getActionTypes().GET_HOME_FAIL, payload: err });
-  }
-};
-
-const getCoinDataAction = () => async (dispatch) => {
-  dispatch({ type: getActionTypes().GET_COINDATA });
-  try {
-    dispatch({ type: getActionTypes().GET_COINDATA_SUCCESS });
-  } catch (err) {
-    dispatch({ type: getActionTypes().GET_COINDATA_FAIL, payload: err });
+    dispatch({ type: getActionTypes().GET_DATA_FAIL, payload: err });
   }
 };
 
@@ -77,8 +68,6 @@ const updatePriceAction = () => async (dispatch) => {
 
     const result = await response.json();
 
-    console.log(result);
-
     if (!result) {
       dispatch({
         type: getActionTypes().UPDATE_PRICE_FAIL,
@@ -96,8 +85,7 @@ const updatePriceAction = () => async (dispatch) => {
 };
 
 const coinActionCreator = {
-  getHomeAction,
-  getCoinDataAction,
+  getDataAction,
   updateMetaDataAction,
   updatePriceAction,
 };

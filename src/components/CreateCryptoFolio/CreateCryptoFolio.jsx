@@ -73,22 +73,21 @@ const CreateCryptoFolio = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { coinData } = useSelector((state) => state.coinReducer);
   const [name, onChangeName] = useInput("");
+  const [coinList, setCoinList] = useState([]);
   const [error, showErrorMessage] = useErrorMessage("");
 
-  const { coinList, handleSearch, handleFilter } = useCoinFilter(
+  const { handleSearch, handleFilter } = useCoinFilter(
     coinData,
-    setSearchTerm
+    setSearchTerm,
+    setCoinList
   );
 
-  const {
-    selectedList,
-    totalValue,
-    handleSelect,
-    handleAmount,
-    handleReset,
-    handleRandom,
-    handleCreate,
-  } = useCoinSelect(coinData, name, showErrorMessage);
+  const { selectedList, totalValue, createHandler } = useCoinSelect(
+    coinData,
+    name,
+    showErrorMessage,
+    setCoinList
+  );
 
   return (
     <>
@@ -101,9 +100,9 @@ const CreateCryptoFolio = () => {
         <SelectContainer>
           <CoinList
             coinList={coinList}
-            handleSelect={handleSelect}
+            handleSelect={createHandler.handleSelect}
             selectedList={selectedList}
-            handleAmount={handleAmount}
+            handleAmount={createHandler.handleAmount}
           />
         </SelectContainer>
         <ResultContainer>
@@ -116,12 +115,12 @@ const CreateCryptoFolio = () => {
           />
           <SelectedList selectedList={selectedList} totalValue={totalValue} />
           <CreateButtonContainer>
-            <Button onClick={handleCreate}>Create</Button>
-            <Button onClick={handleReset} bgColor={"#d63031"}>
+            <Button onClick={createHandler.handleCreate}>Create</Button>
+            <Button onClick={createHandler.handleReset} bgColor={"#d63031"}>
               Reset
             </Button>
           </CreateButtonContainer>
-          <CreateRandom handleRandom={handleRandom} />
+          <CreateRandom handleRandom={createHandler.handleRandom} />
         </ResultContainer>
       </CreateContainer>
     </>

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import actionCreator from "../actions/actionCreator";
+import { TICKERS } from "../constants/constants";
 
 /**
  *
@@ -58,9 +59,43 @@ const useCoinSelect = (coinData, name, showErrorMessage) => {
     setTotalValue(0);
   }, []);
 
-  const handleRandom = useCallback((coinNumber, maxAsset) => {
-    // console.log(coinNumber, maxAsset);
-  }, []);
+  const handleRandom = useCallback(
+    (coinNumber, maxAsset) => {
+      const NANRegex = /[^0-9.]/g;
+      let asset = parseInt(maxAsset, 0);
+
+      if (NANRegex.test(maxAsset) && maxAsset.length > 0) {
+        return showErrorMessage("금액 한도에는 숫자만 입력할 수 있습니다.");
+      }
+
+      if (!asset) {
+        asset = 100000;
+      }
+
+      const eachValue = asset / coinNumber;
+      const randomList = [];
+      let totalValue = 0;
+
+      for (let i = 0; i < coinNumber; i++) {
+        const pickedRandom =
+          TICKERS[Math.floor(Math.random() * TICKERS.length)];
+        randomList.push(pickedRandom);
+      }
+
+      const randomSet = randomList.map((ticker) => {
+        const amount = (eachValue / coinData[ticker].price?.price).toFixed(2);
+        totalValue += parseFloat(
+          (amount * coinData[ticker].price?.price).toFixed(2)
+        );
+
+        return { name: ticker, amount };
+      });
+
+      setSelectedList(randomSet);
+      setTotalValue(totalValue);
+    },
+    [coinData, showErrorMessage]
+  );
 
   const handleCreate = useCallback(() => {
     if (name.length === 0) {
@@ -77,9 +112,18 @@ const useCoinSelect = (coinData, name, showErrorMessage) => {
     );
   }, [name, dispatch, selectedList, totalValue, history, showErrorMessage]);
 
+  const createHandler = {
+    handleSelect,
+    handleAmount,
+    handleReset,
+    handleRandom,
+    handleCreate,
+  };
+
   return {
     selectedList,
     totalValue,
+    createHandler,
     handleSelect,
     handleAmount,
     handleReset,

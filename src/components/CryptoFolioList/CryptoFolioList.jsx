@@ -12,7 +12,10 @@ const CryptoFolioItemContainer = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: repeat(7, 1fr);
+  margin-top: 26px;
   row-gap: 20px;
+  column-gap: 5px;
+  justify-content: center;
   align-items: center;
   background-color: black;
   color: white;
@@ -20,27 +23,42 @@ const CryptoFolioItemContainer = styled.div`
 
 const CryptoFolioItem = styled.div`
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const CryptoFolioName = styled.div`
+  font-weight: 800;
 `;
 
 const CryptoFolioInfo = styled.div`
   margin-top: 5px;
-  margin-left: 35px;
+  display: flex;
+  justify-content: center;
 
+  span {
+    display: block;
+    text-align: left;
+  }
   span:first-child {
     font-weight: 800;
   }
 `;
 
-const CryptoFolioList = ({ cryptofolios }) => {
+const CryptoFolioList = ({ cryptoFolios }) => {
   const { user } = useSelector((state) => state.authReducer);
   const history = useHistory();
 
   return (
     <CryptoFolioItemContainer>
-      {!cryptofolios && <div>No Cryptofolios</div>}
-      {cryptofolios &&
-        cryptofolios.slice(0, 10).map((cryptofolio) => (
+      {!cryptoFolios && <div>No Cryptofolios</div>}
+      {cryptoFolios &&
+        cryptoFolios.slice(0, 7).map((cryptofolio) => (
           <CryptoFolioItem key={cryptofolio._id}>
+            <CryptoFolioInfo style={{ marginTop: "15px" }}>
+              <CryptoFolioName>{cryptofolio.name}</CryptoFolioName>
+            </CryptoFolioInfo>
             <div
               onClick={() => history.push(`/cryptofolio/${cryptofolio._id}`)}
             >
@@ -69,7 +87,7 @@ const CryptoFolioList = ({ cryptofolios }) => {
 };
 
 CryptoFolioList.propTypes = {
-  cryptofolios: PropTypes.array,
+  cryptoFolios: PropTypes.array,
 };
 
 export default CryptoFolioList;
