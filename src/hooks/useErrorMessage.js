@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 /**
  *
- * @param {String} message
+ * @param {string} message
  * @returns error message & show message func
  */
 const useErrorMessage = (message = "") => {

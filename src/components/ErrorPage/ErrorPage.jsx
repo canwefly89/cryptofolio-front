@@ -1,6 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const ErrorPageContainer = styled.div`
   width: 100vw;
@@ -37,10 +37,10 @@ const ErrorPage = () => {
       <ErrorMessage>알 수 없는 에러가 발생하였습니다.</ErrorMessage>
       <HomeButton
         onClick={() => {
-          history.push("/games");
+          history.push("/");
         }}
       >
-        게임창으로 돌아가기
+        돌아가기
       </HomeButton>
     </ErrorPageContainer>
   );
