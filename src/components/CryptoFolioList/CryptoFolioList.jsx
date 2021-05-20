@@ -66,11 +66,7 @@ const CryptoFolioList = ({ cryptoFolios }) => {
             </div>
             <CryptoFolioInfo style={{ marginTop: "15px" }}>
               <span>작성자&nbsp;&nbsp;</span>
-              <span>
-                {cryptofolio.createdBy.name
-                  ? cryptofolio.createdBy.name
-                  : user.name}
-              </span>
+              <span>{cryptofolio.createdBy?.name || user.name}</span>
             </CryptoFolioInfo>
             <CryptoFolioInfo>
               <span>현재 수익&nbsp;&nbsp;</span>
@@ -79,6 +75,10 @@ const CryptoFolioList = ({ cryptoFolios }) => {
             <CryptoFolioInfo>
               <span>수익률&nbsp;&nbsp;</span>
               <span>{changeNumberFormat(cryptofolio.profitPercent)}%</span>
+            </CryptoFolioInfo>
+            <CryptoFolioInfo>
+              <span>작성일&nbsp;&nbsp;</span>
+              <span>{cryptofolio.createdAt?.slice(5, 10)}</span>
             </CryptoFolioInfo>
           </CryptoFolioItem>
         ))}

@@ -139,6 +139,10 @@ const CryptoFolioDetail = () => {
           &nbsp;&nbsp;
           <span>{currentFolio.profitPercent}%</span>
         </CryptoFolioInfo>
+        <CryptoFolioInfo>
+          <span>작성일&nbsp;&nbsp;</span>
+          <span>{currentFolio.createdAt}</span>
+        </CryptoFolioInfo>
       </CryptoFolioInfoContainer>
       <CrypoFolioCoins>
         <CoinTicker></CoinTicker>

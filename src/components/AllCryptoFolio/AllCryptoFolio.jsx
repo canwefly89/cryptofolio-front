@@ -120,6 +120,10 @@ const AllCryptoFolio = () => {
                 <span>수익률&nbsp;&nbsp;</span>
                 <span>{changeNumberFormat(cryptofolio.profitPercent)}%</span>
               </CryptoFolioInfo>
+              <CryptoFolioInfo>
+                <span>작성일&nbsp;&nbsp;</span>
+                <span>{cryptofolio.createdAt?.slice(5, 10)}</span>
+              </CryptoFolioInfo>
             </CryptoFolioItem>
           ))}
       </CryptoFolioItemContainer>

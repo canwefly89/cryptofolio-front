@@ -24,7 +24,7 @@ const calculateProfit = (cryptofolioList = [], coinData = {}) => {
       (currentValue - cryptofolio.createdValue).toFixed(2)
     );
     cryptofolio.profitPercent = parseFloat(
-      (currentValue / cryptofolio.createdValue - 1).toFixed(2)
+      ((currentValue / cryptofolio.createdValue - 1) * 100).toFixed(2)
     );
 
     return cryptofolio;
