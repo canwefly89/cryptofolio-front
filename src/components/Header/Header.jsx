@@ -90,16 +90,10 @@ const Header = () => {
         <HeaderItemContainer>
           <div onClick={() => history.push("/cryptofolio/all")}>Show All</div>
           <div onClick={() => history.push("/cryptofolio")}>Rank</div>
-          {isAuthorized && (
-            <>
-              <div onClick={() => history.push("/cryptofolio/new")}>
-                Creat New
-              </div>
-              <div onClick={() => history.push("/my-cryptofolio")}>
-                My Cryptofolio
-              </div>
-            </>
-          )}
+          <div onClick={() => history.push("/cryptofolio/new")}>Creat New</div>
+          <div onClick={() => history.push("/my-cryptofolio")}>
+            My Cryptofolio
+          </div>
         </HeaderItemContainer>
         {isAuthorized && (
           <WelcomeMessage>

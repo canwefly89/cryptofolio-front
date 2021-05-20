@@ -43,7 +43,7 @@ const App = ({ authService }) => {
     dispatch(actionCreator.getDataAction());
     dispatch(actionCreator.checkAuthAction());
     dispatch(actionCreator.getCryptofoliosAction());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -59,14 +59,14 @@ const App = ({ authService }) => {
             <CryptoFolioPage />
           </Route>
 
+          <Route exact path="/cryptofolio/all">
+            <AllCryptoFolio />
+          </Route>
+
           {isAuthorized ? (
             <Switch>
               <Route exact path="/cryptofolio/new">
                 <CreateCryptoFolio />
-              </Route>
-
-              <Route exact path="/cryptofolio/all">
-                <AllCryptoFolio />
               </Route>
 
               <Route exact path="/my-cryptofolio">
@@ -86,6 +86,7 @@ const App = ({ authService }) => {
               path={[
                 "/cryptofolio/new",
                 "/cryptofolio/:cryptofolioId",
+                "/my-cryptofolio",
                 "/logout",
                 "/login",
               ]}

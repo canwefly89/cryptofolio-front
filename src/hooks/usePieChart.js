@@ -100,18 +100,8 @@ const usePieChart = (
     }
 
     return () => tip.hide();
-  }, [
-    coinData,
-    colorSet,
-    handleMouseOut,
-    handleMouseOver,
-    selectedList,
-    size.height,
-    size.radius,
-    size.width,
-    svgRef,
-    tip,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [coinData, selectedList]);
 };
 
 export default usePieChart;
