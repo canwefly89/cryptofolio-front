@@ -46,7 +46,7 @@ const CryptoFolioInfo = styled.div`
   }
 `;
 
-const CryptoFolioList = ({ cryptoFolios }) => {
+const CryptoFolioList = ({ cryptoFolios, slice }) => {
   const { user } = useSelector((state) => state.authReducer);
   const history = useHistory();
 
@@ -54,7 +54,7 @@ const CryptoFolioList = ({ cryptoFolios }) => {
     <CryptoFolioItemContainer>
       {!cryptoFolios && <div>No Cryptofolios</div>}
       {cryptoFolios &&
-        cryptoFolios.slice(0, 7).map((cryptofolio) => (
+        cryptoFolios.slice(0, slice).map((cryptofolio) => (
           <CryptoFolioItem key={cryptofolio._id}>
             <CryptoFolioInfo style={{ marginTop: "15px" }}>
               <CryptoFolioName>{cryptofolio.name}</CryptoFolioName>

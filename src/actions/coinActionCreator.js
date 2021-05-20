@@ -75,6 +75,8 @@ const updatePriceAction = () => async (dispatch) => {
       });
     }
 
+    await setTimeout(() => {}, 3000);
+
     dispatch({
       type: getActionTypes().UPDATE_PRICE_SUCCESS,
       payload: result.data,

@@ -65,8 +65,12 @@ const MetaData = () => {
         <span>김치 프리미엄</span>
         <span>{metadata?.premium}%</span>
       </MetaDataItem>
+      <MetaDataItem>
+        <span>현재 환율</span>
+        <span>{changeNumberFormat(metadata?.rate)}원/달러</span>
+      </MetaDataItem>
       {isMetadataLoading ? (
-        <span>로딩중</span>
+        <span>&nbsp; &nbsp; 최신 정보를 불러오는 중입니다..</span>
       ) : (
         <UpdateMetaData onClick={handleUpdateMetaData}>업데이트</UpdateMetaData>
       )}

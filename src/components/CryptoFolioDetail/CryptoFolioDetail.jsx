@@ -63,7 +63,7 @@ const Section = styled.span`
   font-weight: 800;
 `;
 
-const size = { height: 600, width: 600, radius: 300 };
+const size = { height: 500, width: 500, radius: 250 };
 
 const CryptoFolioDetail = () => {
   const [currentFolio, setCurrentFolio] = useState({});
@@ -73,7 +73,7 @@ const CryptoFolioDetail = () => {
   );
 
   const { user } = useSelector((state) => state.authReducer);
-  const { coinData } = useSelector((state) => state.coinReducer);
+  const { metadata, coinData } = useSelector((state) => state.coinReducer);
   const { allCryptoFolios } = useSelector((state) => state.cryptofolioReducer);
   const dispatch = useDispatch();
 
@@ -88,6 +88,13 @@ const CryptoFolioDetail = () => {
         currentFolio?._id,
         history
       )
+    );
+  };
+
+  const getWonValue = (value) => {
+    return changeNumberFormat(
+      (value * metadata?.rate * (parseFloat(metadata?.premium) + 100)) / 100,
+      "int"
     );
   };
 
@@ -130,9 +137,19 @@ const CryptoFolioDetail = () => {
           <span>${changeNumberFormat(currentFolio.currentValue)}</span>
         </CryptoFolioInfo>
         <CryptoFolioInfo>
+          <span>현재 가치</span>
+          &nbsp;&nbsp;
+          {getWonValue(currentFolio.currentValue)}원
+        </CryptoFolioInfo>
+        <CryptoFolioInfo>
           <span>현재 수익</span>
           &nbsp;&nbsp;
-          <span>${currentFolio.profit}</span>
+          <span>${changeNumberFormat(currentFolio.profit)}</span>
+        </CryptoFolioInfo>
+        <CryptoFolioInfo>
+          <span>현재 수익</span>
+          &nbsp;&nbsp;
+          <span>{getWonValue(currentFolio.profit)}원</span>
         </CryptoFolioInfo>
         <CryptoFolioInfo>
           <span>수익률</span>
