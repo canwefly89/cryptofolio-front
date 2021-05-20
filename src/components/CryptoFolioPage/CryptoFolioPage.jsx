@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 import CryptoFolioList from "../CryptoFolioList/CryptoFolioList";
-import Button from "../shared/Button/Button";
-
-import useUpdatePrice from "../../hooks/useUpdatePrice";
+import CryptoFolioButtons from "../CryptoFolioButtons/CryptoFolioButtons";
 
 import calculateProfit from "../../utils/calculateProfit";
 import getMonthlySorted from "../../utils/getMonthlySorted";
@@ -32,12 +29,9 @@ const ListTitle = styled.h1`
 
 const CryptoFolioPage = () => {
   const [cryptoFolios, setCryptoFolios] = useState({});
-  const { isAuthorized, user } = useSelector((state) => state.authReducer);
+  const { user } = useSelector((state) => state.authReducer);
   const { coinData } = useSelector((state) => state.coinReducer);
   const { allCryptoFolios } = useSelector((state) => state.cryptofolioReducer);
-  const history = useHistory();
-
-  const handleUpdatePrice = useUpdatePrice();
 
   useEffect(() => {
     if (!coinData) {
@@ -61,38 +55,27 @@ const CryptoFolioPage = () => {
 
   return (
     <CryptoFolioContainer>
-      {isAuthorized && (
-        <Button
-          onClick={() => history.push("/cryptofolio/new")}
-          margin={[0, "10px", 0, 0]}
-        >
-          New Cryptofolio
-        </Button>
-      )}
-      <Button
-        onClick={() => history.push("/cryptofolio/all")}
-        margin={[0, "10px", 0, 0]}
-      >
-        Show All
-      </Button>
-      <Button onClick={handleUpdatePrice} bgColor={"#f1c40f"} color={"black"}>
-        Update Price
-      </Button>
-      <span>
-        &nbsp;&nbsp;
-        <strong>마지막 업데이트: {coinData?.BTC?.price?.date}</strong>
-      </span>
+      <CryptoFolioButtons />
       <ListContainer>
         <ListTitle>Weekly Top Profit</ListTitle>
-        <CryptoFolioList cryptoFolios={cryptoFolios.weeklyCryptoFolios} />
+        <CryptoFolioList
+          cryptoFolios={cryptoFolios.weeklyCryptoFolios}
+          slice={7}
+        />
       </ListContainer>
       <ListContainer>
         <ListTitle>Monthly Top Profit</ListTitle>
-        <CryptoFolioList cryptoFolios={cryptoFolios.monthlyCryptoFolios} />
+        <CryptoFolioList
+          cryptoFolios={cryptoFolios.monthlyCryptoFolios}
+          slice={7}
+        />
       </ListContainer>
       <ListContainer>
         <ListTitle>All Time Top Profit</ListTitle>
-        <CryptoFolioList cryptoFolios={cryptoFolios.allTimeCryptoFolios} />
+        <CryptoFolioList
+          cryptoFolios={cryptoFolios.allTimeCryptoFolios}
+          slice={7}
+        />
       </ListContainer>
     </CryptoFolioContainer>
   );
