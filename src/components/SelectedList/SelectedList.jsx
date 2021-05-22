@@ -1,14 +1,11 @@
 /* eslint-disable indent */
-import React, { useRef } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import { COLOR_SET } from "../../constants/constants";
-import changeNumberFormat from "../../utils/changeNumberFormat";
-import usePieChart from "../../hooks/usePieChart";
 
-import SVG from "../shared/SVG/SVG";
+import changeNumberFormat from "../../utils/changeNumberFormat";
+
 import styled from "styled-components";
 
-const SelectedContainer = styled.div``;
 const SelectedCoin = styled.div`
   display: flex;
   align-items: center;
@@ -38,20 +35,11 @@ const TotalContainer = styled.div`
   font-size: 1.2rem;
 `;
 
-const size = { height: 400, width: 400, radius: 180 };
-
 const SelectedList = ({ selectedList, totalValue }) => {
   const { coinData } = useSelector((state) => state.coinReducer);
-  const svgRef = useRef();
-  const colorRef = useRef(
-    COLOR_SET[Math.floor(Math.random() * COLOR_SET.length)]
-  );
-
-  usePieChart(svgRef, selectedList, coinData, size, colorRef.current);
 
   return (
-    <SelectedContainer>
-      <SVG ref={svgRef}></SVG>
+    <>
       {selectedList &&
         selectedList.map((coin) => {
           return (
@@ -87,7 +75,7 @@ const SelectedList = ({ selectedList, totalValue }) => {
         &nbsp;&nbsp;
         <span>${changeNumberFormat(totalValue)}</span>
       </TotalContainer>
-    </SelectedContainer>
+    </>
   );
 };
 

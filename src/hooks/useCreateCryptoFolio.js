@@ -12,7 +12,7 @@ import { TICKERS } from "../constants/constants";
  * @param {func} showErrorMessage
  * @returns {array, number, func} selected List, total value of cryptofolio, handler funcs
  */
-const useCoinSelect = (coinData, name, showErrorMessage) => {
+const useCreateCryptoFolio = (coinData, name, showErrorMessage) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [selectedList, setSelectedList] = useState([]);
@@ -132,4 +132,4 @@ const useCoinSelect = (coinData, name, showErrorMessage) => {
   };
 };
 
-export default useCoinSelect;
+export default useCreateCryptoFolio;

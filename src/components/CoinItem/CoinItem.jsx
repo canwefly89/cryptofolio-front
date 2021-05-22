@@ -154,10 +154,9 @@ const CoinItem = ({ coin, onClick, selectedList, handleAmount }) => {
             placeholder="Enter Amount"
             onChange={(e) => handleChangeValue(e.target.value)}
             value={
-              value ||
               selectedList.filter(
                 (selected) => selected.name === coin.ticker
-              )[0].amount
+              )[0].amount || value
             }
           />
         )}
