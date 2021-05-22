@@ -60,6 +60,17 @@ const useBubbleChart = (
     [chartType, tip]
   );
 
+  const handleClick = useCallback((event, d) => {
+    if (
+      chartType === CHART_TYPE.PORTFOLIO ||
+      chartType === CHART_TYPE.MYPORTFOLIO
+    ) {
+      return;
+    }
+    window.open(`https://coinmarketcap.com/currencies/${d.name}`, "_blank");
+    return;
+  }, []);
+
   const drawGraph = useCallback(
     (svg, coinList, chartType, circleType, viewType) => {
       if (!coinList || coinList.length === 0) {
@@ -81,12 +92,14 @@ const useBubbleChart = (
         .attr("opacity", 0.85)
         .on("mouseover", handleMouseOver)
         .on("mouseout", handleMouseOut)
+        .on("click", handleClick)
+        .style("cursor", "pointer")
         .call(tip);
 
       colorByChartType(circles, chartType);
       simulation.nodes(coinList).on("tick", ticked);
     },
-    [handleMouseOut, handleMouseOver, tip]
+    [handleClick, handleMouseOut, handleMouseOver, tip]
   );
 
   useEffect(() => {

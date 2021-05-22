@@ -11,7 +11,7 @@ import changeNumberFormat from "../../utils/changeNumberFormat";
 const CryptoFolioItemContainer = styled.div`
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   margin-top: 26px;
   row-gap: 20px;
   column-gap: 5px;

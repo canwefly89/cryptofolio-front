@@ -17,8 +17,6 @@ import LogoutPage from "../LogoutPage/LogoutPage";
 import MyCryptoFolioPage from "../MyCryptoFolioPage/MyCryproFolioPage";
 import SignupPage from "../SignupPage/SignupPage";
 
-// import usePusher from "../../hooks/usePusher";
-
 import actionCreator from "../../actions/actionCreator";
 
 const App = ({ authService }) => {
@@ -26,7 +24,6 @@ const App = ({ authService }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  // usePusher();
 
   useEffect(() => {
     const authPath = ["login", "signup"];
@@ -43,6 +40,7 @@ const App = ({ authService }) => {
     dispatch(actionCreator.getDataAction());
     dispatch(actionCreator.checkAuthAction());
     dispatch(actionCreator.getCryptofoliosAction());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
